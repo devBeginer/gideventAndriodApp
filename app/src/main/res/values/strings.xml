@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">AndriodApp</string>
+    <string name="favourite_toolbar_title">Избранное</string>
+    <string name="purchases_toolbar_title">Заказы</string>
+    <string name="search_toolbar_title">Поиск</string>
+</resources>
