@@ -19,6 +19,7 @@ data class Advertisement(
     val rating: Int,
     val category: Category,
     val city: City,
+    val favourite: Boolean?,
     val seller: Seller,
-    val priceList: List<TicketPriceDto>
+    val priceList: List<TicketPriceDto>?
 )

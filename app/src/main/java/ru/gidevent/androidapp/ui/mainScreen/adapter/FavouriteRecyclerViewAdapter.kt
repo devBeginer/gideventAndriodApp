@@ -40,6 +40,7 @@ class FavouriteRecyclerViewAdapter(
 
     fun setItemsList(list: List<AdvertPreviewCard>) {
         dataSet = list
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: CardsViewHolder, position: Int) {

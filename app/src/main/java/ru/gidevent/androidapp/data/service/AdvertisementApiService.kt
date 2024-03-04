@@ -25,6 +25,15 @@ interface AdvertisementApiService {
     @GET("auth/advertisement/top")
     suspend fun getTopAdvertisement(): Response<TopsResponse?>
 
+    @GET("advertisement/")
+    suspend fun getAllAdvertisement(@Header("Authorization") token: String): Response<List<Advertisement>>
+
+    @GET("advertisement/top")
+    suspend fun getTopAdvertisement(@Header("Authorization") token: String): Response<TopsResponse?>
+
+    @GET("advertisement/favourite")
+    suspend fun getFavouriteAdvertisement(@Header("Authorization") token: String): Response<List<Advertisement>>
+
     @GET("auth/advertisement/{id}")
     suspend fun getAdvertisementById(@Path("id") id: Long): Response<Advertisement>
 

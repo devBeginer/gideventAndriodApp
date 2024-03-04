@@ -74,6 +74,7 @@ class MainRecyclerViewAdapter(
 
     fun setItemsList(list: MainRecyclerViewData) {
         dataSet = list
+        notifyDataSetChanged()
     }
 
     /*override fun onBindViewHolder(holder: CardsViewHolder, position: Int) {
@@ -136,10 +137,10 @@ class MainRecyclerViewAdapter(
             favourite.setImageDrawable(
                 if (dataSet.cardsDataSet[positionInList].isFavourite) ContextCompat.getDrawable(
                     favourite.context,
-                    R.drawable.twotone_favorite_24
+                    R.drawable.baseline_favorite_active_24
                 ) else ContextCompat.getDrawable(
                     favourite.context,
-                    R.drawable.baseline_favorite_active_24
+                    R.drawable.twotone_favorite_24
                 )
             )
             Glide.with(imageView.context)

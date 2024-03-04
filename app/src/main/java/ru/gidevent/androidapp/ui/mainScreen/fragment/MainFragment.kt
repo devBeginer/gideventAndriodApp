@@ -43,35 +43,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       /* val viewPagerData = listOf(
-            HeaderViewpagerItem("name1", 1500, R.drawable.viewpager_item1),
-            HeaderViewpagerItem("name2", 500, R.drawable.viewpager_item2),
-            HeaderViewpagerItem("name3", 2000, R.drawable.viewpager_item3),
-            HeaderViewpagerItem("name4", 5000, R.drawable.viewpager_item1),
-            HeaderViewpagerItem("name5", 15000, R.drawable.viewpager_item2),
-            HeaderViewpagerItem("name1", 1500, R.drawable.viewpager_item3),
-            HeaderViewpagerItem("name3", 2000, R.drawable.viewpager_item2),
-            HeaderViewpagerItem("name4", 5000, R.drawable.viewpager_item3),
-            HeaderViewpagerItem("name5", 15000, R.drawable.viewpager_item1)
-        )
 
-
-
-        val cardData = listOf(
-            AdvertPreviewCard(true, "name1", listOf("Cat1", "Cat2"), 1500, "url"),
-            AdvertPreviewCard(false, "name2", listOf("Cat6", "Cat9"), 500, "url"),
-            AdvertPreviewCard(true, "name3", listOf("Cat1", "Cat2"), 2000, "url"),
-            AdvertPreviewCard(false, "name4", listOf("Cat7", "Cat5"), 5000, "url"),
-            AdvertPreviewCard(true, "name5", listOf("Cat1", "Cat2"), 15000, "url"),
-            AdvertPreviewCard(true, "name1", listOf("Cat1", "Cat2"), 1500, "url"),
-            AdvertPreviewCard(false, "name2", listOf("Cat6", "Cat9"), 500, "url"),
-            AdvertPreviewCard(true, "name3", listOf("Cat1", "Cat2"), 2000, "url"),
-            AdvertPreviewCard(false, "name4", listOf("Cat7", "Cat5"), 5000, "url"),
-            AdvertPreviewCard(true, "name5", listOf("Cat1", "Cat2"), 15000, "url")
-        )
-
-        val categoryData =
-            listOf("Квест", "Экскурсия", "Фотопрогулка", "Речная прогулка", "Необычные экскурсии")*/
 
         initView()
         initObservers()

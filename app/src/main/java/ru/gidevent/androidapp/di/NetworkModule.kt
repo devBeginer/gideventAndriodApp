@@ -40,7 +40,7 @@ object NetworkModule {
             .readTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
             .connectTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
             .writeTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
-            .authenticator(jwtAuthenticator)
+            //.authenticator(jwtAuthenticator)
             .addInterceptor(interceptor)
             .build()
 

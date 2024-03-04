@@ -37,7 +37,11 @@ class MainViewModel @Inject constructor(
                         it.top.map { advertisement ->
                             HeaderViewpagerItem(
                                 advertisement.name,
-                                advertisement.priceList.firstOrNull()?.let { ticketPrice->ticketPrice.price }?:0,
+                                advertisement.priceList?.let { ticketPriceList ->
+                                    ticketPriceList.firstOrNull()?.let { ticketPrice->
+                                        ticketPrice.price
+                                    }?:0
+                                }?:0,
                                 advertisement.photos.split(",").first()
                             )
                         }
@@ -45,10 +49,14 @@ class MainViewModel @Inject constructor(
                     val mainDataSet = response.data?.let{
                         it.general.map { advertisement ->
                             AdvertPreviewCard(
-                                false,
+                                advertisement.favourite?:false,
                                 advertisement.name,
                                 listOf(advertisement.category.name),
-                                advertisement.priceList.firstOrNull()?.let { ticketPrice->ticketPrice.price }?:0,
+                                advertisement.priceList?.let { ticketPriceList ->
+                                    ticketPriceList.firstOrNull()?.let { ticketPrice->
+                                        ticketPrice.price
+                                    }?:0
+                                }?:0,
                                 advertisement.photos.split(",").first()
                             )
                         }

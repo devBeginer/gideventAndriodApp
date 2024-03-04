@@ -15,13 +15,34 @@ import javax.inject.Inject
 
 class AdvertisementRepository @Inject constructor(
     private val advertRemoteDataSource: AdvertRemoteDataSource,
-    private val advertLocalDataSource: AdvertLocalDataSource
+    private val advertLocalDataSource: AdvertLocalDataSource,
+    private val userLocalDataSource: UserLocalDataSource
 ) {
 
 
 
     suspend fun getTopAdvertisement(): ApiResult<TopsResponse?> {
-        return advertRemoteDataSource.getTopAdvertList()
+        val token = userLocalDataSource.getAccessTokenFromSP()
+        return if(token!=""){
+            advertRemoteDataSource.getTopAdvertList(token)
+        }else{
+            advertRemoteDataSource.getTopAdvertList()
+        }
+    }
+
+    suspend fun getAllAdvertisement(): ApiResult<List<Advertisement>> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+        return if(token!=""){
+            advertRemoteDataSource.getAdvertList(token)
+        }else{
+            advertRemoteDataSource.getAdvertList()
+        }
+    }
+
+    suspend fun getFavouriteAdvertisement(): ApiResult<List<Advertisement>> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+        return advertRemoteDataSource.getAdvertList(token)
+
     }
 
 
