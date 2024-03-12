@@ -1,5 +1,6 @@
 package ru.gidevent.androidapp.data.repository
 
+import ru.gidevent.RestAPI.auth.LoginBodyResponse
 import ru.gidevent.RestAPI.auth.RefreshBodyRequest
 import ru.gidevent.RestAPI.auth.RegisterBodyRequest
 import ru.gidevent.androidapp.data.dataSource.UserLocalDataSource
@@ -29,7 +30,20 @@ class UserRepository @Inject constructor(
     }
 
     fun saveAccessTokenToSP(token: String) {
-        return localDataSource.saveAccessTokenToSP("Bearer $token")
+        localDataSource.saveAccessTokenToSP("Bearer $token")
+    }
+
+    fun saveRefreshTokenToSP(refreshToken: String) {
+        localDataSource.saveRefreshTokenToSP(refreshToken)
+    }
+
+    fun saveCredentialsToSP(loginBodyResponse: LoginBodyResponse) {
+        localDataSource.saveAccessTokenToSP("Bearer ${loginBodyResponse.accessToken}")
+        localDataSource.saveRefreshTokenToSP(loginBodyResponse.refreshToken)
+    }
+
+    fun isAuthorised(): Boolean{
+        return localDataSource.getAccessTokenFromSP()!=""
     }
 
 

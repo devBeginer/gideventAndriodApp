@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_params"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar_params"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/android:colorBackground"
+            app:title="Фильтры"
+            app:navigationIcon="@drawable/baseline_close_24"
+            app:menu="@menu/menu_appbar_search_options"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appbar_params"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="16dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_options_title_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:text="Цена"/>
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/slider_options_price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:valueFrom="0"
+                android:valueTo="50000"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_options_title_price"/>
+            <TextView
+                android:id="@+id/tv_options_title_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/slider_options_price"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:text="Дата"/>
+            <TextView
+                android:id="@+id/tv_options_title_date_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_options_title_date"
+                android:text="Выбрать"/>
+
+            <HorizontalScrollView
+                android:id="@+id/hsv_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_options_title_date"
+                android:scrollbars="none">
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroup_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:singleSelection="true"
+                    app:singleLine="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_today"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="Сегодня" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_tomorrow"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="Завтра" />
+
+                </com.google.android.material.chip.ChipGroup>
+
+            </HorizontalScrollView>
+
+
+            <TextView
+                android:id="@+id/tv_options_date_period"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hsv_date"
+                android:text="20.05.2024 - 30.06.2025"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/tv_options_title_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_options_date_period"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:text="Категории"/>
+            <TextView
+                android:id="@+id/tv_options_title_category_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_options_title_category"
+                android:text="Все"/>
+
+            <HorizontalScrollView
+                android:id="@+id/hsv_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_options_title_category"
+                android:scrollbars="none">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroup_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:singleLine="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_category_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="Экскурсия"/>
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_category_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="Мастер-класс" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_category_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="Квест" />
+
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switch_options_individual"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Индивидуальная"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hsv_category"
+                android:checked="true"/>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switch_options_group"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Групповая"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/switch_options_individual"
+                android:checked="true"/>
+
+
+            <TextView
+                android:id="@+id/tv_options_title_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/switch_options_group"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:text="Длительность"/>
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/slider_options_duration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:valueFrom="0.0"
+                android:valueTo="72.0"
+                android:stepSize="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_options_title_duration"/>
+
+            <TextView
+                android:id="@+id/tv_options_title_transportation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/slider_options_duration"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:text="Способ передвижения"/>
+
+
+            <HorizontalScrollView
+                android:id="@+id/hsv_transportation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_options_title_transportation"
+                android:scrollbars="none">
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroup_transportation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:singleLine="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_transportation_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="Пешком"/>
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_transportation_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="Катер" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_transportation_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="Автобус" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_transportation_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="Внедорожник" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_transportation_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="Самокаты" />
+
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
+
+
+            <TextView
+                android:id="@+id/tv_options_title_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hsv_transportation"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:text="Возрастные ограничения"/>
+
+
+            <HorizontalScrollView
+                android:id="@+id/hsv_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_options_title_age"
+                android:scrollbars="none">
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroup_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:singleLine="true"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_age_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="0+"/>
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_age_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="6+" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_age_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="12+" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_age_6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="16+" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_age_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="18+" />
+
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
+
+
+            <TextView
+                android:id="@+id/tv_options_title_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hsv_age"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:text="Город"/>
+
+            <TextView
+                android:id="@+id/tv_options_title_city_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_options_title_city"
+                android:text="Москва"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tv_options_title_city_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_options_title_city"
+                android:text="Выбрать"/>
+
+            <TextView
+                android:id="@+id/tv_options_title_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_options_title_city_name"
+                android:layout_marginTop="4dp"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:text="Рейтинг"/>
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/slider_options_rating"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:valueFrom="0.0"
+                android:valueTo="5.0"
+                android:stepSize="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_options_title_rating"/>
+
+            <Button
+                android:id="@+id/btn_options_select"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/slider_options_rating"
+                android:text="Применить"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+    
+</androidx.constraintlayout.widget.ConstraintLayout>

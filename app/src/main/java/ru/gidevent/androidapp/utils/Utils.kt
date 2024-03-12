@@ -2,6 +2,9 @@ package ru.gidevent.androidapp.utils
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 object Utils {
     const val PASSWORD_PATTERN = "^" +
@@ -64,5 +67,10 @@ object Utils {
         options.inJustDecodeBounds = false
 
         return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size, options)
+    }
+
+    fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
+        val formatter = SimpleDateFormat(format, locale)
+        return formatter.format(this)
     }
 }

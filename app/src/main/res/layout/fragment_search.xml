@@ -6,9 +6,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/container">
 
-    <androidx.appcompat.widget.Toolbar
+    <!--<androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,8 +17,40 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/search_toolbar_title">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
 
-    </androidx.appcompat.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>-->
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbar_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <com.google.android.material.search.SearchBar
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Поиск"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.search.SearchView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="Поиск">
+        <!-- Search suggestions/results go here (ScrollView, RecyclerView, etc.). -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_search_suggestions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="9"
+            tools:listitem="@layout/search_recycler_view_item" />
+    </com.google.android.material.search.SearchView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_search_cards"

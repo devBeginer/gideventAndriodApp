@@ -31,7 +31,9 @@ class SignInViewModel @Inject constructor(private val repository: UserRepository
             val response = repository.userSignIn(LoginBodyRequest(login, password))
             when(response){
                 is ApiResult.Success<LoginBodyResponse> -> {
-                    repository.saveAccessTokenToSP(response.data.accessToken)
+                    /*repository.saveAccessTokenToSP(response.data.accessToken)
+                    repository.saveRefreshTokenToSP(response.data.refreshToken)*/
+                    repository.saveCredentialsToSP(response.data)
                     _loginState.postValue(UIState.Success(true))
                     //loginResultMutableLiveData.postValue(true)
                 }

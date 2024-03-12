@@ -1,5 +1,6 @@
 package ru.gidevent.androidapp.data.model.advertisement.response
 
+import com.google.gson.annotations.SerializedName
 import ru.gidevent.RestAPI.model.Category
 import ru.gidevent.RestAPI.model.City
 import ru.gidevent.RestAPI.model.Seller
@@ -21,5 +22,6 @@ data class Advertisement(
     val city: City,
     val favourite: Boolean?,
     val seller: Seller,
+    @SerializedName("price")
     val priceList: List<TicketPriceDto>?
 )

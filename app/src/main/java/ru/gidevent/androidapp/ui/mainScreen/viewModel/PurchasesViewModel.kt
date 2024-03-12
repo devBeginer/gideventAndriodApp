@@ -28,34 +28,39 @@ class PurchasesViewModel @Inject constructor(
 
     fun initView(){
         viewModelScope.launch (Dispatchers.IO){
-            val response = advertRepository.getFavouriteAdvertisement()
-            when (response) {
-                is ApiResult.Success<List<Advertisement>> -> {
+            if(repository.isAuthorised()){
+                val response = advertRepository.getFavouriteAdvertisement()
+                when (response) {
+                    is ApiResult.Success<List<Advertisement>> -> {
 
-                    val mainDataSet = response.data.map { advertisement ->
-                        AdvertPreviewCard(
-                            advertisement.favourite ?: false,
-                            advertisement.name,
-                            listOf(advertisement.category.name),
-                            advertisement.priceList?.let { ticketPriceList ->
-                                ticketPriceList.firstOrNull()?.let { ticketPrice ->
-                                    ticketPrice.price
-                                } ?: 0
-                            } ?: 0,
-                            advertisement.photos.split(",").first()
-                        )
+                        val mainDataSet = response.data.map { advertisement ->
+                            AdvertPreviewCard(
+                                advertisement.favourite ?: false,
+                                advertisement.name,
+                                listOf(advertisement.category.name),
+                                advertisement.priceList?.let { ticketPriceList ->
+                                    ticketPriceList.firstOrNull()?.let { ticketPrice ->
+                                        ticketPrice.price
+                                    } ?: 0
+                                } ?: 0,
+                                advertisement.photos.split(",").first()
+                            )
+                        }
+
+                        dataResultMutableLiveData.postValue(UIState.Success(mainDataSet))
                     }
 
-                    dataResultMutableLiveData.postValue(UIState.Success(mainDataSet))
-                }
-
-                is ApiResult.Error -> {
-                    when{
-                        response.body.contains("Connection") -> dataResultMutableLiveData.postValue(
-                            UIState.ConnectionError)
-                        response.code == 404 -> dataResultMutableLiveData.postValue(UIState.Error("Произошла ошибка, и попробуйте снова"))
+                    is ApiResult.Error -> {
+                        when{
+                            response.body.contains("Connection") -> dataResultMutableLiveData.postValue(
+                                UIState.ConnectionError)
+                            response.code == 403 || response.code == 401 -> dataResultMutableLiveData.postValue(UIState.Unauthorised)
+                            response.code == 404 -> dataResultMutableLiveData.postValue(UIState.Error("Произошла ошибка, и попробуйте снова"))
+                        }
                     }
                 }
+            }else{
+                dataResultMutableLiveData.postValue(UIState.Unauthorised)
             }
         }
     }

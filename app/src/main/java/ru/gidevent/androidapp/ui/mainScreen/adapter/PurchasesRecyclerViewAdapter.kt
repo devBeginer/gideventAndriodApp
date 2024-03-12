@@ -48,10 +48,10 @@ class PurchasesRecyclerViewAdapter(
         holder.favourite.setImageDrawable(
             if (dataSet[position].isFavourite) ContextCompat.getDrawable(
                 holder.favourite.context,
-                R.drawable.twotone_favorite_24
+                R.drawable.baseline_favorite_active_24
             ) else ContextCompat.getDrawable(
                 holder.favourite.context,
-                R.drawable.baseline_favorite_active_24
+                R.drawable.twotone_favorite_24
             )
         )
         Glide.with(holder.imageView.context)
@@ -61,6 +61,7 @@ class PurchasesRecyclerViewAdapter(
             .centerCrop()
             .into(holder.imageView)
 
+        holder.categories.removeAllViews()
         dataSet[position].categories.forEach { category ->
             val category = createCategory(category, holder.categories.context)
             holder.categories.addView(category)

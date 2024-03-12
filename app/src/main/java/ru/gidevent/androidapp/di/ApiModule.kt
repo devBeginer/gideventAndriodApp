@@ -23,5 +23,5 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideAdvertisementApiService(@PublicRetrofit retrofit: Retrofit): AdvertisementApiService = retrofit.create(AdvertisementApiService::class.java)
+    fun provideAdvertisementApiService(@AuthRetrofit retrofit: Retrofit): AdvertisementApiService = retrofit.create(AdvertisementApiService::class.java)
 }

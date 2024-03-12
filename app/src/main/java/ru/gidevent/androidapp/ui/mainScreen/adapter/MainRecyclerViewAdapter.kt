@@ -77,30 +77,6 @@ class MainRecyclerViewAdapter(
         notifyDataSetChanged()
     }
 
-    /*override fun onBindViewHolder(holder: CardsViewHolder, position: Int) {
-        holder.name.text = dataSet[position].name
-        holder.price.text = dataSet[position].price.toString()
-        holder.favourite.setImageDrawable(
-            if (dataSet[position].isFavourite) ContextCompat.getDrawable(
-                holder.favourite.context,
-                R.drawable.twotone_favorite_24
-            ) else ContextCompat.getDrawable(
-                holder.favourite.context,
-                R.drawable.baseline_favorite_active_24
-            )
-        )
-        Glide.with(holder.imageView.context)
-            .load(dataSet[position].photoUrl)
-            .placeholder(R.drawable.card_preview_placeholder)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .centerCrop()
-            .into(holder.imageView)
-
-        dataSet[position].categories.forEach { category ->
-            val category = createCategory(category, holder.categories.context)
-            holder.categories.addView(category)
-        }
-    }*/
 
     private fun createCategory(text: String, context: Context): TextView {
         val textView = TextView(context)
@@ -150,6 +126,7 @@ class MainRecyclerViewAdapter(
                 .centerCrop()
                 .into(imageView)
 
+            categories.removeAllViews()
             dataSet.cardsDataSet[positionInList].categories.forEach { category ->
                 val category = createCategory(category, categories.context)
                 categories.addView(category)
