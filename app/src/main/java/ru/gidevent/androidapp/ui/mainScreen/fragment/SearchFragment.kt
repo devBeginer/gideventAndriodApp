@@ -21,6 +21,7 @@ import ru.gidevent.andriodapp.R
 import ru.gidevent.andriodapp.databinding.FragmentSearchBinding
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.AdvertPreviewCard
 import ru.gidevent.androidapp.data.model.suggestionsRecyclerviewModels.SuggestionRecyclerViewData
+import ru.gidevent.androidapp.ui.advertisement.AdvertisementFragment
 import ru.gidevent.androidapp.ui.mainScreen.adapter.SearchRecyclerViewAdapter
 import ru.gidevent.androidapp.ui.mainScreen.adapter.SuggestionsRecyclerViewAdapter
 import ru.gidevent.androidapp.ui.mainScreen.viewModel.SearchViewModel
@@ -66,7 +67,9 @@ class SearchFragment : Fragment() {
         viewModel.initView()
         adapter = SearchRecyclerViewAdapter(listOf())
         binding.rvSearchCards.adapter = adapter
-        suggestionAdapter = SuggestionsRecyclerViewAdapter(SuggestionRecyclerViewData(listOf(), listOf(), listOf()))
+        suggestionAdapter = SuggestionsRecyclerViewAdapter(SuggestionRecyclerViewData(listOf(), listOf(), listOf())){
+            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it)).commit()
+        }
         binding.rvSearchSuggestions.adapter = suggestionAdapter
 
         binding.searchBar.inflateMenu(R.menu.menu_search_bar)

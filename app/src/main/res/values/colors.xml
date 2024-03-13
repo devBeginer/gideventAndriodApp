@@ -9,4 +9,6 @@
     <color name="gray">#AEAEAE</color>
     <color name="gray_search_view">#CDCDCD</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="color_divider_dark">#1F000000</color>
+    <color name="color_divider_light">#1FFFFFFF</color>
 </resources>

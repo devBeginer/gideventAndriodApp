@@ -19,7 +19,8 @@ import ru.gidevent.andriodapp.R
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.MainRecyclerViewData
 
 class MainRecyclerViewAdapter(
-    private var dataSet: MainRecyclerViewData
+    private var dataSet: MainRecyclerViewData,
+    private val onClick: (id: Long)->Unit
 ) : RecyclerView.Adapter<MainRecyclerViewAdapter.MainViewHolder>() {
     companion object{
         const val VIEW_TYPE_HEADER1: Int = 0
@@ -104,6 +105,9 @@ class MainRecyclerViewAdapter(
             favourite = view.findViewById(R.id.iv_card_favourite)
             categories = view.findViewById(R.id.ll_card_category)
 
+            view.setOnClickListener {
+                onClick(dataSet.cardsDataSet[adapterPosition-2].id)
+            }
         }
 
         override fun bind(position: Int) {

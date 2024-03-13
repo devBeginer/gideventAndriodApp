@@ -11,6 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.gidevent.andriodapp.R
 import ru.gidevent.andriodapp.databinding.FragmentFavouritesBinding
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.AdvertPreviewCard
+import ru.gidevent.androidapp.ui.advertisement.AdvertisementFragment
 import ru.gidevent.androidapp.ui.login.fragment.SignInFragment
 import ru.gidevent.androidapp.ui.mainScreen.adapter.FavouriteRecyclerViewAdapter
 import ru.gidevent.androidapp.ui.mainScreen.viewModel.FavouritesViewModel
@@ -52,7 +53,9 @@ class FavouritesFragment : Fragment() {
 
     private fun initView(){
         viewModel.initView()
-        adapter = FavouriteRecyclerViewAdapter(listOf())
+        adapter = FavouriteRecyclerViewAdapter(listOf()){
+            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it)).commit()
+        }
         binding.rvFavouriteCards.adapter = adapter
 
         binding.btnFavouriteSignIn.setOnClickListener {

@@ -5,21 +5,15 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
-import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
-import ru.gidevent.RestAPI.auth.LoginBodyResponse
-import ru.gidevent.RestAPI.auth.RefreshBodyRequest
-import ru.gidevent.RestAPI.auth.RegisterBodyRequest
 import ru.gidevent.RestAPI.model.Category
 import ru.gidevent.RestAPI.model.TransportationVariant
 import ru.gidevent.RestAPI.model.dto.CitySuggestion
 import ru.gidevent.RestAPI.model.response.Suggestions
 import ru.gidevent.RestAPI.response.TopsResponse
+import ru.gidevent.androidapp.data.model.advertisement.response.AdvertisementExpanded
 import ru.gidevent.androidapp.data.model.advertisement.response.Advertisement
-import ru.gidevent.androidapp.data.model.auth.request.LoginBodyRequest
-import ru.gidevent.androidapp.data.model.auth.response.RegisterBodyResponse
-import ru.gidevent.androidapp.data.model.auth.response.UserDetailsResponse
 import ru.gidevent.androidapp.data.model.request.search.SearchOptions
 import ru.gidevent.androidapp.data.model.search.OptionsVariants
 
@@ -50,7 +44,10 @@ interface AdvertisementApiService {
     suspend fun getFavouriteAdvertisement(@Header("Authorization") token: String): Response<List<Advertisement>>
 
     @GET("auth/advertisement/{id}")
-    suspend fun getAdvertisementById(@Path("id") id: Long): Response<Advertisement>
+    suspend fun getAdvertisementById(@Path("id") id: Long): Response<AdvertisementExpanded>
+
+    @GET("advertisement/{id}")
+    suspend fun getAdvertisementById(@Header("Authorization") token: String, @Path("id") id: Long): Response<AdvertisementExpanded>
 
     @GET("auth/category/")
     suspend fun getAllCategory(): Response<List<Category>>

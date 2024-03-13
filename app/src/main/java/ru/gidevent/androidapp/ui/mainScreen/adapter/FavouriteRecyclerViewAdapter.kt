@@ -20,7 +20,8 @@ import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.AdvertPreviewCar
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.MainRecyclerViewData
 
 class FavouriteRecyclerViewAdapter(
-    private var dataSet: List<AdvertPreviewCard>
+    private var dataSet: List<AdvertPreviewCard>,
+    private val onClick: (id: Long)->Unit
 ) : RecyclerView.Adapter<FavouriteRecyclerViewAdapter.CardsViewHolder>() {
 
 
@@ -81,7 +82,7 @@ class FavouriteRecyclerViewAdapter(
         return textView
     }
 
-    class CardsViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    inner class CardsViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val name: TextView
         val price: TextView
         val imageView: ImageView
@@ -94,7 +95,9 @@ class FavouriteRecyclerViewAdapter(
             imageView = view.findViewById(R.id.iv_card_preview)
             favourite = view.findViewById(R.id.iv_card_favourite)
             categories = view.findViewById(R.id.ll_card_category)
-
+            view.setOnClickListener {
+                onClick(dataSet[adapterPosition].id)
+            }
         }
     }
 

@@ -40,6 +40,7 @@ class FavouritesViewModel @Inject constructor(
 
                         val mainDataSet = response.data.map { advertisement ->
                             AdvertPreviewCard(
+                                advertisement.id,
                                 advertisement.favourite ?: false,
                                 advertisement.name,
                                 listOf(advertisement.category.name),

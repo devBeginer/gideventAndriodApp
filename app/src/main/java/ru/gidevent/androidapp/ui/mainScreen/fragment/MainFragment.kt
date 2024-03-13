@@ -13,6 +13,8 @@ import ru.gidevent.andriodapp.databinding.FragmentMainBinding
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.AdvertPreviewCard
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.HeaderViewpagerItem
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.MainRecyclerViewData
+import ru.gidevent.androidapp.ui.advertisement.AdvertisementFragment
+import ru.gidevent.androidapp.ui.login.fragment.SignUpFragment
 import ru.gidevent.androidapp.ui.mainScreen.adapter.MainRecyclerViewAdapter
 import ru.gidevent.androidapp.ui.mainScreen.viewModel.MainViewModel
 
@@ -54,7 +56,9 @@ class MainFragment : Fragment() {
         viewModel.initView()
         adapter = MainRecyclerViewAdapter(
             MainRecyclerViewData(listOf<HeaderViewpagerItem>(), listOf<String>(), listOf<AdvertPreviewCard>())
-        )
+        ){
+            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it)).commit()
+        }
         binding.rvMainCards.adapter = adapter
     }
 

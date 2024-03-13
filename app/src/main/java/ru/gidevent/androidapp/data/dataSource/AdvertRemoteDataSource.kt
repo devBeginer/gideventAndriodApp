@@ -35,6 +35,12 @@ class AdvertRemoteDataSource @Inject constructor(
     suspend fun getAdvertListByParams(searchOptions: SearchOptions) =
         networkHelper.safeApiCall { advertApiService.getAdvertByParams(searchOptions)}
 
+    suspend fun getAdvertListById(credentials: String, id: Long) =
+        networkHelper.safeApiCall { advertApiService.getAdvertisementById(credentials, id)}
+
+    suspend fun getAdvertListById(id: Long) =
+        networkHelper.safeApiCall { advertApiService.getAdvertisementById(id)}
+
     suspend fun getAllTransport() =
         networkHelper.safeApiCall { advertApiService.getAllTransportations()}
 

@@ -20,7 +20,8 @@ import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.MainRecyclerView
 import ru.gidevent.androidapp.data.model.suggestionsRecyclerviewModels.SuggestionRecyclerViewData
 
 class SuggestionsRecyclerViewAdapter(
-    private var dataSet: SuggestionRecyclerViewData
+    private var dataSet: SuggestionRecyclerViewData,
+    private val onClick: (id: Long)->Unit
 ) : RecyclerView.Adapter<SuggestionsRecyclerViewAdapter.MainViewHolder>() {
     companion object{
         const val VIEW_TYPE_CATEGORY: Int = 0
@@ -91,7 +92,9 @@ class SuggestionsRecyclerViewAdapter(
         init {
             name = view.findViewById(R.id.tv_suggestion_name)
             city = view.findViewById(R.id.tv_suggestion_item_city)
-
+            view.setOnClickListener {
+                onClick(dataSet.suggestionsList[adapterPosition].id)
+            }
         }
 
         override fun bind(position: Int) {

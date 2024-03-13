@@ -1,7 +1,5 @@
 package ru.gidevent.androidapp.data.repository
 
-import ru.gidevent.RestAPI.auth.RefreshBodyRequest
-import ru.gidevent.RestAPI.auth.RegisterBodyRequest
 import ru.gidevent.RestAPI.model.Category
 import ru.gidevent.RestAPI.model.TransportationVariant
 import ru.gidevent.RestAPI.model.dto.CitySuggestion
@@ -10,10 +8,8 @@ import ru.gidevent.RestAPI.response.TopsResponse
 import ru.gidevent.androidapp.data.dataSource.AdvertLocalDataSource
 import ru.gidevent.androidapp.data.dataSource.AdvertRemoteDataSource
 import ru.gidevent.androidapp.data.dataSource.UserLocalDataSource
-import ru.gidevent.androidapp.data.dataSource.UserRemoteDataSource
+import ru.gidevent.androidapp.data.model.advertisement.response.AdvertisementExpanded
 import ru.gidevent.androidapp.data.model.advertisement.response.Advertisement
-import ru.gidevent.androidapp.data.model.auth.request.LoginBodyRequest
-import ru.gidevent.androidapp.data.model.auth.response.UserDetailsResponse
 import ru.gidevent.androidapp.data.model.request.search.SearchOptions
 import ru.gidevent.androidapp.data.model.search.OptionsVariants
 import ru.gidevent.androidapp.network.ApiResult
@@ -76,6 +72,17 @@ class AdvertisementRepository @Inject constructor(
             advertRemoteDataSource.getAdvertListByParams(token, searchOptions)
         }else{
             advertRemoteDataSource.getAdvertListByParams(searchOptions)
+        }
+    }
+
+
+
+    suspend fun getAdvertisementById(id: Long): ApiResult<AdvertisementExpanded> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+        return if(token!=""){
+            advertRemoteDataSource.getAdvertListById(token, id)
+        }else{
+            advertRemoteDataSource.getAdvertListById(id)
         }
     }
 

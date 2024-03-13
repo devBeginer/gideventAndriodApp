@@ -14,6 +14,7 @@ import ru.gidevent.andriodapp.databinding.FragmentPurchasesBinding
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.AdvertPreviewCard
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.HeaderViewpagerItem
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.MainRecyclerViewData
+import ru.gidevent.androidapp.ui.advertisement.AdvertisementFragment
 import ru.gidevent.androidapp.ui.login.fragment.SignInFragment
 import ru.gidevent.androidapp.ui.mainScreen.adapter.FavouriteRecyclerViewAdapter
 import ru.gidevent.androidapp.ui.mainScreen.adapter.MainRecyclerViewAdapter
@@ -57,7 +58,9 @@ class PurchasesFragment : Fragment() {
 
     private fun initView(){
         viewModel.initView()
-        adapter = PurchasesRecyclerViewAdapter(listOf())
+        adapter = PurchasesRecyclerViewAdapter(listOf()){
+            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it)).commit()
+        }
         binding.rvPurchasesCards.adapter = adapter
 
         binding.btnPurchasesSignIn.setOnClickListener {

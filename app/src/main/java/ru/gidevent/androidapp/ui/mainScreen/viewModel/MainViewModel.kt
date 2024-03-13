@@ -49,6 +49,7 @@ class MainViewModel @Inject constructor(
                     val mainDataSet = response.data?.let{
                         it.general.map { advertisement ->
                             AdvertPreviewCard(
+                                advertisement.id,
                                 advertisement.favourite?:false,
                                 advertisement.name,
                                 listOf(advertisement.category.name),
