@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    android:minHeight="400dp"
+    android:paddingHorizontal="16dp">
+
+    <TextView
+        android:id="@+id/tv_schedule_time_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="24dp"
+        android:textStyle="bold"
+        android:text="Время"/>
+
+    <TimePicker
+        android:id="@+id/tp_schedule_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:timePickerMode="spinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_schedule_time_title"
+        android:layout_marginTop="8dp"/>
+
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/switch_schedule_repeatable"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Повторяющаяся"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tp_schedule_time"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:checked="true"/>
+
+    <HorizontalScrollView
+        android:id="@+id/hsv_schedule_weekdays"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/switch_schedule_repeatable"
+        android:layout_marginTop="8dp"
+        android:scrollbars="none">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup_schedule_weekdays"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:singleLine="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipGroup_weekdays_mon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="Пн"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipGroup_weekdays_tue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="Вт" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipGroup_weekdays_wed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="Ср" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipGroup_weekdays_thu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="Чт"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipGroup_weekdays_fri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="Пт" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipGroup_weekdays_sat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="Сб" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipGroup_weekdays_sun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="Вс" />
+
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/tv_schedule_title_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hsv_schedule_weekdays"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:textSize="18dp"
+        android:text="Дата проведения"/>
+
+    <TextView
+        android:id="@+id/tv_schedule_title_date_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_schedule_title_date"
+        android:text="Выбрать"/>
+
+
+    <TextView
+        android:id="@+id/tv_schedule_date_period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_schedule_title_date_select"
+        android:text="20.05.2024 - 30.06.2025"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/btn_schedule_create"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_schedule_date_period"
+        android:text="Сохранить"
+
+        android:backgroundTint="?attr/colorPrimary"
+        android:textColor="?attr/colorOnPrimary"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

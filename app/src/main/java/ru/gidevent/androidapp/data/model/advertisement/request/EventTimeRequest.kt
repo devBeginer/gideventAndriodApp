@@ -1,9 +1,8 @@
-package ru.gidevent.androidapp.data.model.advertisement.response
+package ru.gidevent.androidapp.data.model.advertisement.request
 
-import java.util.Calendar
-
-data class EventTimeResponse(
+data class EventTimeRequest(
         val timeId: Long,
+        val advertisement: Long,
         val time: Long,
         val isRepeatable: Boolean,
         val daysOfWeek: String,

@@ -23,4 +23,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_main_screen_container" />
+
+    <Button
+        android:id="@+id/btn_profile_create_advert"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Создать"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_repeat" />
 </androidx.constraintlayout.widget.ConstraintLayout>

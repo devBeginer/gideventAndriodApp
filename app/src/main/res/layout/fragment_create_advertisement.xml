@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_сreate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Создать">
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:id="@+id/sv_create_main_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_сreate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_create_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:hint="Название"
+                android:layout_marginTop="8dp">
+                <EditText
+                    android:id="@+id/et_create_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_create_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/til_create_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:hint="Описание"
+                android:layout_marginTop="8dp">
+                <EditText
+                    android:id="@+id/et_create_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:lines="7"
+                    android:gravity="top|start"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            
+            <TextView
+                android:id="@+id/tv_create_duration_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/til_create_description"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="8dp"
+                android:textStyle="bold"
+                android:text="Длительность"/>
+
+            <TimePicker
+                android:id="@+id/tp_create_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:timePickerMode="spinner"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_create_duration_title"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/tv_create_transportation_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tp_create_duration"
+                android:textStyle="bold"
+                android:text="Способ передвижения"/>
+            <TextView
+                android:id="@+id/tv_create_transportation_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_create_transportation_title"
+                app:layout_constraintBottom_toBottomOf="@id/tv_create_transportation_title"
+                android:layout_marginTop="8dp"
+                android:text="Добавить"/>
+
+
+            <HorizontalScrollView
+                android:id="@+id/hsv_create_transportation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_create_transportation_title"
+                android:scrollbars="none">
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroup_create_transportation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:singleSelection="true"
+                    app:singleLine="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_transportation_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="Пешком"/>
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_transportation_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="Катер" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_transportation_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="Автобус" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_transportation_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="Внедорожник" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_transportation_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="Самокаты" />
+
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/tv_create_age_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hsv_create_transportation"
+                android:textStyle="bold"
+                android:text="Возрастные ограничения"/>
+
+
+            <HorizontalScrollView
+                android:id="@+id/hsv_create_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_create_age_title"
+                android:scrollbars="none">
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroup_create_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:singleLine="true"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_age_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="0+"/>
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_age_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="6+" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_age_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="12+" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_age_6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="16+" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_age_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="18+" />
+
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/switch_create_individual"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Индивидуальная"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hsv_create_age"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_create_people_count"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/switch_create_individual"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:hint="Количество человек в группе"
+                android:layout_marginTop="8dp">
+                <EditText
+                    android:id="@+id/et_create_people_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:imeOptions="actionNext"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/tv_create_category_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/til_create_people_count"
+                android:layout_marginTop="8dp"
+                android:textStyle="bold"
+                android:text="Категории"/>
+            <TextView
+                android:id="@+id/tv_create_category_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_create_category_title"
+                app:layout_constraintBottom_toBottomOf="@id/tv_create_category_title"
+                android:layout_marginTop="8dp"
+                android:text="Добавить"/>
+
+            <HorizontalScrollView
+                android:id="@+id/hsv_create_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_create_category_title"
+                android:layout_marginTop="8dp"
+                android:scrollbars="none">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroup_create_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:singleSelection="true"
+                    app:singleLine="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_category_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="Экскурсия"/>
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_category_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="Мастер-класс" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipGroup_category_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        android:text="Квест" />
+
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
+
+
+            <TextView
+                android:id="@+id/tv_create_city_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hsv_create_category"
+                android:textStyle="bold"
+                android:text="Город"/>
+
+            <TextView
+                android:id="@+id/tv_create_city_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_create_city_title"
+                android:text=""
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tv_create_city_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_create_city_title"
+                android:text="Выбрать"/>
+
+            <TextView
+                android:id="@+id/tv_create_photo_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_create_city_name"
+                android:layout_marginTop="8dp"
+                android:textStyle="bold"
+                android:text="Фотографии"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_create_photo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_create_photo_title"
+                android:layout_marginTop="8dp"
+                tools:listitem="@layout/recyclerview_item_photo"/>
+
+            <TextView
+                android:id="@+id/tv_create_schedule_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_create_photo"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                android:textStyle="bold"
+                android:text="Время проведения"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_create_schedule"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_create_schedule_title"
+                android:layout_marginTop="8dp"
+                tools:listitem="@layout/recyclerview_item_schedule"/>
+
+            <TextView
+                android:id="@+id/tv_create_pricelist_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_create_schedule"
+                android:layout_marginTop="8dp"
+                android:visibility="gone"
+                android:textStyle="bold"
+                android:text="Цены"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_create_pricelist"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_create_pricelist_title"
+                android:layout_marginTop="8dp"
+                tools:listitem="@layout/recyclerview_item_price"/>
+
+            <Button
+                android:id="@+id/btn_create_post"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/rv_create_pricelist"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Продолжить"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,6 @@ import ru.gidevent.RestAPI.model.Category
 import ru.gidevent.RestAPI.model.City
 import ru.gidevent.RestAPI.model.Seller
 import ru.gidevent.RestAPI.model.TransportationVariant
-import ru.gidevent.RestAPI.model.dto.TicketPriceDto
 
 data class Advertisement(
     val id: Long,

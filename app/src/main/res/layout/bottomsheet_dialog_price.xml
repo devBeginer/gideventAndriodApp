@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    android:minHeight="400dp"
+    android:paddingHorizontal="16dp">
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_price_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:hint="Цена"
+        android:layout_marginTop="24dp">
+        <EditText
+            android:id="@+id/et_price_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:imeOptions="actionNext"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_price_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/til_price_amount"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"
+        android:text="Категория посетителей"/>
+
+    <TextView
+        android:id="@+id/tv_price_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_price_title"
+        android:text="Выбрать"/>
+
+    <RadioGroup
+        android:id="@+id/rg_price_customercategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:checkedButton="@+id/rbtn_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_price_title">
+
+        <RadioButton
+            android:id="@+id/rbtn_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Пенсионеры"
+            android:visibility="gone"/>
+
+        <RadioButton
+            android:id="@+id/rbtn_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Дети до 7 лет"
+            android:visibility="gone" />
+
+        <RadioButton
+            android:id="@+id/rbtn_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Стандартный"
+            android:visibility="gone" />
+
+        <RadioButton
+            android:id="@+id/rbtn_4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Студенты"
+            android:visibility="gone" />
+
+        <RadioButton
+            android:id="@+id/rbtn_5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Посетители с собакой"
+            android:visibility="gone" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_price_create"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rg_price_customercategory"
+        android:text="Сохранить"
+
+        android:backgroundTint="?attr/colorPrimary"
+        android:textColor="?attr/colorOnPrimary"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,13 @@
 package ru.gidevent.androidapp.data.dataSource
 
+import okhttp3.MultipartBody
+import ru.gidevent.RestAPI.model.Category
+import ru.gidevent.RestAPI.model.TransportationVariant
+import ru.gidevent.androidapp.data.model.advertisement.dto.CustomerCategory
+import ru.gidevent.androidapp.data.model.advertisement.request.EventTimeRequest
+import ru.gidevent.androidapp.data.model.advertisement.request.NewAdvertisement
+import ru.gidevent.androidapp.data.model.advertisement.request.TicketPrice
+import ru.gidevent.androidapp.data.model.advertisement.request.TicketPriceRequest
 import ru.gidevent.androidapp.data.model.request.search.SearchOptions
 import ru.gidevent.androidapp.data.service.AdvertisementApiService
 import ru.gidevent.androidapp.network.NetworkHelper
@@ -49,5 +57,58 @@ class AdvertRemoteDataSource @Inject constructor(
 
     suspend fun getAllCategories() =
         networkHelper.safeApiCall { advertApiService.getAllCategory()}
+
+    suspend fun getAllCustomerCategories() =
+        networkHelper.safeApiCall { advertApiService.getAllCustomerCategory()}
+
+
+
+    suspend fun postAdvertisement(credentials: String, newAdvertisement: NewAdvertisement) =
+        networkHelper.safeApiCall { advertApiService.postAdvertisement(newAdvertisement, credentials)}
+
+    suspend fun putAdvertisement(credentials: String, newAdvertisement: NewAdvertisement) =
+        networkHelper.safeApiCall { advertApiService.putAdvertisement(newAdvertisement, credentials)}
+
+    suspend fun postEventTime(credentials: String, eventTimeRequest: EventTimeRequest) =
+        networkHelper.safeApiCall { advertApiService.postEventTime(eventTimeRequest, credentials)}
+
+    suspend fun getAllEventTime(id: Long) =
+        networkHelper.safeApiCall { advertApiService.getAllEventTime(id)}
+
+    suspend fun getAllTicketPrice(id: Long) =
+        networkHelper.safeApiCall { advertApiService.getAllTicketPrice(id)}
+
+    suspend fun putEventTime(credentials: String, eventTimeRequest: EventTimeRequest) =
+        networkHelper.safeApiCall { advertApiService.putEventTime(eventTimeRequest, credentials)}
+
+    suspend fun postTicketPrice(credentials: String, ticketPrice: TicketPriceRequest) =
+        networkHelper.safeApiCall { advertApiService.postTicketPrice(ticketPrice, credentials)}
+
+    suspend fun putTicketPrice(credentials: String, ticketPrice: TicketPriceRequest) =
+        networkHelper.safeApiCall { advertApiService.putTicketPrice(ticketPrice, credentials)}
+
+    suspend fun postCategory(credentials: String, category: Category) =
+        networkHelper.safeApiCall { advertApiService.postCategory(category, credentials)}
+
+    suspend fun putCategory(credentials: String, category: Category) =
+        networkHelper.safeApiCall { advertApiService.putCategory(category, credentials)}
+
+    suspend fun postTransportationVariant(credentials: String, transportationVariant: TransportationVariant) =
+        networkHelper.safeApiCall { advertApiService.postTransportationVariant(transportationVariant, credentials)}
+
+    suspend fun putTransportationVariant(credentials: String, transportationVariant: TransportationVariant) =
+        networkHelper.safeApiCall { advertApiService.putTransportationVariant(transportationVariant, credentials)}
+
+    suspend fun postCustomerCategory(credentials: String, category: CustomerCategory) =
+        networkHelper.safeApiCall { advertApiService.postCustomerCategory(category, credentials)}
+
+    suspend fun putCustomerCategory(credentials: String, category: CustomerCategory) =
+        networkHelper.safeApiCall { advertApiService.putCustomerCategory(category, credentials)}
+
+    suspend fun postPhoto(credentials: String, image: MultipartBody.Part) =
+        networkHelper.safeApiCall { advertApiService.insertPhoto(image, credentials)}
+
+    suspend fun delPhoto(credentials: String, fileUUID: String) =
+        networkHelper.safeApiCall { advertApiService.deletePhoto(fileUUID, credentials)}
 
 }

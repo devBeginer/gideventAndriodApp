@@ -13,6 +13,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import ru.gidevent.andriodapp.R
 import ru.gidevent.androidapp.data.model.advertisement.ReviewRecyclerViewItem
 import ru.gidevent.androidapp.ui.mainScreen.adapter.HeaderViewPagerAdapter
+import ru.gidevent.androidapp.utils.Utils
 
 class AdvertReviewRecyclerViewAdapter(
     private var dataSet: List<ReviewRecyclerViewItem>
@@ -65,6 +66,7 @@ class AdvertReviewRecyclerViewAdapter(
 
     fun setItemList(newDataSet: List<ReviewRecyclerViewItem>){
         dataSet = newDataSet
+        notifyDataSetChanged()
     }
 
     inner class ItemViewHolder(view: View) : AdvertViewHolder(view) {
@@ -86,7 +88,7 @@ class AdvertReviewRecyclerViewAdapter(
             text.text = dataSet[position].text
 
             Glide.with(imageView.context)
-                .load(dataSet[position].avatarUrl)
+                .load("${Utils.IMAGE_URL}${dataSet[position].avatarUrl}")
                 .placeholder(R.drawable.card_preview_placeholder)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()

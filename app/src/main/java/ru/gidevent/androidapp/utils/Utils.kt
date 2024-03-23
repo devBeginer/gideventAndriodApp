@@ -30,6 +30,8 @@ object Utils {
             "([\\/\\w\\.-]*)*\\/?" +//slash and any alphabet symbols with . and - repeats from 0 to infinity times, and / or not
             "$"
 
+    const val IMAGE_URL = "http://10.0.2.2:8080/api/auth/photo/"
+
     fun calculateInSampleSize(
         options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int
     ): Int {
@@ -73,4 +75,6 @@ object Utils {
         val formatter = SimpleDateFormat(format, locale)
         return formatter.format(this)
     }
+
+
 }

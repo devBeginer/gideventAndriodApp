@@ -174,7 +174,7 @@
                 </com.google.android.material.chip.ChipGroup>
             </HorizontalScrollView>
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
+            <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/switch_options_individual"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -186,7 +186,7 @@
                 app:layout_constraintTop_toBottomOf="@id/hsv_category"
                 android:checked="true"/>
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
+            <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/switch_options_group"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

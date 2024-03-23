@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import ru.gidevent.andriodapp.R
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.MainRecyclerViewData
+import ru.gidevent.androidapp.utils.Utils
 
 class MainRecyclerViewAdapter(
     private var dataSet: MainRecyclerViewData,
@@ -124,7 +125,7 @@ class MainRecyclerViewAdapter(
                 )
             )
             Glide.with(imageView.context)
-                .load(dataSet.cardsDataSet[positionInList].photoUrl)
+                .load("${Utils.IMAGE_URL}${dataSet.cardsDataSet[positionInList].photoUrl}")
                 .placeholder(R.drawable.card_preview_placeholder)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()

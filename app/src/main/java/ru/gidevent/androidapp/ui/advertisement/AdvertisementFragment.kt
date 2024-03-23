@@ -16,6 +16,7 @@ import ru.gidevent.androidapp.data.model.advertisement.AdvertisementCardInfo
 import ru.gidevent.androidapp.ui.advertisement.adapter.AdvertReviewRecyclerViewAdapter
 import ru.gidevent.androidapp.ui.advertisement.adapter.AdvertViewPagerAdapter
 import ru.gidevent.androidapp.ui.state.UIState
+import ru.gidevent.androidapp.utils.Utils
 import ru.gidevent.androidapp.utils.showSnack
 
 @AndroidEntryPoint
@@ -88,7 +89,7 @@ class AdvertisementFragment : Fragment() {
                         binding.tvAdvertDescription.text = dataSet.description
                         binding.tvAdvertSellerName.text = "${dataSet.seller.lastName} ${dataSet.seller.firstName}"
                         Glide.with(requireContext())
-                            .load(dataSet.seller.photo)
+                            .load("${Utils.IMAGE_URL}${dataSet.seller.photo}")
                             .placeholder(R.drawable.viewpager_item2)
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .centerCrop()

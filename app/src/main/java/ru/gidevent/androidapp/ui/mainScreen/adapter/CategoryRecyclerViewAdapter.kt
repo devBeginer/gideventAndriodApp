@@ -13,6 +13,7 @@ class CategoryRecyclerViewAdapter() : RecyclerView.Adapter<CategoryRecyclerViewA
 
     fun setItemList(newCategoryList: List<String>){
         categoryList = newCategoryList
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardsViewHolder {

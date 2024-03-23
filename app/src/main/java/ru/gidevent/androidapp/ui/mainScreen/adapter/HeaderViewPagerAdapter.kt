@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import ru.gidevent.andriodapp.R
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.HeaderViewpagerItem
+import ru.gidevent.androidapp.utils.Utils
 
 class HeaderViewPagerAdapter() : RecyclerView.Adapter<HeaderViewPagerAdapter.HeaderViewHolder>() {
 
@@ -18,6 +19,7 @@ class HeaderViewPagerAdapter() : RecyclerView.Adapter<HeaderViewPagerAdapter.Hea
 
     fun setItemList(newItemsList: List<HeaderViewpagerItem>){
         itemsList = newItemsList
+        notifyDataSetChanged()
     }
 
 
@@ -36,7 +38,7 @@ class HeaderViewPagerAdapter() : RecyclerView.Adapter<HeaderViewPagerAdapter.Hea
         holder.price.text = "₽ ${itemsList[position].price.toString()}"
 
         Glide.with(holder.imageView.context)
-            .load(itemsList[position].photoUrl)
+            .load("${Utils.IMAGE_URL}${itemsList[position].photoUrl}")
             //.load(ContextCompat.getDrawable(holder.imageView.context, itemsList[position].photoUrl))
             .placeholder(R.drawable.card_preview_placeholder)
             .diskCacheStrategy(DiskCacheStrategy.ALL)

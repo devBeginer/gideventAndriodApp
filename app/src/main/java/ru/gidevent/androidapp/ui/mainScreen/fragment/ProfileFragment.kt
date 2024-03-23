@@ -8,7 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
+import ru.gidevent.andriodapp.R
 import ru.gidevent.andriodapp.databinding.FragmentProfileBinding
+import ru.gidevent.androidapp.ui.edit.fragment.CreateAdvertisementFragment
+import ru.gidevent.androidapp.ui.edit.fragment.EditContainerFragment
 import ru.gidevent.androidapp.ui.mainScreen.viewModel.ProfileViewModel
 
 @AndroidEntryPoint
@@ -46,6 +49,13 @@ class ProfileFragment: Fragment() {
 
         binding.btnRepeat.setOnClickListener {
             viewModel.initView()
+        }
+
+        binding.btnProfileCreateAdvert.setOnClickListener {
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.nav_host_fragment, EditContainerFragment())
+                .commit()
         }
     }
 }
