@@ -22,6 +22,7 @@ import ru.gidevent.androidapp.ui.mainScreen.adapter.PurchasesRecyclerViewAdapter
 import ru.gidevent.androidapp.ui.mainScreen.viewModel.MainViewModel
 import ru.gidevent.androidapp.ui.mainScreen.viewModel.PurchasesViewModel
 import ru.gidevent.androidapp.ui.state.UIState
+import ru.gidevent.androidapp.ui.state.UIStateAdvertList
 import ru.gidevent.androidapp.utils.showSnack
 
 @AndroidEntryPoint
@@ -56,16 +57,23 @@ class PurchasesFragment : Fragment() {
 
     }
 
-    private fun initView(){
+    override fun onResume() {
+        super.onResume()
         viewModel.initView()
-        adapter = PurchasesRecyclerViewAdapter(listOf()){
-            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it)).commit()
-        }
+    }
+
+    private fun initView(){
+        //viewModel.initView()
+        adapter = PurchasesRecyclerViewAdapter(listOf(), {
+            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it)).addToBackStack(null).commit()
+        },{
+            viewModel.postFavourite(it)
+        })
         binding.rvPurchasesCards.adapter = adapter
 
         binding.btnPurchasesSignIn.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment, SignInFragment()).commit()
+                .replace(R.id.nav_host_fragment, SignInFragment()).addToBackStack(null).commit()
         }
     }
 
@@ -73,22 +81,28 @@ class PurchasesFragment : Fragment() {
 
         viewModel.data.observe(viewLifecycleOwner, Observer {
             when(it){
-                is UIState.Success<*> -> {
+                is UIStateAdvertList.Success<*> -> {
                     val dataSet = it.data as List<AdvertPreviewCard>?
                     if(dataSet!=null){
                         adapter.setItemsList(dataSet)
                     }
                 }
-                is UIState.Error -> {
+                is UIStateAdvertList.Update<*> -> {
+                    val advert = it.data as AdvertPreviewCard?
+                    if(advert!=null){
+                        adapter.updateItem(advert)
+                    }
+                }
+                is UIStateAdvertList.Error -> {
                     showSnack(requireView(), it.message, 5)
                 }
-                is UIState.ConnectionError -> {
+                is UIStateAdvertList.ConnectionError -> {
                     showSnack(requireView(), "Отсутствует интернет подключение", 3)
                 }
-                is UIState.Idle -> {
+                is UIStateAdvertList.Idle -> {
 
                 }
-                is UIState.Unauthorised -> {
+                is UIStateAdvertList.Unauthorised -> {
                     binding.rvPurchasesCards.visibility = View.GONE
                     binding.tvPurchasesNotAuth.visibility = View.VISIBLE
                     binding.btnPurchasesSignIn.visibility = View.VISIBLE

@@ -13,7 +13,9 @@ import ru.gidevent.andriodapp.R
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.HeaderViewpagerItem
 import ru.gidevent.androidapp.utils.Utils
 
-class HeaderViewPagerAdapter() : RecyclerView.Adapter<HeaderViewPagerAdapter.HeaderViewHolder>() {
+class HeaderViewPagerAdapter(
+    val onClick: (id: Long)->Unit
+) : RecyclerView.Adapter<HeaderViewPagerAdapter.HeaderViewHolder>() {
 
     private var itemsList: List<HeaderViewpagerItem> = listOf()
 
@@ -46,7 +48,7 @@ class HeaderViewPagerAdapter() : RecyclerView.Adapter<HeaderViewPagerAdapter.Hea
             .into(holder.imageView)
     }
 
-    class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView
         val price: TextView
         val imageView: ImageView
@@ -55,6 +57,10 @@ class HeaderViewPagerAdapter() : RecyclerView.Adapter<HeaderViewPagerAdapter.Hea
             name = view.findViewById(R.id.tv_name_header_viewpager)
             price = view.findViewById(R.id.tv_price_header_viewpager)
             imageView = view.findViewById(R.id.iv_header_viewpager)
+
+            view.setOnClickListener {
+                onClick(itemsList[adapterPosition].id)
+            }
         }
     }
 

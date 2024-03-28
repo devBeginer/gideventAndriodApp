@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_price_title"
-        android:text="Выбрать"/>
+        android:text="Добавить"/>
 
     <RadioGroup
         android:id="@+id/rg_price_customercategory"

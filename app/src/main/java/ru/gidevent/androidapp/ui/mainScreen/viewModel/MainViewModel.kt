@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.gidevent.RestAPI.model.Category
 import ru.gidevent.RestAPI.response.TopsResponse
+import ru.gidevent.androidapp.data.model.advertisement.response.Advertisement
 import ru.gidevent.androidapp.data.model.auth.response.UserDetailsResponse
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.AdvertPreviewCard
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.HeaderViewpagerItem
@@ -16,6 +17,7 @@ import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.MainRecyclerView
 import ru.gidevent.androidapp.data.repository.AdvertisementRepository
 import ru.gidevent.androidapp.data.repository.UserRepository
 import ru.gidevent.androidapp.network.ApiResult
+import ru.gidevent.androidapp.ui.state.UIStateAdvertList
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,6 +29,11 @@ class MainViewModel @Inject constructor(
     val data: LiveData<MainRecyclerViewData?>
         get() = dataResultMutableLiveData
 
+    private val favouriteMutableLiveData = MutableLiveData<AdvertPreviewCard?>()
+    val favourite: LiveData<AdvertPreviewCard?>
+        get() = favouriteMutableLiveData
+
+
 
     fun initView(){
         viewModelScope.launch (Dispatchers.IO){
@@ -36,6 +43,7 @@ class MainViewModel @Inject constructor(
                     val headerDataSet = response.data?.let{
                         it.top.map { advertisement ->
                             HeaderViewpagerItem(
+                                advertisement.id,
                                 advertisement.name,
                                 advertisement.priceList?.let { ticketPriceList ->
                                     ticketPriceList.firstOrNull()?.let { ticketPrice->
@@ -69,6 +77,46 @@ class MainViewModel @Inject constructor(
                     dataResultMutableLiveData.postValue(MainRecyclerViewData(headerDataSet, categories, mainDataSet))
                 }
                 is ApiResult.Error -> dataResultMutableLiveData.postValue(null)
+            }
+        }
+    }
+
+    fun postFavourite(id: Long){
+        viewModelScope.launch(Dispatchers.IO){
+            val response = advertRepository.postFavourite(id)
+            when (response) {
+                is ApiResult.Success<Advertisement> -> {
+
+                    val advert = AdvertPreviewCard(
+                        response.data.id,
+                        response.data.favourite ?: false,
+                        response.data.name,
+                        listOf(response.data.category.name),
+                        response.data.priceList?.let { ticketPriceList ->
+                            ticketPriceList.firstOrNull()?.let { ticketPrice ->
+                                ticketPrice.price
+                            } ?: 0
+                        } ?: 0,
+                        response.data.photos.split(",").first()
+                    )
+
+
+                    favouriteMutableLiveData.postValue(advert)
+                }
+
+                is ApiResult.Error -> {
+                    /*when{
+                        response.body.contains("Connection") -> dataResultMutableLiveData.postValue(
+                            UIStateAdvertList.ConnectionError)
+                        response.code == 403 || response.code == 401 -> dataResultMutableLiveData.postValue(
+                            UIStateAdvertList.Unauthorised)
+                        response.code == 404 -> dataResultMutableLiveData.postValue(
+                            UIStateAdvertList.Error("Произошла ошибка, и попробуйте снова"))
+                    }*/
+
+
+                    favouriteMutableLiveData.postValue(null)
+                }
             }
         }
     }

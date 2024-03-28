@@ -19,6 +19,7 @@ import ru.gidevent.RestAPI.model.response.Suggestions
 import ru.gidevent.RestAPI.response.TopsResponse
 import ru.gidevent.androidapp.data.model.advertisement.dto.CustomerCategory
 import ru.gidevent.androidapp.data.model.advertisement.dto.EventTime
+import ru.gidevent.androidapp.data.model.advertisement.dto.NewFeedback
 import ru.gidevent.androidapp.data.model.advertisement.request.EventTimeRequest
 import ru.gidevent.androidapp.data.model.advertisement.request.NewAdvertisement
 import ru.gidevent.androidapp.data.model.advertisement.request.TicketPrice
@@ -26,6 +27,7 @@ import ru.gidevent.androidapp.data.model.advertisement.request.TicketPriceReques
 import ru.gidevent.androidapp.data.model.advertisement.response.AdvertisementExpanded
 import ru.gidevent.androidapp.data.model.advertisement.response.Advertisement
 import ru.gidevent.androidapp.data.model.advertisement.response.EventTimeResponse
+import ru.gidevent.androidapp.data.model.advertisement.response.NewFeedbackResponse
 import ru.gidevent.androidapp.data.model.advertisement.response.ResponsePoster
 import ru.gidevent.androidapp.data.model.advertisement.response.TicketPriceResponse
 import ru.gidevent.androidapp.data.model.request.search.SearchOptions
@@ -183,5 +185,30 @@ interface AdvertisementApiService {
     @DELETE("photo/")
     suspend fun deletePhoto(@Path("fileUUID") fileUUID: String,
                             @Header("Authorization") token: String): Response<ResponsePoster>
+
+
+
+    @POST("feedback/")
+    suspend fun postFeedback(
+        @Body newFeedback: NewFeedback,
+        @Header("Authorization") token: String
+    ): Response<NewFeedbackResponse>
+
+
+
+    @PUT("feedback/")
+    suspend fun putFeedback(
+        @Body newFeedback: NewFeedback,
+        @Header("Authorization") token: String
+    ): Response<NewFeedbackResponse>
+
+
+
+    @POST("favourite/")
+    suspend fun postFavourite(
+        @Query("advertisementId") advertisementId: Long,
+        @Header("Authorization") token: String
+    ): Response<Advertisement>
+
 
 }

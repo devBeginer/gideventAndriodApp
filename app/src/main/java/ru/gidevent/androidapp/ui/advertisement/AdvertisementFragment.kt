@@ -15,6 +15,7 @@ import ru.gidevent.andriodapp.databinding.FragmentAdvertisementBinding
 import ru.gidevent.androidapp.data.model.advertisement.AdvertisementCardInfo
 import ru.gidevent.androidapp.ui.advertisement.adapter.AdvertReviewRecyclerViewAdapter
 import ru.gidevent.androidapp.ui.advertisement.adapter.AdvertViewPagerAdapter
+import ru.gidevent.androidapp.ui.edit.fragment.PriceBottomSheetDialog
 import ru.gidevent.androidapp.ui.state.UIState
 import ru.gidevent.androidapp.utils.Utils
 import ru.gidevent.androidapp.utils.showSnack
@@ -62,7 +63,12 @@ class AdvertisementFragment : Fragment() {
         recyclerViewAdapter = AdvertReviewRecyclerViewAdapter(
             listOf()
         )
-        binding.viewPagerAdvertisement.adapter = viewPagerAdapter
+        binding.rvAdvertReviews.adapter = recyclerViewAdapter
+
+        binding.tvAdvertReviewsAdd.setOnClickListener {
+            FeedbackBottomSheetDialog(viewModel)
+                .show(parentFragmentManager, "priceBottomSheetDialog")
+        }
     }
 
     private fun initObservers() {
@@ -72,7 +78,8 @@ class AdvertisementFragment : Fragment() {
                     val dataSet = it.data as AdvertisementCardInfo?
                     if (dataSet != null) {
                         viewPagerAdapter.setItemList(dataSet.advertViewpagerItem)
-                        recyclerViewAdapter.setItemList(dataSet.reviewsList)
+                        val list = listOf(dataSet.reviewsList[0], dataSet.reviewsList[0], dataSet.reviewsList[0]/*, dataSet.reviewsList[0]*/)
+                        recyclerViewAdapter.setItemList(list)
                         binding.collapsingToolbar.title = dataSet.name
                         binding.ratingBarAdvert.rating = dataSet.rating
                         binding.tvAdvertFeedback.text = when (dataSet.reviewsList.size) {

@@ -107,6 +107,8 @@ class EventtimeBottomSheetDialog(): BottomSheetDialogFragment() {
                         when(result){
                             is UIState.Success<*>->{
                                 viewModel.initScheduleList()
+                                viewModel.editableStartDate = null
+                                viewModel.editableEndDate = null
                                 dismiss()
                             }
                             is UIState.Loading->{}

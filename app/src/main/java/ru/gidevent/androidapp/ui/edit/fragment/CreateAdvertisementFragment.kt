@@ -181,7 +181,7 @@ class CreateAdvertisementFragment() : Fragment() {
                     parentFragmentManager
                         /*requireParentFragment().childFragmentManager*/
                             .beginTransaction()
-                            .replace(R.id.edit_nav_host_fragment, CreateScheduleFragment())
+                            .replace(R.id.edit_nav_host_fragment, CreateScheduleFragment()).addToBackStack(null)
                             .commit()
 
                 }

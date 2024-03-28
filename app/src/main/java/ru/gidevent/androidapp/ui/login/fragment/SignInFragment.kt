@@ -49,12 +49,14 @@ class SignInFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnSignInRegister.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
+            requireActivity().supportFragmentManager.beginTransaction().addToBackStack(null)
                 .replace(R.id.nav_host_fragment, SignUpFragment()).commit()
         }
 
         binding.ivSignInBack.setOnClickListener {
-
+            /*requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment, MainScreenContainerFragment()).commit()*/
+            requireActivity().supportFragmentManager.popBackStack()
         }
 
         binding.btnSignInLogin.setOnClickListener {
@@ -89,7 +91,7 @@ class SignInFragment : Fragment() {
             when(it){
                 is UIState.Success<*> -> {
                     requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.nav_host_fragment, MainScreenContainerFragment()).addToBackStack(null)
+                        .replace(R.id.nav_host_fragment, MainScreenContainerFragment())/*.addToBackStack(null)*/
                         .commit()
                 }is UIState.Error -> {
                     showSnack(requireView(), it.message, 5)

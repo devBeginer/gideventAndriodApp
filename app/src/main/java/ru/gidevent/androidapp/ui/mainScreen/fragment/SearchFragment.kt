@@ -63,12 +63,17 @@ class SearchFragment : Fragment() {
 
     }
 
-    private fun initView(){
+    override fun onResume() {
+        super.onResume()
         viewModel.initView()
+    }
+
+    private fun initView(){
+        //viewModel.initView()
         adapter = SearchRecyclerViewAdapter(listOf())
         binding.rvSearchCards.adapter = adapter
         suggestionAdapter = SuggestionsRecyclerViewAdapter(SuggestionRecyclerViewData(listOf(), listOf(), listOf())){
-            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it)).commit()
+            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it)).addToBackStack(null).commit()
         }
         binding.rvSearchSuggestions.adapter = suggestionAdapter
 

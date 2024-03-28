@@ -120,7 +120,7 @@ class CreateScheduleFragment(/*private val viewModel: CreateAdvertViewModel*/): 
             //requireActivity().supportFragmentManager
             /*requireParentFragment().childFragmentManager*/
                 .beginTransaction()
-                .replace(R.id.edit_nav_host_fragment, CreatePriceFragment())
+                .replace(R.id.edit_nav_host_fragment, CreatePriceFragment()).addToBackStack(null)
                 .commit()
 
         }

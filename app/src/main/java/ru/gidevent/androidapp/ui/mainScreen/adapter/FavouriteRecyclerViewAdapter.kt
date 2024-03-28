@@ -12,17 +12,16 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.setPadding
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import ru.gidevent.andriodapp.R
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.AdvertPreviewCard
-import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.MainRecyclerViewData
 import ru.gidevent.androidapp.utils.Utils
 
 class FavouriteRecyclerViewAdapter(
     private var dataSet: List<AdvertPreviewCard>,
-    private val onClick: (id: Long)->Unit
+    private val onClick: (id: Long)->Unit,
+    private val onFavourite: (id: Long)->Unit
 ) : RecyclerView.Adapter<FavouriteRecyclerViewAdapter.CardsViewHolder>() {
 
 
@@ -43,6 +42,17 @@ class FavouriteRecyclerViewAdapter(
     fun setItemsList(list: List<AdvertPreviewCard>) {
         dataSet = list
         notifyDataSetChanged()
+    }
+
+    fun updateItem(advert: AdvertPreviewCard) {
+        val position = dataSet.find { it.id == advert.id }?.let { dataSet.indexOf(it) }
+        if(position!=null){
+            val tmpList = mutableListOf<AdvertPreviewCard>()
+            tmpList.addAll(dataSet)
+            tmpList[position] = advert
+            dataSet = tmpList
+            notifyItemChanged(position)
+        }
     }
 
     override fun onBindViewHolder(holder: CardsViewHolder, position: Int) {
@@ -98,6 +108,9 @@ class FavouriteRecyclerViewAdapter(
             categories = view.findViewById(R.id.ll_card_category)
             view.setOnClickListener {
                 onClick(dataSet[adapterPosition].id)
+            }
+            favourite.setOnClickListener {
+                onFavourite(dataSet[adapterPosition].id)
             }
         }
     }

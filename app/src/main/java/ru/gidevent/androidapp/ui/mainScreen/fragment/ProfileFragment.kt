@@ -54,7 +54,7 @@ class ProfileFragment: Fragment() {
         binding.btnProfileCreateAdvert.setOnClickListener {
             requireActivity().supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.nav_host_fragment, EditContainerFragment())
+                .replace(R.id.nav_host_fragment, EditContainerFragment()).addToBackStack(null)
                 .commit()
         }
     }

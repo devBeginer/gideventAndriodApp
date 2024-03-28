@@ -47,7 +47,7 @@ class EditContainerFragment : Fragment() {
 
 
         childFragmentManager.beginTransaction()
-            .replace(R.id.edit_nav_host_fragment, CreateAdvertisementFragment()).commit()
+            .replace(R.id.edit_nav_host_fragment, CreateAdvertisementFragment()).addToBackStack(null).commit()
 
     }
 }

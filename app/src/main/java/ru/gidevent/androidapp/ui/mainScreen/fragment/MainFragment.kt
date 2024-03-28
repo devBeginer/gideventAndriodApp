@@ -27,6 +27,12 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var adapter: MainRecyclerViewAdapter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        /*requireActivity().onBackPressedDispatcher.addCallback(this) {
+
+        }*/
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,13 +58,24 @@ class MainFragment : Fragment() {
 
     }
 
-    private fun initView(){
+    override fun onResume() {
+        super.onResume()
         viewModel.initView()
+    }
+
+    private fun initView(){
+        //viewModel.initView()
         adapter = MainRecyclerViewAdapter(
-            MainRecyclerViewData(listOf<HeaderViewpagerItem>(), listOf<String>(), listOf<AdvertPreviewCard>())
-        ){
-            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it)).commit()
-        }
+            MainRecyclerViewData(listOf<HeaderViewpagerItem>(), listOf<String>(), listOf<AdvertPreviewCard>()),
+            {
+                requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it)).addToBackStack(null).commit()
+            },{
+                requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it)).addToBackStack(null).commit()
+            },
+            {
+                viewModel.postFavourite(it)
+            }
+        )
         binding.rvMainCards.adapter = adapter
     }
 
@@ -66,6 +83,12 @@ class MainFragment : Fragment() {
         viewModel.data.observe(viewLifecycleOwner, Observer {dataSet->
             if(dataSet!=null){
                 adapter.setItemsList(dataSet)
+            }
+        })
+
+        viewModel.favourite.observe(viewLifecycleOwner, Observer { advert->
+            if(advert!=null){
+                adapter.updateItem(advert)
             }
         })
     }

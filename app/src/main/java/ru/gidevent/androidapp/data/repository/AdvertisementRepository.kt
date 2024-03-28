@@ -20,6 +20,7 @@ import ru.gidevent.androidapp.data.dataSource.AdvertRemoteDataSource
 import ru.gidevent.androidapp.data.dataSource.UserLocalDataSource
 import ru.gidevent.androidapp.data.model.advertisement.dto.CustomerCategory
 import ru.gidevent.androidapp.data.model.advertisement.dto.EventTime
+import ru.gidevent.androidapp.data.model.advertisement.dto.NewFeedback
 import ru.gidevent.androidapp.data.model.advertisement.request.EventTimeRequest
 import ru.gidevent.androidapp.data.model.advertisement.request.NewAdvertisement
 import ru.gidevent.androidapp.data.model.advertisement.request.TicketPrice
@@ -27,6 +28,7 @@ import ru.gidevent.androidapp.data.model.advertisement.request.TicketPriceReques
 import ru.gidevent.androidapp.data.model.advertisement.response.AdvertisementExpanded
 import ru.gidevent.androidapp.data.model.advertisement.response.Advertisement
 import ru.gidevent.androidapp.data.model.advertisement.response.EventTimeResponse
+import ru.gidevent.androidapp.data.model.advertisement.response.NewFeedbackResponse
 import ru.gidevent.androidapp.data.model.advertisement.response.ResponsePoster
 import ru.gidevent.androidapp.data.model.advertisement.response.TicketPriceResponse
 import ru.gidevent.androidapp.data.model.request.search.SearchOptions
@@ -258,4 +260,20 @@ class AdvertisementRepository @Inject constructor(
             null
         }
     }*/
+
+    suspend fun postFeedback(newFeedback: NewFeedback): ApiResult<NewFeedbackResponse> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+        return advertRemoteDataSource.postFeedback(token, newFeedback)
+    }
+
+    suspend fun putFeedback(newFeedback: NewFeedback): ApiResult<NewFeedbackResponse> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+        return advertRemoteDataSource.putFeedback(token, newFeedback)
+    }
+
+    suspend fun postFavourite(advertId: Long): ApiResult<Advertisement> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+
+        return advertRemoteDataSource.postFavourite(token, advertId)
+    }
 }

@@ -395,72 +395,29 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_advert_circular_avatar" />
 
-            
-            <!--<androidx.cardview.widget.CardView
-                android:id="@+id/cv_advert_feedback"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_advert_reviews_add"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_advert_title_reviews"
-                app:layout_constraintBottom_toBottomOf="@id/tv_advert_feedback_text">
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/iv_advert_circular_feedback_avatar"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_margin="16dp"
-                        android:src="@drawable/viewpager_item1"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:shapeAppearanceOverlay="@style/roundedImageView" />
+                android:layout_marginEnd="16dp"
+                android:text="Написать отзыв"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_advert_title_reviews"
+                app:layout_constraintBottom_toBottomOf="@id/tv_advert_title_reviews" />
 
-                    <TextView
-                        android:id="@+id/tv_advert_feedback_name"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="Иванов Иван"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/iv_advert_circular_feedback_avatar"
-                        app:layout_constraintTop_toTopOf="@id/iv_advert_circular_feedback_avatar" />
-
-                    <RatingBar
-                        android:id="@+id/ratingBar_advert_feedback"
-                        style="?android:attr/ratingBarStyleSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:numStars="5"
-                        android:rating="5.0"
-                        app:layout_constraintStart_toStartOf="@id/tv_advert_feedback_name"
-                        app:layout_constraintTop_toBottomOf="@id/tv_advert_feedback_name" />
-
-                    <TextView
-                        android:id="@+id/tv_advert_feedback_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="16dp"
-                        android:text="Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description Event description"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/ratingBar_advert_feedback" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>-->
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/item_container"
+                android:id="@+id/rv_advert_reviews"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:visibility="visible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_advert_title_reviews"
-                tools:listitem="@layout/recyclerview_item_feedback" />
+                tools:listitem="@layout/recyclerview_item_feedback"
+                tool:itemCount="3"/>
 
 
 

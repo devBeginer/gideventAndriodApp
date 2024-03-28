@@ -24,12 +24,15 @@ class AdvertReviewRecyclerViewAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (position) {
-            3 -> {
-                VIEW_TYPE_MORE
+        //return VIEW_TYPE_MORE
+
+
+        return when  {
+            position<4 -> {
+                VIEW_TYPE_ITEM
             }
             else -> {
-                VIEW_TYPE_ITEM
+                VIEW_TYPE_MORE
             }
         }
     }
@@ -61,11 +64,14 @@ class AdvertReviewRecyclerViewAdapter(
     }
 
     override fun getItemCount(): Int {
+        //return dataSet.size
         return if(dataSet.size>=3) dataSet.size+1 else dataSet.size
     }
 
     fun setItemList(newDataSet: List<ReviewRecyclerViewItem>){
-        dataSet = newDataSet
+        val lastIndex = if(newDataSet.size>3) 3 else newDataSet.lastIndex+1
+        dataSet = newDataSet.subList(0, lastIndex)
+        //dataSet = newDataSet
         notifyDataSetChanged()
     }
 
@@ -77,7 +83,7 @@ class AdvertReviewRecyclerViewAdapter(
 
         init {
             name = view.findViewById(R.id.tv_feedback_name)
-            rating = view.findViewById(R.id.ratingBar_feedback)
+            rating = view.findViewById(R.id.ratingBar_feedback_rate)
             text = view.findViewById(R.id.tv_advert_feedback_text)
             imageView = view.findViewById(R.id.iv_feedback_circular_avatar)
         }

@@ -16,12 +16,15 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import ru.gidevent.andriodapp.R
+import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.AdvertPreviewCard
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.MainRecyclerViewData
 import ru.gidevent.androidapp.utils.Utils
 
 class MainRecyclerViewAdapter(
     private var dataSet: MainRecyclerViewData,
-    private val onClick: (id: Long)->Unit
+    private val onClick: (id: Long)->Unit,
+    private val onClickViewPager: (id: Long)->Unit,
+    private val onFavourite: (id: Long)->Unit
 ) : RecyclerView.Adapter<MainRecyclerViewAdapter.MainViewHolder>() {
     companion object{
         const val VIEW_TYPE_HEADER1: Int = 0
@@ -79,6 +82,18 @@ class MainRecyclerViewAdapter(
         notifyDataSetChanged()
     }
 
+    fun updateItem(advert: AdvertPreviewCard) {
+        val position = dataSet.cardsDataSet.find { it.id == advert.id }?.let { dataSet.cardsDataSet.indexOf(it)+2 }
+        if(position!=null){
+            val tmpList = mutableListOf<AdvertPreviewCard>()
+            tmpList.addAll(dataSet.cardsDataSet)
+            tmpList[position-2] = advert
+            val newDataSet = MainRecyclerViewData(dataSet.headerDataSet, dataSet.categoryDataSet, tmpList)
+            dataSet = newDataSet
+            notifyItemChanged(position)
+        }
+    }
+
 
     private fun createCategory(text: String, context: Context): TextView {
         val textView = TextView(context)
@@ -108,6 +123,9 @@ class MainRecyclerViewAdapter(
 
             view.setOnClickListener {
                 onClick(dataSet.cardsDataSet[adapterPosition-2].id)
+            }
+            favourite.setOnClickListener {
+                onFavourite(dataSet.cardsDataSet[adapterPosition-2].id)
             }
         }
 
@@ -145,7 +163,7 @@ class MainRecyclerViewAdapter(
 
         init {
             headerViewPager = view.findViewById(R.id.view_pager_main_header)
-            headerViewPagerAdapter = HeaderViewPagerAdapter()
+            headerViewPagerAdapter = HeaderViewPagerAdapter(onClickViewPager)
         }
 
         override fun bind(position: Int) {

@@ -119,7 +119,7 @@ class CreatePriceFragment(/*private val viewModel: CreateAdvertViewModel*/): Fra
 
                 requireActivity().supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.nav_host_fragment, MainScreenContainerFragment())
+                    .replace(R.id.nav_host_fragment, MainScreenContainerFragment()).addToBackStack(null)
                     .commit()
 
         }

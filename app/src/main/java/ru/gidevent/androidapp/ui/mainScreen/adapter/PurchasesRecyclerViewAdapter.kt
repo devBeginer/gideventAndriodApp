@@ -22,7 +22,8 @@ import ru.gidevent.androidapp.utils.Utils
 
 class PurchasesRecyclerViewAdapter(
     private var dataSet: List<AdvertPreviewCard>,
-    private val onClick: (id: Long)->Unit
+    private val onClick: (id: Long)->Unit,
+    private val onFavourite: (id: Long)->Unit
 ) : RecyclerView.Adapter<PurchasesRecyclerViewAdapter.CardsViewHolder>() {
 
 
@@ -42,6 +43,17 @@ class PurchasesRecyclerViewAdapter(
 
     fun setItemsList(list: List<AdvertPreviewCard>) {
         dataSet = list
+    }
+
+    fun updateItem(advert: AdvertPreviewCard) {
+        val position = dataSet.find { it.id == advert.id }?.let { dataSet.indexOf(it) }
+        if(position!=null){
+            val tmpList = mutableListOf<AdvertPreviewCard>()
+            tmpList.addAll(dataSet)
+            tmpList[position] = advert
+            dataSet = tmpList
+            notifyItemChanged(position)
+        }
     }
 
     override fun onBindViewHolder(holder: CardsViewHolder, position: Int) {
@@ -97,6 +109,9 @@ class PurchasesRecyclerViewAdapter(
             categories = view.findViewById(R.id.ll_card_category)
             view.setOnClickListener {
                 onClick(dataSet[adapterPosition].id)
+            }
+            favourite.setOnClickListener {
+                onFavourite(dataSet[adapterPosition].id)
             }
         }
     }

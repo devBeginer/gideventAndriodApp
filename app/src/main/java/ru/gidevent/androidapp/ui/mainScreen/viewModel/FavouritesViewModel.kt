@@ -19,6 +19,7 @@ import ru.gidevent.androidapp.data.repository.AdvertisementRepository
 import ru.gidevent.androidapp.data.repository.UserRepository
 import ru.gidevent.androidapp.network.ApiResult
 import ru.gidevent.androidapp.ui.state.UIState
+import ru.gidevent.androidapp.ui.state.UIStateAdvertList
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,8 +27,8 @@ class FavouritesViewModel @Inject constructor(
     private val repository: UserRepository,
     private val advertRepository: AdvertisementRepository
 ) : ViewModel() {
-    private val dataResultMutableLiveData = MutableLiveData<UIState>(UIState.Idle)
-    val data: LiveData<UIState>
+    private val dataResultMutableLiveData = MutableLiveData<UIStateAdvertList>(UIStateAdvertList.Idle)
+    val data: LiveData<UIStateAdvertList>
         get() = dataResultMutableLiveData
 
 
@@ -53,19 +54,53 @@ class FavouritesViewModel @Inject constructor(
                             )
                         }
 
-                        dataResultMutableLiveData.postValue(UIState.Success(mainDataSet))
+                        dataResultMutableLiveData.postValue(UIStateAdvertList.Success(mainDataSet))
                     }
 
                     is ApiResult.Error -> {
                         when{
-                            response.body.contains("Connection") -> dataResultMutableLiveData.postValue(UIState.ConnectionError)
-                            response.code == 403 || response.code == 401 -> dataResultMutableLiveData.postValue(UIState.Unauthorised)
-                            response.code == 404 -> dataResultMutableLiveData.postValue(UIState.Error("Произошла ошибка, и попробуйте снова"))
+                            response.body.contains("Connection") -> dataResultMutableLiveData.postValue(UIStateAdvertList.ConnectionError)
+                            response.code == 403 || response.code == 401 -> dataResultMutableLiveData.postValue(UIStateAdvertList.Unauthorised)
+                            response.code == 404 -> dataResultMutableLiveData.postValue(UIStateAdvertList.Error("Произошла ошибка, и попробуйте снова"))
                         }
                     }
                 }
             }else{
-                dataResultMutableLiveData.postValue(UIState.Unauthorised)
+                dataResultMutableLiveData.postValue(UIStateAdvertList.Unauthorised)
+            }
+        }
+    }
+
+    fun postFavourite(id: Long){
+        viewModelScope.launch(Dispatchers.IO){
+            val response = advertRepository.postFavourite(id)
+            when (response) {
+                is ApiResult.Success<Advertisement> -> {
+
+                    val advert = AdvertPreviewCard(
+                        response.data.id,
+                        response.data.favourite ?: false,
+                        response.data.name,
+                        listOf(response.data.category.name),
+                        response.data.priceList?.let { ticketPriceList ->
+                            ticketPriceList.firstOrNull()?.let { ticketPrice ->
+                                ticketPrice.price
+                            } ?: 0
+                        } ?: 0,
+                        response.data.photos.split(",").first()
+                    )
+
+
+                    dataResultMutableLiveData.postValue(UIStateAdvertList.Update(advert))
+                }
+
+                is ApiResult.Error -> {
+                    when{
+                        response.body.contains("Connection") -> dataResultMutableLiveData.postValue(UIStateAdvertList.ConnectionError)
+                        response.code == 403 || response.code == 401 -> dataResultMutableLiveData.postValue(UIStateAdvertList.Unauthorised)
+                        response.code == 404 -> dataResultMutableLiveData.postValue(UIStateAdvertList.Error("Произошла ошибка, и попробуйте снова"))
+                    }
+                }
             }
         }
     }

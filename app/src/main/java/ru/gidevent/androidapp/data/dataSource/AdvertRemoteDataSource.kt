@@ -4,6 +4,7 @@ import okhttp3.MultipartBody
 import ru.gidevent.RestAPI.model.Category
 import ru.gidevent.RestAPI.model.TransportationVariant
 import ru.gidevent.androidapp.data.model.advertisement.dto.CustomerCategory
+import ru.gidevent.androidapp.data.model.advertisement.dto.NewFeedback
 import ru.gidevent.androidapp.data.model.advertisement.request.EventTimeRequest
 import ru.gidevent.androidapp.data.model.advertisement.request.NewAdvertisement
 import ru.gidevent.androidapp.data.model.advertisement.request.TicketPrice
@@ -110,5 +111,17 @@ class AdvertRemoteDataSource @Inject constructor(
 
     suspend fun delPhoto(credentials: String, fileUUID: String) =
         networkHelper.safeApiCall { advertApiService.deletePhoto(fileUUID, credentials)}
+
+
+
+    suspend fun postFeedback(credentials: String, newFeedback: NewFeedback) =
+        networkHelper.safeApiCall { advertApiService.postFeedback(newFeedback, credentials)}
+
+    suspend fun putFeedback(credentials: String, newFeedback: NewFeedback) =
+        networkHelper.safeApiCall { advertApiService.putFeedback(newFeedback, credentials)}
+
+
+    suspend fun postFavourite(credentials: String, advertId: Long) =
+        networkHelper.safeApiCall { advertApiService.postFavourite(advertId, credentials)}
 
 }
