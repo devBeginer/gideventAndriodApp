@@ -30,6 +30,7 @@ import ru.gidevent.andriodapp.databinding.FragmentCreateAdvertisementBinding
 import ru.gidevent.androidapp.data.model.advertisement.request.NewAdvertisement
 import ru.gidevent.androidapp.data.model.advertisement.response.ResponsePoster
 import ru.gidevent.androidapp.data.model.search.OptionsVariants
+import ru.gidevent.androidapp.ui.SharedViewModel
 import ru.gidevent.androidapp.ui.advertisement.AdvertisementFragment
 import ru.gidevent.androidapp.ui.edit.CreateAdvertViewModel
 import ru.gidevent.androidapp.ui.edit.adapter.PhotoEditRecyclerViewAdapter
@@ -42,6 +43,7 @@ import ru.gidevent.androidapp.utils.showSnack
 @AndroidEntryPoint
 class CreateAdvertisementFragment() : Fragment() {
     private val viewModel: CreateAdvertViewModel by viewModels({requireParentFragment()})
+    private val sharedViewModel: SharedViewModel by viewModels({requireActivity()})
 
     private var _binding: FragmentCreateAdvertisementBinding? = null
     private val binding get() = _binding!!
@@ -156,18 +158,25 @@ class CreateAdvertisementFragment() : Fragment() {
                         categories[chip.id] = it
                         binding.chipGroupCreateCategory.addView(chip)
                     }
+                    sharedViewModel.showProgressIndicator(false)
                 }
 
                 is UIState.Error -> {
+                    sharedViewModel.showProgressIndicator(false)
                     showSnack(requireView(), it.message, 5)
                 }
 
                 is UIState.ConnectionError -> {
+                    sharedViewModel.showProgressIndicator(false)
                     showSnack(requireView(), "Отсутствует интернет подключение", 3)
                 }
 
                 is UIState.Idle -> {
 
+                }
+
+                is UIState.Loading -> {
+                    sharedViewModel.showProgressIndicator(true)
                 }
 
                 else -> {}
@@ -176,6 +185,7 @@ class CreateAdvertisementFragment() : Fragment() {
         viewModel.postResult.observe(viewLifecycleOwner, Observer { it ->
             when (it) {
                 is UIState.Success<*> -> {
+                    sharedViewModel.showProgressIndicator(false)
                     currentMode = EDIT_MODE
 
                     parentFragmentManager
@@ -187,15 +197,21 @@ class CreateAdvertisementFragment() : Fragment() {
                 }
 
                 is UIState.Error -> {
+                    sharedViewModel.showProgressIndicator(false)
                     showSnack(requireView(), it.message, 5)
                 }
 
                 is UIState.ConnectionError -> {
+                    sharedViewModel.showProgressIndicator(false)
                     showSnack(requireView(), "Отсутствует интернет подключение", 3)
                 }
 
                 is UIState.Idle -> {
 
+                }
+
+                is UIState.Loading -> {
+                    sharedViewModel.showProgressIndicator(true)
                 }
 
                 else -> {}

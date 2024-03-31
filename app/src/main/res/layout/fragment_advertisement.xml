@@ -417,6 +417,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_advert_title_reviews"
                 tools:listitem="@layout/recyclerview_item_feedback"
+                android:clipToPadding="false"
+                android:paddingStart="8dp"
+                android:paddingEnd="38dp"
                 tool:itemCount="3"/>
 
 

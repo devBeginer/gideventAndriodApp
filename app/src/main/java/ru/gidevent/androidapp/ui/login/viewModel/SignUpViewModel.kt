@@ -24,6 +24,8 @@ class SignUpViewModel @Inject constructor(private val repository: UserRepository
 
     fun register(login: String, password: String, firstName: String, lastName: String, role: SignInScreenMode){
         viewModelScope.launch (Dispatchers.IO){
+
+            _registerState.postValue(UIState.Loading)
             val response = repository.userSignUp(RegisterBodyRequest(login, password, firstName, lastName, "USER"))
             when(response){
                 is ApiResult.Success<RegisterBodyResponse> -> {

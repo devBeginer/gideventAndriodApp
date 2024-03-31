@@ -39,6 +39,7 @@ class AdvertisementViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
 
             advertId = id
+            dataResultMutableLiveData.postValue(UIState.Loading)
             val response = advertRepository.getAdvertisementById(id)
             when (response) {
                 is ApiResult.Success<AdvertisementExpanded> -> {
@@ -100,6 +101,7 @@ class AdvertisementViewModel @Inject constructor(
 
             val id = advertId
             if(id!=null){
+                dataResultMutableLiveData.postValue(UIState.Loading)
                 val response = advertRepository.getAdvertisementById(id)
                 when (response) {
                     is ApiResult.Success<AdvertisementExpanded> -> {

@@ -119,6 +119,7 @@ class CreateAdvertViewModel @Inject constructor(
 
     fun initOptions() {
         viewModelScope.launch {
+            _optionsVariants.postValue(UIState.Loading)
             val response = advertRepository.getOptionsVariants()
 
             when (response) {
@@ -143,6 +144,7 @@ class CreateAdvertViewModel @Inject constructor(
 
     fun postAdvertisement(newAdvertisement: NewAdvertisement) {
         viewModelScope.launch(Dispatchers.IO) {
+            _postResult.postValue(UIState.Loading)
             val response = advertRepository.postAdvertisement(newAdvertisement)
             when (response) {
                 is ApiResult.Success<Advertisement?> -> {
@@ -162,6 +164,7 @@ class CreateAdvertViewModel @Inject constructor(
 
     fun getCitySuggestions(query: String) {
         viewModelScope.launch(Dispatchers.IO) {
+            _citySuggestions.postValue(UIState.Loading)
             val response = advertRepository.getCitySuggestions(query)
 
 
@@ -279,6 +282,7 @@ class CreateAdvertViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val id = advertId
             if(id!=null){
+                _eventTimeList.postValue(UIState.Loading)
                 val response = advertRepository.getAllEventTime(id)
 
 
@@ -317,6 +321,7 @@ class CreateAdvertViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val id = advertId
             if(id!=null){
+                _priceList.postValue(UIState.Loading)
                 val response = advertRepository.getAllTicketPrice(id)
 
 
@@ -369,6 +374,7 @@ class CreateAdvertViewModel @Inject constructor(
 
     fun initCustomerCategories() {
         viewModelScope.launch {
+            _customerVariants.postValue(UIState.Loading)
             val response = advertRepository.getAllCustomerCategory()
 
             when (response) {

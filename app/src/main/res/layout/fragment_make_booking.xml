@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_make_booking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Бронирование">
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/tv_make_booking_date_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_make_booking"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:text="Дата"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tv_make_booking_date_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_make_booking_date_title"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Выбрать"
+        android:textColor="?attr/colorPrimary"/>
+
+    <TextView
+        android:id="@+id/tv_make_booking_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_make_booking_date_title"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:text="16.04.2024, вт"/>
+
+
+    <HorizontalScrollView
+        android:id="@+id/hsv_make_booking_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_make_booking_date"
+        android:layout_marginTop="16dp"
+        android:paddingHorizontal="16dp"
+        android:clipToPadding="false"
+        android:scrollbars="none">
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup_make_booking_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:singleLine="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipGroup_transportation_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="13:00"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipGroup_transportation_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="14:00"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipGroup_transportation_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="16:00"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipGroup_transportation_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="15:00" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipGroup_transportation_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="17:00" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipGroup_transportation_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="18:00" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipGroup_transportation_7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="19:00" />
+
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/tv_make_booking_participants_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hsv_make_booking_time"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:text="Участники"
+        android:textStyle="bold"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_make_booking_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_make_booking_participants_title"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
+        tools:listitem="@layout/recyclerview_item_booking_price"
+        tools:itemCount="5"/>
+
+    <TextView
+        android:id="@+id/tv_make_booking_total_cost_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Итого:"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_make_booking_price" />
+
+    <TextView
+        android:id="@+id/tv_make_booking_total_cost"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/tv_make_booking_total_cost_title"
+        app:layout_constraintBottom_toBottomOf="@id/tv_make_booking_total_cost_title"
+        app:layout_constraintStart_toEndOf="@id/tv_make_booking_total_cost_title"
+        android:layout_marginHorizontal="16dp"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:visibility="gone"
+        android:text="83000 за 15 участников"/>
+
+    <Button
+        android:id="@+id/btn_make_booking"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_make_booking_total_cost_title"
+        android:text="Забронировать"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,6 +13,7 @@ import ru.gidevent.andriodapp.databinding.FragmentMainBinding
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.AdvertPreviewCard
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.HeaderViewpagerItem
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.MainRecyclerViewData
+import ru.gidevent.androidapp.ui.SharedViewModel
 import ru.gidevent.androidapp.ui.advertisement.AdvertisementFragment
 import ru.gidevent.androidapp.ui.login.fragment.SignUpFragment
 import ru.gidevent.androidapp.ui.mainScreen.adapter.MainRecyclerViewAdapter
@@ -22,6 +23,7 @@ import ru.gidevent.androidapp.ui.mainScreen.viewModel.MainViewModel
 class MainFragment : Fragment() {
 
     private val viewModel: MainViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by viewModels({requireActivity()})
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
@@ -60,6 +62,7 @@ class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        sharedViewModel.showProgressIndicator(true)
         viewModel.initView()
     }
 
@@ -73,6 +76,7 @@ class MainFragment : Fragment() {
                 requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it)).addToBackStack(null).commit()
             },
             {
+                sharedViewModel.showProgressIndicator(true)
                 viewModel.postFavourite(it)
             }
         )
@@ -83,12 +87,14 @@ class MainFragment : Fragment() {
         viewModel.data.observe(viewLifecycleOwner, Observer {dataSet->
             if(dataSet!=null){
                 adapter.setItemsList(dataSet)
+                sharedViewModel.showProgressIndicator(false)
             }
         })
 
         viewModel.favourite.observe(viewLifecycleOwner, Observer { advert->
             if(advert!=null){
                 adapter.updateItem(advert)
+                sharedViewModel.showProgressIndicator(false)
             }
         })
     }

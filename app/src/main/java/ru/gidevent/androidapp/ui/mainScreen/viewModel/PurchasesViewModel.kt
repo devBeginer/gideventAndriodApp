@@ -30,6 +30,7 @@ class PurchasesViewModel @Inject constructor(
     fun initView(){
         viewModelScope.launch (Dispatchers.IO){
             if(repository.isAuthorised()){
+                dataResultMutableLiveData.postValue(UIStateAdvertList.Loading)
                 val response = advertRepository.getFavouriteAdvertisement()
                 when (response) {
                     is ApiResult.Success<List<Advertisement>> -> {
@@ -69,6 +70,7 @@ class PurchasesViewModel @Inject constructor(
 
     fun postFavourite(id: Long){
         viewModelScope.launch(Dispatchers.IO){
+            dataResultMutableLiveData.postValue(UIStateAdvertList.Loading)
             val response = advertRepository.postFavourite(id)
             when (response) {
                 is ApiResult.Success<Advertisement> -> {

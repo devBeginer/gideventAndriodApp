@@ -2,7 +2,6 @@ package ru.gidevent.androidapp.data.repository
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -19,11 +18,9 @@ import ru.gidevent.androidapp.data.dataSource.AdvertLocalDataSource
 import ru.gidevent.androidapp.data.dataSource.AdvertRemoteDataSource
 import ru.gidevent.androidapp.data.dataSource.UserLocalDataSource
 import ru.gidevent.androidapp.data.model.advertisement.dto.CustomerCategory
-import ru.gidevent.androidapp.data.model.advertisement.dto.EventTime
 import ru.gidevent.androidapp.data.model.advertisement.dto.NewFeedback
 import ru.gidevent.androidapp.data.model.advertisement.request.EventTimeRequest
 import ru.gidevent.androidapp.data.model.advertisement.request.NewAdvertisement
-import ru.gidevent.androidapp.data.model.advertisement.request.TicketPrice
 import ru.gidevent.androidapp.data.model.advertisement.request.TicketPriceRequest
 import ru.gidevent.androidapp.data.model.advertisement.response.AdvertisementExpanded
 import ru.gidevent.androidapp.data.model.advertisement.response.Advertisement
@@ -31,6 +28,9 @@ import ru.gidevent.androidapp.data.model.advertisement.response.EventTimeRespons
 import ru.gidevent.androidapp.data.model.advertisement.response.NewFeedbackResponse
 import ru.gidevent.androidapp.data.model.advertisement.response.ResponsePoster
 import ru.gidevent.androidapp.data.model.advertisement.response.TicketPriceResponse
+import ru.gidevent.androidapp.data.model.booking.BookingParamsResponse
+import ru.gidevent.androidapp.data.model.booking.BookingRequest
+import ru.gidevent.androidapp.data.model.booking.BookingResponse
 import ru.gidevent.androidapp.data.model.request.search.SearchOptions
 import ru.gidevent.androidapp.data.model.search.OptionsVariants
 import ru.gidevent.androidapp.network.ApiResult
@@ -275,5 +275,17 @@ class AdvertisementRepository @Inject constructor(
         val token = userLocalDataSource.getAccessTokenFromSP()
 
         return advertRemoteDataSource.postFavourite(token, advertId)
+    }
+
+    suspend fun getBookingParams(advertId: Long, date: Long): ApiResult<BookingParamsResponse> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+
+        return advertRemoteDataSource.getBookingParams(token, advertId, date)
+    }
+
+    suspend fun postBooking(bookingRequest: BookingRequest): ApiResult<BookingResponse> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+
+        return advertRemoteDataSource.postBooking(token, bookingRequest)
     }
 }

@@ -17,15 +17,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import ru.gidevent.RestAPI.model.City
 import ru.gidevent.andriodapp.R
 import ru.gidevent.andriodapp.databinding.FragmentSearchBinding
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.AdvertPreviewCard
 import ru.gidevent.androidapp.data.model.suggestionsRecyclerviewModels.SuggestionRecyclerViewData
+import ru.gidevent.androidapp.ui.SharedViewModel
 import ru.gidevent.androidapp.ui.advertisement.AdvertisementFragment
 import ru.gidevent.androidapp.ui.mainScreen.adapter.SearchRecyclerViewAdapter
 import ru.gidevent.androidapp.ui.mainScreen.adapter.SuggestionsRecyclerViewAdapter
 import ru.gidevent.androidapp.ui.mainScreen.viewModel.SearchViewModel
 import ru.gidevent.androidapp.ui.state.UIState
+import ru.gidevent.androidapp.ui.state.UIStateAdvertList
 import ru.gidevent.androidapp.utils.showSnack
 import ru.gidevent.androidapp.utils.textInputAsFlow
 
@@ -33,6 +36,7 @@ import ru.gidevent.androidapp.utils.textInputAsFlow
 class SearchFragment : Fragment() {
 
     private val viewModel: SearchViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by viewModels({requireActivity()})
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
@@ -70,11 +74,41 @@ class SearchFragment : Fragment() {
 
     private fun initView(){
         //viewModel.initView()
-        adapter = SearchRecyclerViewAdapter(listOf())
-        binding.rvSearchCards.adapter = adapter
-        suggestionAdapter = SuggestionsRecyclerViewAdapter(SuggestionRecyclerViewData(listOf(), listOf(), listOf())){
+        adapter = SearchRecyclerViewAdapter(listOf(), {
             requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it)).addToBackStack(null).commit()
-        }
+        },{
+            viewModel.postFavourite(it)
+        })
+        binding.rvSearchCards.adapter = adapter
+        suggestionAdapter = SuggestionsRecyclerViewAdapter(
+            SuggestionRecyclerViewData(listOf(), listOf(), listOf()),
+            {
+                requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it)).addToBackStack(null).commit()
+            },{
+                viewModel.resetSearchOptions()
+                val newValue = viewModel.searchOptions.value
+                if (newValue != null) {
+                    newValue.city = it
+                    viewModel.postSearchOptions(newValue)
+                    viewModel.approveOptions()
+                    viewModel.searchByParams()
+                    binding.searchBar.setText(it.name)
+                    binding.searchView.hide()
+                }
+            },{
+                viewModel.resetSearchOptions()
+                val newValue = viewModel.searchOptions.value
+                if (newValue != null) {
+                    newValue.categories.clear()
+                    newValue.categories.add(it.categoryId)
+                    viewModel.postSearchOptions(newValue)
+                    viewModel.approveOptions()
+                    viewModel.searchByParams()
+                    binding.searchBar.setText(it.name)
+                    binding.searchView.hide()
+                }
+            }
+        )
         binding.rvSearchSuggestions.adapter = suggestionAdapter
 
         binding.searchBar.inflateMenu(R.menu.menu_search_bar)
@@ -121,20 +155,34 @@ class SearchFragment : Fragment() {
 
         viewModel.data.observe(viewLifecycleOwner, Observer {
             when(it){
-                is UIState.Success<*> -> {
+                is UIStateAdvertList.Success<*> -> {
                     val dataSet = it.data as List<AdvertPreviewCard>?
                     if(dataSet!=null){
                         adapter.setItemsList(dataSet)
                     }
+                    sharedViewModel.showProgressIndicator(false)
                 }
-                is UIState.Error -> {
+                is UIStateAdvertList.Update<*> -> {
+                    val advert = it.data as AdvertPreviewCard?
+                    if(advert!=null){
+                        adapter.updateItem(advert)
+                    }
+                    sharedViewModel.showProgressIndicator(false)
+                }
+                is UIStateAdvertList.Error -> {
+                    sharedViewModel.showProgressIndicator(false)
                     showSnack(requireView(), it.message, 5)
                 }
-                is UIState.ConnectionError -> {
+                is UIStateAdvertList.ConnectionError -> {
+                    sharedViewModel.showProgressIndicator(false)
                     showSnack(requireView(), "Отсутствует интернет подключение", 3)
                 }
-                is UIState.Idle -> {
+                is UIStateAdvertList.Idle -> {
 
+                }
+                is UIStateAdvertList.Loading -> {
+
+                    sharedViewModel.showProgressIndicator(true)
                 }
                 else -> {}
             }

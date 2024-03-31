@@ -11,6 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.gidevent.andriodapp.R
 import ru.gidevent.andriodapp.databinding.FragmentCreateScheduleBinding
 import ru.gidevent.androidapp.data.model.advertisement.dto.EventTime
+import ru.gidevent.androidapp.ui.SharedViewModel
 import ru.gidevent.androidapp.ui.edit.CreateAdvertViewModel
 import ru.gidevent.androidapp.ui.edit.adapter.ScheduleEditRecyclerViewAdapter
 import ru.gidevent.androidapp.ui.state.UIState
@@ -19,6 +20,7 @@ import ru.gidevent.androidapp.utils.showSnack
 @AndroidEntryPoint
 class CreateScheduleFragment(/*private val viewModel: CreateAdvertViewModel*/): Fragment() {
     private val viewModel: CreateAdvertViewModel by viewModels({requireParentFragment()})
+    private val sharedViewModel: SharedViewModel by viewModels({requireActivity()})
 
     private var _binding: FragmentCreateScheduleBinding? = null
     private val binding get() = _binding!!
@@ -63,18 +65,26 @@ class CreateScheduleFragment(/*private val viewModel: CreateAdvertViewModel*/): 
                     val eventTimeList = it.data as List<EventTime>
                     scheduleRVAdapter.setItemList(eventTimeList)
 
+                    sharedViewModel.showProgressIndicator(false)
                 }
 
                 is UIState.Error -> {
+                    sharedViewModel.showProgressIndicator(false)
                     showSnack(requireView(), it.message, 5)
                 }
 
                 is UIState.ConnectionError -> {
+                    sharedViewModel.showProgressIndicator(false)
                     showSnack(requireView(), "Отсутствует интернет подключение", 3)
                 }
 
                 is UIState.Idle -> {
 
+                }
+
+                is UIState.Loading -> {
+
+                    sharedViewModel.showProgressIndicator(true)
                 }
 
                 else -> {}

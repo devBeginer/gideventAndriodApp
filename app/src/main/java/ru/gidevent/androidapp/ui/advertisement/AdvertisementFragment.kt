@@ -13,6 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.gidevent.andriodapp.R
 import ru.gidevent.andriodapp.databinding.FragmentAdvertisementBinding
 import ru.gidevent.androidapp.data.model.advertisement.AdvertisementCardInfo
+import ru.gidevent.androidapp.ui.SharedViewModel
 import ru.gidevent.androidapp.ui.advertisement.adapter.AdvertReviewRecyclerViewAdapter
 import ru.gidevent.androidapp.ui.advertisement.adapter.AdvertViewPagerAdapter
 import ru.gidevent.androidapp.ui.edit.fragment.PriceBottomSheetDialog
@@ -23,6 +24,7 @@ import ru.gidevent.androidapp.utils.showSnack
 @AndroidEntryPoint
 class AdvertisementFragment : Fragment() {
     private val viewModel: AdvertisementViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by viewModels({requireActivity()})
     private var _binding: FragmentAdvertisementBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewPagerAdapter: AdvertViewPagerAdapter
@@ -75,11 +77,11 @@ class AdvertisementFragment : Fragment() {
         viewModel.data.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is UIState.Success<*> -> {
+                    sharedViewModel.showProgressIndicator(false)
                     val dataSet = it.data as AdvertisementCardInfo?
                     if (dataSet != null) {
                         viewPagerAdapter.setItemList(dataSet.advertViewpagerItem)
-                        val list = listOf(dataSet.reviewsList[0], dataSet.reviewsList[0], dataSet.reviewsList[0]/*, dataSet.reviewsList[0]*/)
-                        recyclerViewAdapter.setItemList(list)
+                        recyclerViewAdapter.setItemList(dataSet.reviewsList)
                         binding.collapsingToolbar.title = dataSet.name
                         binding.ratingBarAdvert.rating = dataSet.rating
                         binding.tvAdvertFeedback.text = when (dataSet.reviewsList.size) {
@@ -108,10 +110,12 @@ class AdvertisementFragment : Fragment() {
                 }
 
                 is UIState.Error -> {
+                    sharedViewModel.showProgressIndicator(false)
                     showSnack(requireView(), it.message, 5)
                 }
 
                 is UIState.ConnectionError -> {
+                    sharedViewModel.showProgressIndicator(false)
                     showSnack(requireView(), "Отсутствует интернет подключение", 3)
                 }
 
@@ -120,6 +124,10 @@ class AdvertisementFragment : Fragment() {
                 }
 
                 is UIState.Unauthorised -> {
+                    sharedViewModel.showProgressIndicator(false)
+                }
+                is UIState.Loading ->{
+                    sharedViewModel.showProgressIndicator(true)
                 }
 
                 else -> {}

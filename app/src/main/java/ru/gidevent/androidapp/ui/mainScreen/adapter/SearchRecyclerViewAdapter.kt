@@ -21,7 +21,9 @@ import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.MainRecyclerView
 import ru.gidevent.androidapp.utils.Utils
 
 class SearchRecyclerViewAdapter(
-    private var dataSet: List<AdvertPreviewCard>
+    private var dataSet: List<AdvertPreviewCard>,
+    private val onClick: (id: Long)->Unit,
+    private val onFavourite: (id: Long)->Unit
 ) : RecyclerView.Adapter<SearchRecyclerViewAdapter.CardsViewHolder>() {
 
 
@@ -42,6 +44,17 @@ class SearchRecyclerViewAdapter(
     fun setItemsList(list: List<AdvertPreviewCard>) {
         dataSet = list
         notifyDataSetChanged()
+    }
+
+    fun updateItem(advert: AdvertPreviewCard) {
+        val position = dataSet.find { it.id == advert.id }?.let { dataSet.indexOf(it) }
+        if(position!=null){
+            val tmpList = mutableListOf<AdvertPreviewCard>()
+            tmpList.addAll(dataSet)
+            tmpList[position] = advert
+            dataSet = tmpList
+            notifyItemChanged(position)
+        }
     }
 
     override fun onBindViewHolder(holder: CardsViewHolder, position: Int) {
@@ -82,7 +95,7 @@ class SearchRecyclerViewAdapter(
         return textView
     }
 
-    class CardsViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    inner class CardsViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val name: TextView
         val price: TextView
         val imageView: ImageView
@@ -96,6 +109,12 @@ class SearchRecyclerViewAdapter(
             favourite = view.findViewById(R.id.iv_card_favourite)
             categories = view.findViewById(R.id.ll_card_category)
 
+            view.setOnClickListener {
+                onClick(dataSet[adapterPosition].id)
+            }
+            favourite.setOnClickListener {
+                onFavourite(dataSet[adapterPosition].id)
+            }
         }
     }
 

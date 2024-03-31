@@ -24,6 +24,7 @@ import ru.gidevent.androidapp.data.repository.AdvertisementRepository
 import ru.gidevent.androidapp.data.repository.UserRepository
 import ru.gidevent.androidapp.network.ApiResult
 import ru.gidevent.androidapp.ui.state.UIState
+import ru.gidevent.androidapp.ui.state.UIStateAdvertList
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,8 +32,8 @@ class SearchViewModel @Inject constructor(
     private val repository: UserRepository,
     private val advertRepository: AdvertisementRepository
 ) : ViewModel() {
-    private val dataResultMutableLiveData = MutableLiveData<UIState>(UIState.Idle)
-    val data: LiveData<UIState>
+    private val dataResultMutableLiveData = MutableLiveData<UIStateAdvertList>(UIStateAdvertList.Idle)
+    val data: LiveData<UIStateAdvertList>
         get() = dataResultMutableLiveData
     var approvedSearchOptions: SearchOptionsDto = SearchOptionsDto(
         0f,
@@ -90,6 +91,8 @@ class SearchViewModel @Inject constructor(
 
     fun initView() {
         viewModelScope.launch(Dispatchers.IO) {
+
+            dataResultMutableLiveData.postValue(UIStateAdvertList.Loading)
             val response = advertRepository.getAllAdvertisement()
 
 
@@ -111,16 +114,16 @@ class SearchViewModel @Inject constructor(
                         )
                     }
 
-                    dataResultMutableLiveData.postValue(UIState.Success(mainDataSet))
+                    dataResultMutableLiveData.postValue(UIStateAdvertList.Success(mainDataSet))
                 }
 
                 is ApiResult.Error -> {
                     when {
                         response.body.contains("Connection") -> dataResultMutableLiveData.postValue(
-                            UIState.ConnectionError
+                            UIStateAdvertList.ConnectionError
                         )
 
-                        response.code == 404 -> dataResultMutableLiveData.postValue(UIState.Error("Произошла ошибка, попробуйте снова"))
+                        response.code == 404 -> dataResultMutableLiveData.postValue(UIStateAdvertList.Error("Произошла ошибка, попробуйте снова"))
                     }
                 }
             }
@@ -130,6 +133,7 @@ class SearchViewModel @Inject constructor(
 
     fun searchByName(query: String) {
         viewModelScope.launch(Dispatchers.IO) {
+            dataResultMutableLiveData.postValue(UIStateAdvertList.Loading)
             val response = advertRepository.getSearchAdvertisement(query)
 
 
@@ -151,16 +155,16 @@ class SearchViewModel @Inject constructor(
                         )
                     }
 
-                    dataResultMutableLiveData.postValue(UIState.Success(mainDataSet))
+                    dataResultMutableLiveData.postValue(UIStateAdvertList.Success(mainDataSet))
                 }
 
                 is ApiResult.Error -> {
                     when {
                         response.body.contains("Connection") -> dataResultMutableLiveData.postValue(
-                            UIState.ConnectionError
+                            UIStateAdvertList.ConnectionError
                         )
 
-                        response.code == 404 -> dataResultMutableLiveData.postValue(UIState.Error("Произошла ошибка, попробуйте снова"))
+                        response.code == 404 -> dataResultMutableLiveData.postValue(UIStateAdvertList.Error("Произошла ошибка, попробуйте снова"))
                     }
                 }
             }
@@ -282,6 +286,7 @@ class SearchViewModel @Inject constructor(
 
     fun searchByParams() {
         viewModelScope.launch(Dispatchers.IO) {
+            dataResultMutableLiveData.postValue(UIStateAdvertList.Loading)
             val response = advertRepository.getAdvertisementByParams(
                 SearchOptions(
                     if (approvedSearchOptions.priceFrom == 0f) null else approvedSearchOptions.priceFrom,
@@ -320,20 +325,57 @@ class SearchViewModel @Inject constructor(
                         )
                     }
 
-                    dataResultMutableLiveData.postValue(UIState.Success(mainDataSet))
+                    dataResultMutableLiveData.postValue(UIStateAdvertList.Success(mainDataSet))
                 }
 
                 is ApiResult.Error -> {
                     when {
                         response.body.contains("Connection") -> dataResultMutableLiveData.postValue(
-                            UIState.ConnectionError
+                            UIStateAdvertList.ConnectionError
                         )
 
-                        response.code == 404 -> dataResultMutableLiveData.postValue(UIState.Error("Произошла ошибка, попробуйте снова"))
+                        response.code == 404 -> dataResultMutableLiveData.postValue(UIStateAdvertList.Error("Произошла ошибка, попробуйте снова"))
                     }
                 }
             }
         }
     }
 
+    fun postFavourite(id: Long){
+        viewModelScope.launch(Dispatchers.IO){
+            dataResultMutableLiveData.postValue(UIStateAdvertList.Loading)
+            val response = advertRepository.postFavourite(id)
+            when (response) {
+                is ApiResult.Success<Advertisement> -> {
+
+                    val advert = AdvertPreviewCard(
+                        response.data.id,
+                        response.data.favourite ?: false,
+                        response.data.name,
+                        listOf(response.data.category.name),
+                        response.data.priceList?.let { ticketPriceList ->
+                            ticketPriceList.firstOrNull()?.let { ticketPrice ->
+                                ticketPrice.price
+                            } ?: 0
+                        } ?: 0,
+                        response.data.photos.split(",").first()
+                    )
+
+
+                    dataResultMutableLiveData.postValue(UIStateAdvertList.Update(advert))
+                }
+
+                is ApiResult.Error -> {
+                    when{
+                        response.body.contains("Connection") -> dataResultMutableLiveData.postValue(
+                            UIStateAdvertList.ConnectionError)
+                        response.code == 403 || response.code == 401 -> dataResultMutableLiveData.postValue(
+                            UIStateAdvertList.Unauthorised)
+                        response.code == 404 -> dataResultMutableLiveData.postValue(
+                            UIStateAdvertList.Error("Произошла ошибка, и попробуйте снова"))
+                    }
+                }
+            }
+        }
+    }
 }

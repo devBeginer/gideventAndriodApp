@@ -28,7 +28,7 @@ class AdvertReviewRecyclerViewAdapter(
 
 
         return when  {
-            position<4 -> {
+            position<3 -> {
                 VIEW_TYPE_ITEM
             }
             else -> {

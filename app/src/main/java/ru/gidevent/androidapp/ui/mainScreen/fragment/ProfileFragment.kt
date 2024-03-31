@@ -10,12 +10,14 @@ import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import ru.gidevent.andriodapp.R
 import ru.gidevent.andriodapp.databinding.FragmentProfileBinding
+import ru.gidevent.androidapp.ui.SharedViewModel
 import ru.gidevent.androidapp.ui.edit.fragment.CreateAdvertisementFragment
 import ru.gidevent.androidapp.ui.edit.fragment.EditContainerFragment
 import ru.gidevent.androidapp.ui.mainScreen.viewModel.ProfileViewModel
 
 @AndroidEntryPoint
 class ProfileFragment: Fragment() {
+    private val sharedViewModel: SharedViewModel by viewModels({requireActivity()})
 
     private val viewModel: ProfileViewModel by viewModels()
 

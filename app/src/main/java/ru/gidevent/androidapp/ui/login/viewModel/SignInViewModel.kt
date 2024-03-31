@@ -28,6 +28,8 @@ class SignInViewModel @Inject constructor(private val repository: UserRepository
 
     fun login(login: String, password: String){
         viewModelScope.launch (Dispatchers.IO){
+
+            _loginState.postValue(UIState.Loading)
             val response = repository.userSignIn(LoginBodyRequest(login, password))
             when(response){
                 is ApiResult.Success<LoginBodyResponse> -> {

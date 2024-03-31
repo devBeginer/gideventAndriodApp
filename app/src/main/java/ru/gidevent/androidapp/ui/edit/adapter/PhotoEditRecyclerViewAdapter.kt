@@ -42,7 +42,7 @@ class PhotoEditRecyclerViewAdapter(
         viewType: Int
     ): MainViewHolder {
         return when (viewType) {
-            AdvertReviewRecyclerViewAdapter.VIEW_TYPE_ITEM -> {
+            VIEW_TYPE_ITEM -> {
                 val itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.recyclerview_item_photo, parent, false)
                 ItemViewHolder(itemView)

@@ -23,12 +23,14 @@ import ru.gidevent.RestAPI.model.Category
 import ru.gidevent.andriodapp.R
 import ru.gidevent.andriodapp.databinding.BottomsheetDialogPriceBinding
 import ru.gidevent.androidapp.data.model.advertisement.dto.CustomerCategory
+import ru.gidevent.androidapp.ui.SharedViewModel
 import ru.gidevent.androidapp.ui.edit.CreateAdvertViewModel
 import ru.gidevent.androidapp.ui.state.UIState
 import ru.gidevent.androidapp.utils.showSnack
 @AndroidEntryPoint
 class PriceBottomSheetDialog(): BottomSheetDialogFragment() {
     private val viewModel: CreateAdvertViewModel by viewModels({requireParentFragment()})
+    private val sharedViewModel: SharedViewModel by viewModels({requireActivity()})
     private var _binding: BottomsheetDialogPriceBinding? = null
     private val binding get() = _binding!!
 
@@ -63,6 +65,7 @@ class PriceBottomSheetDialog(): BottomSheetDialogFragment() {
             val category = customerCategory[binding.rgPriceCustomercategory.checkedRadioButtonId]
             if(!binding.etPriceAmount.text.isNullOrBlank()
                 && category!=null){
+                sharedViewModel.showProgressIndicator(true)
                 CoroutineScope(Dispatchers.IO).launch {
 
                     val result = viewModel.createPrice(binding.etPriceAmount.text.toString().toInt(), category.customerCategoryId)
@@ -73,9 +76,12 @@ class PriceBottomSheetDialog(): BottomSheetDialogFragment() {
                                 dismiss()
                             }
                             is UIState.Loading->{}
-                            is UIState.Error->{}
-                            is UIState.ConnectionError->{}
-                            is UIState.Unauthorised->{}
+                            is UIState.Error->{
+                                sharedViewModel.showProgressIndicator(false)}
+                            is UIState.ConnectionError->{
+                                sharedViewModel.showProgressIndicator(false)}
+                            is UIState.Unauthorised->{
+                                sharedViewModel.showProgressIndicator(false)}
                             is UIState.Idle->{}
                             else->{}
                         }
@@ -107,18 +113,26 @@ class PriceBottomSheetDialog(): BottomSheetDialogFragment() {
                     if(binding.rgPriceCustomercategory.childCount>0){
                         binding.rgPriceCustomercategory.check(binding.rgPriceCustomercategory.getChildAt(0).id)
                     }
+                    sharedViewModel.showProgressIndicator(false)
                 }
 
                 is UIState.Error -> {
+                    sharedViewModel.showProgressIndicator(false)
                     showSnack(requireView(), it.message, 5)
                 }
 
                 is UIState.ConnectionError -> {
+                    sharedViewModel.showProgressIndicator(false)
                     showSnack(requireView(), "Отсутствует интернет подключение", 3)
                 }
 
                 is UIState.Idle -> {
 
+                }
+
+                is UIState.Loading -> {
+
+                    sharedViewModel.showProgressIndicator(true)
                 }
 
                 else -> {}
@@ -146,6 +160,7 @@ class PriceBottomSheetDialog(): BottomSheetDialogFragment() {
             dialog.getButton(AlertDialog.BUTTON_POSITIVE)
                 .setOnClickListener {
                     CoroutineScope(Dispatchers.IO).launch {
+                        sharedViewModel.showProgressIndicator(true)
                         val result = viewModel.addCustomerCategory(editText.text.toString())
                         withContext(Dispatchers.Main){
                             when (result) {
@@ -157,15 +172,18 @@ class PriceBottomSheetDialog(): BottomSheetDialogFragment() {
                                     customerCategory[radioButton.id] = category
                                     binding.rgPriceCustomercategory.addView(radioButton)
 
+                                    sharedViewModel.showProgressIndicator(false)
                                     dialog.dismiss()
 
                                 }
 
                                 is UIState.Error -> {
+                                    sharedViewModel.showProgressIndicator(false)
                                     showSnack(requireView(), result.message, 5)
                                 }
 
                                 is UIState.ConnectionError -> {
+                                    sharedViewModel.showProgressIndicator(false)
                                     showSnack(requireView(), "Отсутствует интернет подключение", 3)
                                 }
 

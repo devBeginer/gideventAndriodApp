@@ -14,6 +14,7 @@ import ru.gidevent.andriodapp.databinding.FragmentPurchasesBinding
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.AdvertPreviewCard
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.HeaderViewpagerItem
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.MainRecyclerViewData
+import ru.gidevent.androidapp.ui.SharedViewModel
 import ru.gidevent.androidapp.ui.advertisement.AdvertisementFragment
 import ru.gidevent.androidapp.ui.login.fragment.SignInFragment
 import ru.gidevent.androidapp.ui.mainScreen.adapter.FavouriteRecyclerViewAdapter
@@ -29,6 +30,7 @@ import ru.gidevent.androidapp.utils.showSnack
 class PurchasesFragment : Fragment() {
 
     private val viewModel: PurchasesViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by viewModels({requireActivity()})
 
     private var _binding: FragmentPurchasesBinding? = null
     private val binding get() = _binding!!
@@ -82,6 +84,7 @@ class PurchasesFragment : Fragment() {
         viewModel.data.observe(viewLifecycleOwner, Observer {
             when(it){
                 is UIStateAdvertList.Success<*> -> {
+                    sharedViewModel.showProgressIndicator(false)
                     val dataSet = it.data as List<AdvertPreviewCard>?
                     if(dataSet!=null){
                         adapter.setItemsList(dataSet)
@@ -92,11 +95,14 @@ class PurchasesFragment : Fragment() {
                     if(advert!=null){
                         adapter.updateItem(advert)
                     }
+                    sharedViewModel.showProgressIndicator(false)
                 }
                 is UIStateAdvertList.Error -> {
+                    sharedViewModel.showProgressIndicator(false)
                     showSnack(requireView(), it.message, 5)
                 }
                 is UIStateAdvertList.ConnectionError -> {
+                    sharedViewModel.showProgressIndicator(false)
                     showSnack(requireView(), "Отсутствует интернет подключение", 3)
                 }
                 is UIStateAdvertList.Idle -> {
@@ -106,6 +112,10 @@ class PurchasesFragment : Fragment() {
                     binding.rvPurchasesCards.visibility = View.GONE
                     binding.tvPurchasesNotAuth.visibility = View.VISIBLE
                     binding.btnPurchasesSignIn.visibility = View.VISIBLE
+                    sharedViewModel.showProgressIndicator(false)
+                }
+                is UIStateAdvertList.Loading -> {
+                    sharedViewModel.showProgressIndicator(true)
                 }
                 else -> {}
             }

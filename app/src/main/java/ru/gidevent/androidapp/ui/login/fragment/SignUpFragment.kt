@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import ru.gidevent.andriodapp.R
 import ru.gidevent.andriodapp.databinding.FragmentSignUpBinding
+import ru.gidevent.androidapp.ui.SharedViewModel
 import ru.gidevent.androidapp.ui.login.viewModel.SignUpViewModel
 import ru.gidevent.androidapp.ui.state.UIState
 import ru.gidevent.androidapp.utils.showSnack
@@ -18,6 +19,7 @@ import ru.gidevent.androidapp.utils.showSnack
 class SignUpFragment : Fragment() {
 
     private val viewModel: SignUpViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by viewModels({requireActivity()})
 
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
@@ -94,14 +96,20 @@ class SignUpFragment : Fragment() {
                 }
 
                 is UIState.Error -> {
+                    sharedViewModel.showProgressIndicator(false)
                     showSnack(requireView(), it.message, 5)
                 }
 
                 is UIState.ConnectionError -> {
+                    sharedViewModel.showProgressIndicator(false)
                     showSnack(requireView(), "Отсутствует интернет подключение", 3)
                 }
 
                 is UIState.Idle -> {}
+
+                is UIState.Loading -> {
+                    sharedViewModel.showProgressIndicator(true)
+                }
                 else -> {}
             }
         })

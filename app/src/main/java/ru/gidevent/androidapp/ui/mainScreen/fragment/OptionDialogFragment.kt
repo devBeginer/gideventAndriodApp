@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.core.view.children
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.chip.Chip
 import com.google.android.material.datepicker.CalendarConstraints
@@ -19,6 +20,7 @@ import ru.gidevent.andriodapp.R
 import ru.gidevent.andriodapp.databinding.DialogFragmentOptionsBinding
 import ru.gidevent.androidapp.data.model.search.OptionsVariants
 import ru.gidevent.androidapp.data.model.suggestionsRecyclerviewModels.SuggestionRecyclerViewData
+import ru.gidevent.androidapp.ui.SharedViewModel
 import ru.gidevent.androidapp.ui.mainScreen.viewModel.SearchViewModel
 import ru.gidevent.androidapp.ui.state.UIState
 import ru.gidevent.androidapp.utils.Utils.toString
@@ -27,6 +29,7 @@ import java.util.Calendar
 import java.util.Locale
 
 class OptionDialogFragment(private val viewModel: SearchViewModel) : DialogFragment() {
+    private val sharedViewModel: SharedViewModel by viewModels({requireActivity()})
 
     //private val viewModel: SearchViewModel by viewModels({ requireParentFragment() })
 
@@ -443,15 +446,22 @@ class OptionDialogFragment(private val viewModel: SearchViewModel) : DialogFragm
                         categories[chip.id] = it
                         binding.chipGroupCategory.addView(chip)
                     }
+                    sharedViewModel.showProgressIndicator(false)
                 }
                 is UIState.Error -> {
+                    sharedViewModel.showProgressIndicator(false)
                     showSnack(requireView(), it.message, 5)
                 }
                 is UIState.ConnectionError -> {
+                    sharedViewModel.showProgressIndicator(false)
                     showSnack(requireView(), "Отсутствует интернет подключение", 3)
                 }
                 is UIState.Idle -> {
 
+                }
+
+                is UIState.Loading -> {
+                    sharedViewModel.showProgressIndicator(true)
                 }
                 else -> {}
             }

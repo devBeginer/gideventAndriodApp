@@ -39,7 +39,7 @@ class ScheduleEditRecyclerViewAdapter(
         viewType: Int
     ): MainViewHolder {
         return when (viewType) {
-            AdvertReviewRecyclerViewAdapter.VIEW_TYPE_ITEM -> {
+            VIEW_TYPE_ITEM -> {
                 val itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.recyclerview_item_schedule, parent, false)
                 ItemViewHolder(itemView)

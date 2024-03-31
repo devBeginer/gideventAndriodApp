@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.gidevent.andriodapp.databinding.BottomsheetDialogEventtimeBinding
 import ru.gidevent.androidapp.data.model.advertisement.dto.EventTime
+import ru.gidevent.androidapp.ui.SharedViewModel
 import ru.gidevent.androidapp.ui.edit.CreateAdvertViewModel
 import ru.gidevent.androidapp.ui.state.UIState
 import ru.gidevent.androidapp.utils.Utils.toString
@@ -27,6 +28,7 @@ import java.util.Locale
 @AndroidEntryPoint
 class EventtimeBottomSheetDialog(): BottomSheetDialogFragment() {
     private val viewModel: CreateAdvertViewModel by viewModels({requireParentFragment()})
+    private val sharedViewModel: SharedViewModel by viewModels({requireActivity()})
     private var _binding: BottomsheetDialogEventtimeBinding? = null
     private val binding get() = _binding!!
 
@@ -77,6 +79,7 @@ class EventtimeBottomSheetDialog(): BottomSheetDialogFragment() {
         }
 
         binding.btnScheduleCreate.setOnClickListener {
+
             val startDate = viewModel.editableStartDate
             val endDate = viewModel.editableEndDate
             if((!binding.switchScheduleRepeatable.isChecked
@@ -84,6 +87,7 @@ class EventtimeBottomSheetDialog(): BottomSheetDialogFragment() {
                         && endDate!=null))
                 && startDate != null
                 /*&& (!binding.switchScheduleRepeatable.isChecked || endDate!=null)*/){
+                sharedViewModel.showProgressIndicator(true)
                 CoroutineScope(Dispatchers.IO).launch {
                     var time = Calendar.getInstance(Locale.getDefault())
                     time.set(Calendar.HOUR_OF_DAY, binding.tpScheduleTime.hour)
@@ -93,7 +97,17 @@ class EventtimeBottomSheetDialog(): BottomSheetDialogFragment() {
                     var weekDays = ""
                     binding.chipGroupScheduleWeekdays.checkedChipIds.forEach {
                         val chip = binding.chipGroupScheduleWeekdays.findViewById<Chip>(it)
-                        weekDays += chip.text.toString()
+                        //weekDays += chip.text.toString()
+                        weekDays += when(chip.text.toString()){
+                            "Сб"->{"Saturday,"}
+                            "Вс"->{"Sunday,"}
+                            "Пн"->{"Monday,"}
+                            "Вт"->{"Tuesday,"}
+                            "Ср"->{"Wednesday,"}
+                            "Чт"->{"Thursday,"}
+                            "Пт"->{"Friday,"}
+                            else -> {""}
+                        }
                     }
                     val result = viewModel.createEventTime(
                         EventTime(0,
@@ -112,9 +126,12 @@ class EventtimeBottomSheetDialog(): BottomSheetDialogFragment() {
                                 dismiss()
                             }
                             is UIState.Loading->{}
-                            is UIState.Error->{}
-                            is UIState.ConnectionError->{}
-                            is UIState.Unauthorised->{}
+                            is UIState.Error->{
+                                sharedViewModel.showProgressIndicator(false)}
+                            is UIState.ConnectionError->{
+                                sharedViewModel.showProgressIndicator(false)}
+                            is UIState.Unauthorised->{
+                                sharedViewModel.showProgressIndicator(false)}
                             is UIState.Idle->{}
                             else->{}
                         }

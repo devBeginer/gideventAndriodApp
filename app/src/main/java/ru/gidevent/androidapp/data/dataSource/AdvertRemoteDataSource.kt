@@ -9,6 +9,7 @@ import ru.gidevent.androidapp.data.model.advertisement.request.EventTimeRequest
 import ru.gidevent.androidapp.data.model.advertisement.request.NewAdvertisement
 import ru.gidevent.androidapp.data.model.advertisement.request.TicketPrice
 import ru.gidevent.androidapp.data.model.advertisement.request.TicketPriceRequest
+import ru.gidevent.androidapp.data.model.booking.BookingRequest
 import ru.gidevent.androidapp.data.model.request.search.SearchOptions
 import ru.gidevent.androidapp.data.service.AdvertisementApiService
 import ru.gidevent.androidapp.network.NetworkHelper
@@ -123,5 +124,13 @@ class AdvertRemoteDataSource @Inject constructor(
 
     suspend fun postFavourite(credentials: String, advertId: Long) =
         networkHelper.safeApiCall { advertApiService.postFavourite(advertId, credentials)}
+
+
+    suspend fun getBookingParams(credentials: String, advertId: Long, dateParam: Long) =
+        networkHelper.safeApiCall { advertApiService.getBookingParams(advertId, dateParam, credentials)}
+
+
+    suspend fun postBooking(credentials: String, bookingRequest: BookingRequest) =
+        networkHelper.safeApiCall { advertApiService.postBooking(bookingRequest, credentials)}
 
 }

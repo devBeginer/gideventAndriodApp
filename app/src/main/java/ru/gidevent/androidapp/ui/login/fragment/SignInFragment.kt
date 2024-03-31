@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import ru.gidevent.andriodapp.R
 import ru.gidevent.andriodapp.databinding.FragmentSignInBinding
+import ru.gidevent.androidapp.ui.SharedViewModel
 import ru.gidevent.androidapp.ui.VKID.PKCEUtil
 import ru.gidevent.androidapp.ui.mainScreen.fragment.MainScreenContainerFragment
 import ru.gidevent.androidapp.ui.login.viewModel.SignInViewModel
@@ -25,6 +26,7 @@ import java.util.UUID
 class SignInFragment : Fragment() {
 
     private val viewModel: SignInViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by viewModels({requireActivity()})
 
     private var _binding: FragmentSignInBinding? = null
     private val binding get() = _binding!!
@@ -93,13 +95,20 @@ class SignInFragment : Fragment() {
                     requireActivity().supportFragmentManager.beginTransaction()
                         .replace(R.id.nav_host_fragment, MainScreenContainerFragment())/*.addToBackStack(null)*/
                         .commit()
-                }is UIState.Error -> {
+                }
+                is UIState.Error -> {
+                    sharedViewModel.showProgressIndicator(false)
                     showSnack(requireView(), it.message, 5)
                 }
                 is UIState.ConnectionError -> {
+                    sharedViewModel.showProgressIndicator(false)
                     showSnack(requireView(), "Отсутствует интернет подключение", 3)
                 }
                 is UIState.Idle -> {}
+
+                is UIState.Loading -> {
+                    sharedViewModel.showProgressIndicator(true)
+                }
                 else -> {}
             }
         })

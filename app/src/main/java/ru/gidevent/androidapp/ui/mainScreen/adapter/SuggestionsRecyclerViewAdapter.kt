@@ -1,27 +1,20 @@
 package ru.gidevent.androidapp.ui.mainScreen.adapter
 
-import android.app.ActionBar.LayoutParams
-import android.content.Context
-import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.core.view.setPadding
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import ru.gidevent.RestAPI.model.Category
+import ru.gidevent.RestAPI.model.City
 import ru.gidevent.andriodapp.R
-import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.MainRecyclerViewData
 import ru.gidevent.androidapp.data.model.suggestionsRecyclerviewModels.SuggestionRecyclerViewData
 
 class SuggestionsRecyclerViewAdapter(
     private var dataSet: SuggestionRecyclerViewData,
-    private val onClick: (id: Long)->Unit
+    private val onClick: (id: Long)->Unit,
+    private val onClickCity: (city: City)->Unit,
+    private val onClickCategory: (category: Category)->Unit
 ) : RecyclerView.Adapter<SuggestionsRecyclerViewAdapter.MainViewHolder>() {
     companion object{
         const val VIEW_TYPE_CATEGORY: Int = 0
@@ -93,7 +86,7 @@ class SuggestionsRecyclerViewAdapter(
             name = view.findViewById(R.id.tv_suggestion_name)
             city = view.findViewById(R.id.tv_suggestion_item_city)
             view.setOnClickListener {
-                onClick(dataSet.suggestionsList[adapterPosition].id)
+                onClick(dataSet.suggestionsList[adapterPosition-dataSet.categoryList.size-dataSet.cityList.size].id)
             }
         }
 
@@ -109,6 +102,9 @@ class SuggestionsRecyclerViewAdapter(
 
         init {
             name = view.findViewById(R.id.tv_suggestion_city)
+            view.setOnClickListener {
+                onClickCity(City(dataSet.cityList[adapterPosition-dataSet.categoryList.size].id, dataSet.cityList[adapterPosition-dataSet.categoryList.size].name))
+            }
         }
 
         override fun bind(position: Int) {
@@ -123,6 +119,9 @@ class SuggestionsRecyclerViewAdapter(
 
         init {
             name = view.findViewById(R.id.tv_suggestion_category)
+            view.setOnClickListener {
+                onClickCategory(Category(dataSet.categoryList[adapterPosition].id, dataSet.categoryList[adapterPosition].name))
+            }
         }
 
         override fun bind(position: Int) {
