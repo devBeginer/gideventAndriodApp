@@ -16,7 +16,10 @@ import ru.gidevent.androidapp.data.model.advertisement.AdvertisementCardInfo
 import ru.gidevent.androidapp.ui.SharedViewModel
 import ru.gidevent.androidapp.ui.advertisement.adapter.AdvertReviewRecyclerViewAdapter
 import ru.gidevent.androidapp.ui.advertisement.adapter.AdvertViewPagerAdapter
+import ru.gidevent.androidapp.ui.edit.fragment.CreateAdvertisementFragment
 import ru.gidevent.androidapp.ui.edit.fragment.PriceBottomSheetDialog
+import ru.gidevent.androidapp.ui.mainScreen.fragment.MainScreenContainerFragment
+import ru.gidevent.androidapp.ui.makeBooking.MakeBookingFragment
 import ru.gidevent.androidapp.ui.state.UIState
 import ru.gidevent.androidapp.utils.Utils
 import ru.gidevent.androidapp.utils.showSnack
@@ -70,6 +73,12 @@ class AdvertisementFragment : Fragment() {
         binding.tvAdvertReviewsAdd.setOnClickListener {
             FeedbackBottomSheetDialog(viewModel)
                 .show(parentFragmentManager, "priceBottomSheetDialog")
+        }
+        binding.btnAdvertBuy.setOnClickListener {
+            id?.let { advertId-> requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment, MakeBookingFragment.newInstance(advertId)).addToBackStack(null).commit()
+            }
+
         }
     }
 

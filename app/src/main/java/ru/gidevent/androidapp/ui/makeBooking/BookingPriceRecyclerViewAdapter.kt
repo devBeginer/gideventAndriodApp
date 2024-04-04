@@ -33,6 +33,7 @@ class BookingPriceRecyclerViewAdapter(
     ) {
         holder.categoryName.text = dataSet[position].name
         holder.price.text = dataSet[position].price.toString()
+        holder.count.text = dataSet[position].count.toString()
     }
 
     override fun getItemCount(): Int {
@@ -77,12 +78,12 @@ class BookingPriceRecyclerViewAdapter(
             btnMinus = view.findViewById(R.id.iv_booking_price_minus)
             btnPlus.setOnClickListener {
                 val newCount = onPlus(/*count.text.toString().toInt()*/dataSet[adapterPosition].count, dataSet[adapterPosition].price, dataSet[adapterPosition].priceId)
-                count.text = newCount.toString()
+                //count.text = newCount.toString()
                 updateItemList(newCount, adapterPosition)
             }
             btnMinus.setOnClickListener {
                 val newCount = onMinus(/*count.text.toString().toInt(),*/dataSet[adapterPosition].count, dataSet[adapterPosition].price, dataSet[adapterPosition].priceId)
-                count.text = newCount.toString()
+                //count.text = newCount.toString()
                 updateItemList(newCount, adapterPosition)
             }
         }

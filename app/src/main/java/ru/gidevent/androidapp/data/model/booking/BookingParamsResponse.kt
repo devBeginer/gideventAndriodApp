@@ -5,6 +5,5 @@ import ru.gidevent.androidapp.data.model.advertisement.response.TicketPriceRespo
 
 data class BookingParamsResponse(
     val eventTimeList: List<EventTimeWithCountResponse>,
-    val price: List<TicketPriceResponse>,
-    val maxCount: Int
+    val price: List<TicketPriceResponse>
 )

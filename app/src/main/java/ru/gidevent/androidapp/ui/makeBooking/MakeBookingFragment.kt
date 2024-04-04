@@ -108,28 +108,52 @@ class MakeBookingFragment  : Fragment() {
     private fun initView() {
         id?.let { viewModel.initView(it) }
         adapter = BookingPriceRecyclerViewAdapter(listOf(),
-            {count, price, id->
-                var newCount = count - 1
-                if(newCount>=0) {
-                    viewModel.totalCost -= price
+            { count, price, id ->
+                return@BookingPriceRecyclerViewAdapter if (time[binding.chipGroupMakeBookingTime.checkedChipId]!=null) {
+                    var newCount = count - 1
+                    newCount = if (newCount >= 0) {
+                        viewModel.totalCost -= price
+                        viewModel.totalCount--
+                        viewModel.priceCount[id] = newCount
+                        newCount
+                    }else{
+                        count
+                    }
+                    viewModel.postTotal()
+                    newCount
+                } else {
+                    showSnack(
+                        requireView(),
+                        "Не выбрано время, выберете время и повторите снова",
+                        5
+                    )
+                    0
                 }
-                newCount = if(newCount<0) 0 else newCount
-                viewModel.priceCount[id] = newCount
-                viewModel.postTotal()
-                return@BookingPriceRecyclerViewAdapter newCount
             },
-            {count, price, id->
-                var newCount = if(viewModel.totalCount<viewModel.maxCount){
-                    viewModel.priceCount[id] = count + 1
-                    viewModel.totalCount++
-                    viewModel.totalCost += price
-                    count + 1
-                }else{
-                    count
+            { count, price, id ->
+                val tmp = time[binding.chipGroupMakeBookingTime.checkedChipId]
+                return@BookingPriceRecyclerViewAdapter if (tmp!=null) {
+                    val max = time[binding.chipGroupMakeBookingTime.checkedChipId]?.let { time ->
+                        viewModel.maxCount[time.timeId]
+                    } ?: 0
+                    var newCount = if (viewModel.totalCount < max) {
+                        viewModel.priceCount[id] = count + 1
+                        viewModel.totalCount++
+                        viewModel.totalCost += price
+                        count + 1
+                    } else {
+                        count
+                    }
+                    viewModel.postTotal()
+                    newCount
+                } else {
+                    showSnack(
+                        requireView(),
+                        "Не выбрано время, выберете время и повторите снова",
+                        5
+                    )
+                    0
                 }
-                viewModel.postTotal()
-                //TODO проверка максимального начения
-                return@BookingPriceRecyclerViewAdapter newCount
             })
         binding.rvMakeBookingPrice.adapter = adapter
         binding.tvMakeBookingDate.text = "${viewModel.date.time.toString("dd.MM.yyyy, EE")}"
@@ -175,6 +199,16 @@ class MakeBookingFragment  : Fragment() {
             viewModel.date = newDate
             id?.let { viewModel.initView(it) }
             binding.tvMakeBookingDate.text = "${viewModel.date.time.toString("dd.MM.yyyy, EE")}"
+        }
+    }
+
+    companion object {
+        fun newInstance(id: Long): MakeBookingFragment {
+            val fragment = MakeBookingFragment()
+            val args = Bundle()
+            args.putLong("ID", id)
+            fragment.setArguments(args)
+            return fragment
         }
     }
 }

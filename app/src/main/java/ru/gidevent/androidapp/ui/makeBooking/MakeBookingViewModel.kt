@@ -43,7 +43,7 @@ class MakeBookingViewModel @Inject constructor(
         get() = _total
 
     val priceCount = mutableMapOf<Long, Int>()
-    var maxCount = 0
+    var maxCount = mutableMapOf<Long, Int>()
     var totalCount = 0
     var totalCost = 0
 
@@ -56,6 +56,8 @@ class MakeBookingViewModel @Inject constructor(
 
                     val mainData = response.data
                     val eventTime = mainData.eventTimeList.map {
+                        maxCount.clear()
+                        maxCount[it.timeId] = it.count
                         val time = Calendar.getInstance(Locale.getDefault())
                         time.timeInMillis = it.time
                         val startData = Calendar.getInstance(Locale.getDefault())
@@ -68,7 +70,7 @@ class MakeBookingViewModel @Inject constructor(
                         BookingPriceRVItem(it.priceId, it.customerCategory.customerCategoryId, it.customerCategory.name, it.price, priceCount[it.priceId]?:0)
                     }
 
-                    maxCount = response.data.maxCount
+
                     _bookingVariant.postValue(
                         UIStateMakeBooking.UpdateUI(
                             BookingParams(eventTime, price)
