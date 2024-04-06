@@ -61,6 +61,23 @@ class BookingPriceRecyclerViewAdapter(
 
     }
 
+    fun resetItemList(){
+        val newDataSet = mutableListOf<BookingPriceRVItem>()
+        newDataSet.addAll(dataSet)
+
+        dataSet = newDataSet.map {
+            BookingPriceRVItem(
+                it.priceId,
+                it.customerCategoryId,
+                it.name,
+                it.price,
+                0
+            )
+        }
+        notifyDataSetChanged()
+
+    }
+
 
 
     inner class ItemViewHolder(view: View): RecyclerView.ViewHolder(view) {

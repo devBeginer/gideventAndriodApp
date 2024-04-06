@@ -3,6 +3,7 @@ package ru.gidevent.androidapp.utils
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -74,6 +75,20 @@ object Utils {
     fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
         val formatter = SimpleDateFormat(format, locale)
         return formatter.format(this)
+    }
+
+    fun dayOfWeekToString(date: Calendar): String {
+        val day = date.get(Calendar.DAY_OF_WEEK)
+        return when (day) {
+            Calendar.SUNDAY -> "Вс"
+            Calendar.MONDAY -> "Пн"
+            Calendar.TUESDAY -> "Вт"
+            Calendar.WEDNESDAY -> "Ср"
+            Calendar.THURSDAY -> "Чт"
+            Calendar.FRIDAY -> "Пт"
+            Calendar.SATURDAY -> "Сб"
+            else -> ""
+        }
     }
 
 

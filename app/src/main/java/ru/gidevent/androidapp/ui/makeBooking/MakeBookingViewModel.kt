@@ -33,6 +33,12 @@ class MakeBookingViewModel @Inject constructor(
 ): ViewModel() {
 
     var date = Calendar.getInstance(Locale.getDefault())
+    init {
+        date.set(Calendar.HOUR_OF_DAY, 0)
+        date.set(Calendar.SECOND, 0)
+        date.set(Calendar.MINUTE, 0)
+        date.set(Calendar.MILLISECOND, 0)
+    }
 
     private val _bookingVariant = MutableLiveData<UIStateMakeBooking>(UIStateMakeBooking.Loading)
     val bookingVariant: LiveData<UIStateMakeBooking>
@@ -55,8 +61,11 @@ class MakeBookingViewModel @Inject constructor(
                 is ApiResult.Success<BookingParamsResponse> -> {
 
                     val mainData = response.data
+                    maxCount.clear()
+                    priceCount.clear()
+                    totalCount = 0
+                    totalCost = 0
                     val eventTime = mainData.eventTimeList.map {
-                        maxCount.clear()
                         maxCount[it.timeId] = it.count
                         val time = Calendar.getInstance(Locale.getDefault())
                         time.timeInMillis = it.time
@@ -66,8 +75,18 @@ class MakeBookingViewModel @Inject constructor(
                         endData.timeInMillis = it.endDate
                         EventTime(it.timeId, time, it.isRepeatable, it.daysOfWeek, startData, endData)
                     }
-                    val price = mainData.price.map {
-                        BookingPriceRVItem(it.priceId, it.customerCategory.customerCategoryId, it.customerCategory.name, it.price, priceCount[it.priceId]?:0)
+                    val price = if(eventTime.isNotEmpty()) {
+                        mainData.price.map {
+                            BookingPriceRVItem(
+                                it.priceId,
+                                it.customerCategory.customerCategoryId,
+                                it.customerCategory.name,
+                                it.price,
+                                priceCount[it.priceId] ?: 0
+                            )
+                        }
+                    }else{
+                        listOf()
                     }
 
 
@@ -132,6 +151,12 @@ class MakeBookingViewModel @Inject constructor(
 
     fun postTotal(){
         _total.postValue(Pair(totalCount, totalCost))
+    }
+
+    fun resetPriceList(){
+        priceCount.clear()
+        totalCount = 0
+        totalCost = 0
     }
 
 }

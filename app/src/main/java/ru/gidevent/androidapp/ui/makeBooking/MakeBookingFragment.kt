@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
+import com.google.android.material.chip.ChipGroup.OnCheckedStateChangeListener
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,6 +23,7 @@ import ru.gidevent.androidapp.data.model.booking.GroupRequest
 import ru.gidevent.androidapp.ui.SharedViewModel
 import ru.gidevent.androidapp.ui.mainScreen.fragment.MainScreenContainerFragment
 import ru.gidevent.androidapp.ui.state.UIStateMakeBooking
+import ru.gidevent.androidapp.utils.Utils
 import ru.gidevent.androidapp.utils.Utils.toString
 import ru.gidevent.androidapp.utils.showSnack
 import java.util.Calendar
@@ -156,6 +159,7 @@ class MakeBookingFragment  : Fragment() {
                 }
             })
         binding.rvMakeBookingPrice.adapter = adapter
+        //binding.tvMakeBookingDate.text = "${viewModel.date.time.toString("dd.MM.yyyy")}, ${Utils.dayOfWeekToString(viewModel.date)}"
         binding.tvMakeBookingDate.text = "${viewModel.date.time.toString("dd.MM.yyyy, EE")}"
         binding.tvMakeBookingDateSelect.setOnClickListener {
             showDatePicker()
@@ -172,6 +176,11 @@ class MakeBookingFragment  : Fragment() {
                     }
                 }
             }
+        }
+
+        binding.chipGroupMakeBookingTime.setOnCheckedStateChangeListener { chipGroup, ints ->
+            viewModel.resetPriceList()
+            adapter.resetItemList()
         }
     }
 
@@ -196,8 +205,13 @@ class MakeBookingFragment  : Fragment() {
 
             var newDate = Calendar.getInstance(Locale.getDefault())
             newDate.timeInMillis = dates
+            newDate.set(Calendar.HOUR_OF_DAY, 0)
+            newDate.set(Calendar.SECOND, 0)
+            newDate.set(Calendar.MINUTE, 0)
+            newDate.set(Calendar.MILLISECOND, 0)
             viewModel.date = newDate
             id?.let { viewModel.initView(it) }
+            //binding.tvMakeBookingDate.text = "${viewModel.date.time.toString("dd.MM.yyyy")}, ${Utils.dayOfWeekToString(viewModel.date)}"
             binding.tvMakeBookingDate.text = "${viewModel.date.time.toString("dd.MM.yyyy, EE")}"
         }
     }
