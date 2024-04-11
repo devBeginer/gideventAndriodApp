@@ -12,12 +12,10 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.setPadding
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import ru.gidevent.andriodapp.R
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.AdvertPreviewCard
-import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.MainRecyclerViewData
 import ru.gidevent.androidapp.utils.Utils
 
 class PurchasesRecyclerViewAdapter(
@@ -29,7 +27,7 @@ class PurchasesRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardsViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.cards_recycler_view_item, parent, false)
+                    .inflate(R.layout.recyclerview_item_cards, parent, false)
         return CardsViewHolder(itemView)
 
 
@@ -43,6 +41,7 @@ class PurchasesRecyclerViewAdapter(
 
     fun setItemsList(list: List<AdvertPreviewCard>) {
         dataSet = list
+        notifyDataSetChanged()
     }
 
     fun updateItem(advert: AdvertPreviewCard) {

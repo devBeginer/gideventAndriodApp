@@ -60,7 +60,7 @@ class MainRecyclerViewAdapter(
             }
             else -> {
                 val itemView = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.cards_recycler_view_item, parent, false)
+                    .inflate(R.layout.recyclerview_item_cards, parent, false)
                 CardsViewHolder(itemView)
 
             }

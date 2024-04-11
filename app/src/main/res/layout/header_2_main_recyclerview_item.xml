@@ -14,5 +14,5 @@
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="9"
-        tools:listitem="@layout/category_recycler_view_item" />
+        tools:listitem="@layout/recyclerview_item_category" />
 </androidx.constraintlayout.widget.ConstraintLayout>

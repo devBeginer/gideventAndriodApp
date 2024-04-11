@@ -31,6 +31,10 @@ import ru.gidevent.androidapp.data.model.advertisement.response.TicketPriceRespo
 import ru.gidevent.androidapp.data.model.booking.BookingParamsResponse
 import ru.gidevent.androidapp.data.model.booking.BookingRequest
 import ru.gidevent.androidapp.data.model.booking.BookingResponse
+import ru.gidevent.androidapp.data.model.myAdverts.AdvertChip
+import ru.gidevent.androidapp.data.model.myAdverts.BookingInfoResponse
+import ru.gidevent.androidapp.data.model.myAdverts.SellerAdvertResponse
+import ru.gidevent.androidapp.data.model.myAdverts.SellerBookingResponse
 import ru.gidevent.androidapp.data.model.request.search.SearchOptions
 import ru.gidevent.androidapp.data.model.search.OptionsVariants
 import ru.gidevent.androidapp.network.ApiResult
@@ -78,6 +82,12 @@ class AdvertisementRepository @Inject constructor(
     suspend fun getFavouriteAdvertisement(): ApiResult<List<Advertisement>> {
         val token = userLocalDataSource.getAccessTokenFromSP()
         return advertRemoteDataSource.getFavouriteAdvertList(token)
+
+    }
+
+    suspend fun getPurchasesAdvertisement(): ApiResult<List<Advertisement>> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+        return advertRemoteDataSource.getPurchasesAdvertisement(token)
 
     }
 
@@ -287,5 +297,35 @@ class AdvertisementRepository @Inject constructor(
         val token = userLocalDataSource.getAccessTokenFromSP()
 
         return advertRemoteDataSource.postBooking(token, bookingRequest)
+    }
+
+    suspend fun postBookingConfirmation(bookingId: Long): ApiResult<BookingResponse> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+
+        return advertRemoteDataSource.postBookingConfirmation(token, bookingId)
+    }
+
+    suspend fun getBookingInfo(bookingId: Long): ApiResult<BookingInfoResponse> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+
+        return advertRemoteDataSource.getBookingInfo(token, bookingId)
+    }
+
+    suspend fun getSellerBooking(advertId: Long, date: Long?): ApiResult<List<SellerBookingResponse>> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+
+        return advertRemoteDataSource.getSellerBooking(token, advertId, date)
+    }
+
+    suspend fun getAdvertChips(): ApiResult<List<AdvertChip>> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+
+        return advertRemoteDataSource.getAdvertChips(token)
+    }
+
+    suspend fun getSellerAdvert(): ApiResult<List<SellerAdvertResponse>> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+
+        return advertRemoteDataSource.getSellerAdvert(token)
     }
 }

@@ -7,7 +7,7 @@
         android:id="@+id/tv_main_screen_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_repeat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -22,13 +22,35 @@
         android:text="repeat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_profile_create_advert"
         app:layout_constraintTop_toBottomOf="@+id/tv_main_screen_container" />
 
     <Button
         android:id="@+id/btn_profile_create_advert"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Создать"
+        android:text="Создать объявление"
+        app:layout_constraintBottom_toTopOf="@id/btn_profile_my_advert"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_repeat" />
+
+    <Button
+        android:id="@+id/btn_profile_my_advert"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Мои объявления"
+        app:layout_constraintBottom_toTopOf="@id/btn_profile_my_bookings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_profile_create_advert" />
+
+    <Button
+        android:id="@+id/btn_profile_my_bookings"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Мои брони"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_repeat" />

@@ -3,4 +3,6 @@
     <string name="favourite_toolbar_title">Избранное</string>
     <string name="purchases_toolbar_title">Заказы</string>
     <string name="search_toolbar_title">Поиск</string>
+    <string name="my_advert_toolbar_title">Мои объявления</string>
+    <string name="my_booking_toolbar_title">Брони</string>
 </resources>

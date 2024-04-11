@@ -10,5 +10,5 @@ data class BookingResponse(
         val bookingTime: Long,
         val date: Long,
         val totalPrice: Int,
-        val idApproved: Boolean
+        val isApproved: Boolean
 )

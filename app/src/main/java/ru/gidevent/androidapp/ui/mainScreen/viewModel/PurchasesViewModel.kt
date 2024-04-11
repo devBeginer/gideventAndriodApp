@@ -31,7 +31,7 @@ class PurchasesViewModel @Inject constructor(
         viewModelScope.launch (Dispatchers.IO){
             if(repository.isAuthorised()){
                 dataResultMutableLiveData.postValue(UIStateAdvertList.Loading)
-                val response = advertRepository.getFavouriteAdvertisement()
+                val response = advertRepository.getPurchasesAdvertisement()
                 when (response) {
                     is ApiResult.Success<List<Advertisement>> -> {
 

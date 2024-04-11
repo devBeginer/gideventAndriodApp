@@ -27,7 +27,7 @@ class FavouriteRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardsViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.cards_recycler_view_item, parent, false)
+                    .inflate(R.layout.recyclerview_item_cards, parent, false)
         return CardsViewHolder(itemView)
 
 

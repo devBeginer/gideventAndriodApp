@@ -34,6 +34,8 @@ class AdvertRemoteDataSource @Inject constructor(
         networkHelper.safeApiCall { advertApiService.getAllAdvertisement(credentials) }
     suspend fun getFavouriteAdvertList(credentials: String) =
         networkHelper.safeApiCall { advertApiService.getFavouriteAdvertisement(credentials) }
+    suspend fun getPurchasesAdvertisement(credentials: String) =
+        networkHelper.safeApiCall { advertApiService.getPurchasesAdvertisement(credentials) }
     suspend fun getSuggestions(query: String) =
         networkHelper.safeApiCall { advertApiService.getSuggestionByName(query) }
     suspend fun getCitySuggestions(query: String) =
@@ -132,5 +134,23 @@ class AdvertRemoteDataSource @Inject constructor(
 
     suspend fun postBooking(credentials: String, bookingRequest: BookingRequest) =
         networkHelper.safeApiCall { advertApiService.postBooking(bookingRequest, credentials)}
+
+
+    suspend fun postBookingConfirmation(credentials: String, bookingId: Long) =
+        networkHelper.safeApiCall { advertApiService.postBookingConfirmation(bookingId, credentials)}
+
+
+    suspend fun getBookingInfo(credentials: String, bookingId: Long) =
+        networkHelper.safeApiCall { advertApiService.getBookingInfo(bookingId, credentials)}
+
+
+    suspend fun getSellerBooking(credentials: String, advertId: Long, date: Long?) =
+        networkHelper.safeApiCall { advertApiService.getSellerBooking(advertId, date, credentials)}
+    suspend fun getAdvertChips(credentials: String) =
+        networkHelper.safeApiCall { advertApiService.getAdvertChips(credentials)}
+
+
+    suspend fun getSellerAdvert(credentials: String) =
+        networkHelper.safeApiCall { advertApiService.getSellerAdvert(credentials)}
 
 }

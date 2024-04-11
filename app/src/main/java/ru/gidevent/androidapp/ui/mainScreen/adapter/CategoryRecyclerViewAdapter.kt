@@ -18,7 +18,7 @@ class CategoryRecyclerViewAdapter() : RecyclerView.Adapter<CategoryRecyclerViewA
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardsViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.category_recycler_view_item, parent, false)
+            .inflate(R.layout.recyclerview_item_category, parent, false)
         return CardsViewHolder(itemView)
     }
 

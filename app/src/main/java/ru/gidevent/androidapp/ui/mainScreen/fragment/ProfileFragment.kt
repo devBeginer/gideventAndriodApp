@@ -59,5 +59,19 @@ class ProfileFragment: Fragment() {
                 .replace(R.id.nav_host_fragment, EditContainerFragment()).addToBackStack(null)
                 .commit()
         }
+
+        binding.btnProfileMyAdvert.setOnClickListener {
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.nav_host_fragment, MyAdvertsFragment()).addToBackStack(null)
+                .commit()
+        }
+
+        binding.btnProfileMyBookings.setOnClickListener {
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.nav_host_fragment, MyBookingsFragment()).addToBackStack(null)
+                .commit()
+        }
     }
 }

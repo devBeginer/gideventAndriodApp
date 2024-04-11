@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    android:minHeight="400dp"
+    android:paddingHorizontal="16dp">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/tv_booking_info_booking_name_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Название"
+                android:gravity="center_vertical|start"
+                app:layout_constraintEnd_toStartOf="@id/tv_booking_info_booking_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_booking_info_booking_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Название"
+                android:textStyle="bold"
+                android:gravity="center_vertical|end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_booking_info_booking_name_title"
+                app:layout_constraintTop_toTopOf="@id/tv_booking_info_booking_name_title"
+                app:layout_constraintBottom_toBottomOf="@id/tv_booking_info_booking_name_title" />
+
+            <TextView
+                android:id="@+id/tv_booking_info_booking_date_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Дата"
+                android:gravity="center_vertical|start"
+                app:layout_constraintEnd_toStartOf="@id/tv_booking_info_booking_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_booking_info_booking_name_title" />
+
+            <TextView
+                android:id="@+id/tv_booking_info_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="10.04.24"
+                android:textStyle="bold"
+                android:gravity="center_vertical|end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_booking_info_booking_name_title"
+                app:layout_constraintTop_toTopOf="@id/tv_booking_info_booking_date_title"
+                app:layout_constraintBottom_toBottomOf="@id/tv_booking_info_booking_date_title" />
+
+            <TextView
+                android:id="@+id/tv_booking_info_booking_time_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Время"
+                android:gravity="center_vertical|start"
+                app:layout_constraintEnd_toStartOf="@id/tv_booking_info_booking_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_booking_info_date" />
+
+            <TextView
+                android:id="@+id/tv_booking_info_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="10:00"
+                android:textStyle="bold"
+                android:gravity="center_vertical|end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_booking_info_booking_name_title"
+                app:layout_constraintTop_toTopOf="@id/tv_booking_info_booking_time_title"
+                app:layout_constraintBottom_toBottomOf="@id/tv_booking_info_booking_time_title" />
+
+            <TextView
+                android:id="@+id/tv_booking_info_booking_timestamp_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Время бронирования"
+                android:gravity="center_vertical|start"
+                app:layout_constraintEnd_toStartOf="@id/tv_booking_info_booking_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_booking_info_booking_time_title" />
+
+            <TextView
+                android:id="@+id/tv_booking_info_timestamp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="10.04.24 10:00"
+                android:textStyle="bold"
+                android:gravity="center_vertical|end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_booking_info_booking_timestamp_title"
+                app:layout_constraintTop_toTopOf="@id/tv_booking_info_booking_timestamp_title"
+                app:layout_constraintBottom_toBottomOf="@id/tv_booking_info_booking_timestamp_title" />
+
+            <TextView
+                android:id="@+id/tv_booking_info_booking_confirmed_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Статус"
+                android:gravity="center_vertical|start"
+                app:layout_constraintEnd_toStartOf="@id/tv_booking_info_booking_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_booking_info_booking_timestamp_title" />
+
+            <TextView
+                android:id="@+id/tv_booking_info_confirmed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Подтверждена"
+                android:textStyle="bold"
+                android:gravity="center_vertical|end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_booking_info_booking_confirmed_title"
+                app:layout_constraintTop_toTopOf="@id/tv_booking_info_booking_confirmed_title"
+                app:layout_constraintBottom_toBottomOf="@id/tv_booking_info_booking_confirmed_title" />
+
+            <TextView
+                android:id="@+id/tv_booking_info_booking_customer_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Заказчик"
+                android:gravity="center_vertical|start"
+                app:layout_constraintEnd_toStartOf="@id/tv_booking_info_booking_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_booking_info_booking_confirmed_title" />
+
+            <TextView
+                android:id="@+id/tv_booking_info_customer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Сидоров Иван Петрович"
+                android:textStyle="bold"
+                android:gravity="center_vertical|end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_booking_info_booking_customer_title"
+                app:layout_constraintTop_toTopOf="@id/tv_booking_info_booking_customer_title"
+                app:layout_constraintBottom_toBottomOf="@id/tv_booking_info_booking_customer_title" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_booking_info_customers"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_booking_info_booking_customer_title"
+                tools:itemCount="9"
+                tools:listitem="@layout/recyclerview_item_booking_group" />
+
+            <TextView
+                android:id="@+id/tv_booking_info_booking_cost_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="20sp"
+                android:text="Итого:"
+                android:gravity="center_vertical|start"
+                app:layout_constraintEnd_toStartOf="@id/tv_booking_info_cost"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_booking_info_customers" />
+
+            <TextView
+                android:id="@+id/tv_booking_info_cost"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="15000р"
+                android:textStyle="bold"
+                android:gravity="center_vertical|end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_booking_info_booking_cost_title"
+                app:layout_constraintTop_toTopOf="@id/tv_booking_info_booking_cost_title"
+                app:layout_constraintBottom_toBottomOf="@id/tv_booking_info_booking_cost_title" />
+
+            <Button
+                android:id="@+id/btn_booking_info_confirm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_booking_info_booking_cost_title"
+                android:text="Подтвердить"
+
+                android:backgroundTint="?attr/colorPrimary"
+                android:textColor="?attr/colorOnPrimary"/>
+
+            <Button
+                android:id="@+id/btn_booking_info_decline"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_booking_info_booking_cost_title"
+                android:text="Отменить"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:backgroundTint="?attr/colorOnPrimary"
+                android:textColor="?attr/colorPrimary"
+                android:visibility="gone"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</LinearLayout>

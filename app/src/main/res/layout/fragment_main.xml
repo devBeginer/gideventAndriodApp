@@ -42,7 +42,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="9"
-            tools:listitem="@layout/cards_recycler_view_item"/>
+            tools:listitem="@layout/recyclerview_item_cards"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

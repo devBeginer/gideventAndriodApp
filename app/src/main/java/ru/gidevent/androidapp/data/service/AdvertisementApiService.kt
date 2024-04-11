@@ -33,6 +33,10 @@ import ru.gidevent.androidapp.data.model.advertisement.response.TicketPriceRespo
 import ru.gidevent.androidapp.data.model.booking.BookingParamsResponse
 import ru.gidevent.androidapp.data.model.booking.BookingRequest
 import ru.gidevent.androidapp.data.model.booking.BookingResponse
+import ru.gidevent.androidapp.data.model.myAdverts.AdvertChip
+import ru.gidevent.androidapp.data.model.myAdverts.BookingInfoResponse
+import ru.gidevent.androidapp.data.model.myAdverts.SellerAdvertResponse
+import ru.gidevent.androidapp.data.model.myAdverts.SellerBookingResponse
 import ru.gidevent.androidapp.data.model.request.search.SearchOptions
 import ru.gidevent.androidapp.data.model.search.OptionsVariants
 
@@ -61,6 +65,9 @@ interface AdvertisementApiService {
 
     @GET("advertisement/favourite")
     suspend fun getFavouriteAdvertisement(@Header("Authorization") token: String): Response<List<Advertisement>>
+
+    @GET("advertisement/purchases")
+    suspend fun getPurchasesAdvertisement(@Header("Authorization") token: String): Response<List<Advertisement>>
 
     @GET("auth/advertisement/{id}")
     suspend fun getAdvertisementById(@Path("id") id: Long): Response<AdvertisementExpanded>
@@ -231,4 +238,39 @@ interface AdvertisementApiService {
     ): Response<BookingResponse>
 
 
+
+
+
+    @GET("bookingInfo/")
+    suspend fun getBookingInfo(
+        @Query("bookingId") bookingId: Long,
+        @Header("Authorization") token: String
+    ): Response<BookingInfoResponse>
+
+
+    @GET("sellerBookings/")
+    suspend fun getSellerBooking(
+        @Query("advertId") advertId: Long,
+        @Query("date") date: Long?,
+        @Header("Authorization") token: String
+    ): Response<List<SellerBookingResponse>>
+
+
+    @GET("advertChips/")
+    suspend fun getAdvertChips(
+        @Header("Authorization") token: String
+    ): Response<List<AdvertChip>>
+
+
+    @GET("sellerAdverts/")
+    suspend fun getSellerAdvert(
+        @Header("Authorization") token: String
+    ): Response<List<SellerAdvertResponse>>
+
+
+    @POST("confirmBooking/")
+    suspend fun postBookingConfirmation(
+        @Query("bookingId") bookingId: Long,
+        @Header("Authorization") token: String
+    ): Response<BookingResponse>
 }

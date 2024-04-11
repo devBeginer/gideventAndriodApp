@@ -16,8 +16,6 @@ import java.util.Calendar
 import java.util.Locale
 
 class DateBottomSheetDialog(private val viewModel: SearchViewModel): BottomSheetDialogFragment() {
-    //private val viewModel: SearchViewModel by viewModels({ requireActivity().supportFragmentManager.findFragmentByTag("") })
-    //private val viewModel = ViewModelProviders.of(requireActivity())[SearchViewModel::class.java]
     private var _binding: BottomsheetDialogDatePickBinding? = null
     private val binding get() = _binding!!
 

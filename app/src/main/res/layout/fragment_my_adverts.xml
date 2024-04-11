@@ -14,12 +14,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/purchases_toolbar_title">
+        app:title="@string/my_advert_toolbar_title">
 
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_purchases_cards"
+        android:id="@+id/rv_adverts_cards"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar_purchases"
         tools:itemCount="9"
-        tools:listitem="@layout/recyclerview_item_cards" />
+        tools:listitem="@layout/recyclerview_item_my_advert" />
 
     <TextView
         android:id="@+id/tv_purchases_not_auth"
