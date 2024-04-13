@@ -1,6 +1,6 @@
 package ru.gidevent.androidapp.data.model.myAdverts
 
-data class SellerBookingResponse(
+data class BookingCardResponse(
         val id: Long,
         val eventTime: Long,
         val advertisement: String,

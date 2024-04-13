@@ -8,13 +8,16 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.gidevent.androidapp.data.model.advertisement.response.Advertisement
-import ru.gidevent.androidapp.data.model.auth.response.UserDetailsResponse
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.AdvertPreviewCard
+import ru.gidevent.androidapp.data.model.myAdverts.BookingCardResponse
+import ru.gidevent.androidapp.data.model.myAdverts.BookingInfoResponse
+import ru.gidevent.androidapp.data.model.myAdverts.MyBooking
 import ru.gidevent.androidapp.data.repository.AdvertisementRepository
 import ru.gidevent.androidapp.data.repository.UserRepository
 import ru.gidevent.androidapp.network.ApiResult
-import ru.gidevent.androidapp.ui.state.UIState
 import ru.gidevent.androidapp.ui.state.UIStateAdvertList
+import java.util.Calendar
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,26 +30,38 @@ class PurchasesViewModel @Inject constructor(
         get() = dataResultMutableLiveData
 
 
+
+    private val _bottomSheetData = MutableLiveData<UIStateAdvertList>(UIStateAdvertList.Idle)
+    val bottomSheetData: LiveData<UIStateAdvertList>
+        get() = _bottomSheetData
+
+    var id: Long? = null
     fun initView(){
         viewModelScope.launch (Dispatchers.IO){
             if(repository.isAuthorised()){
                 dataResultMutableLiveData.postValue(UIStateAdvertList.Loading)
                 val response = advertRepository.getPurchasesAdvertisement()
                 when (response) {
-                    is ApiResult.Success<List<Advertisement>> -> {
+                    is ApiResult.Success<List<BookingCardResponse>> -> {
 
-                        val mainDataSet = response.data.map { advertisement ->
-                            AdvertPreviewCard(
-                                advertisement.id,
-                                advertisement.favourite ?: false,
-                                advertisement.name,
-                                listOf(advertisement.category.name),
-                                advertisement.priceList?.let { ticketPriceList ->
-                                    ticketPriceList.firstOrNull()?.let { ticketPrice ->
-                                        ticketPrice.price
-                                    } ?: 0
-                                } ?: 0,
-                                advertisement.photos.split(",").first()
+
+
+                        val mainDataSet = response.data.map { bookingResponse ->
+                            val eventTime = Calendar.getInstance(Locale.getDefault())
+                            eventTime.timeInMillis = bookingResponse.eventTime
+                            val date = Calendar.getInstance(Locale.getDefault())
+                            date.timeInMillis = bookingResponse.date
+                            date.set(Calendar.HOUR_OF_DAY, eventTime.get(Calendar.HOUR_OF_DAY))
+                            date.set(Calendar.MINUTE, eventTime.get(Calendar.MINUTE))
+                            date.set(Calendar.SECOND, eventTime.get(Calendar.SECOND))
+                            date.set(Calendar.MILLISECOND, eventTime.get(Calendar.MILLISECOND))
+                            MyBooking(
+                                bookingResponse.id,
+                                bookingResponse.advertisement,
+                                bookingResponse.customerCount,
+                                date,
+                                bookingResponse.totalPrice,
+                                bookingResponse.isApproved
                             )
                         }
 
@@ -102,6 +117,37 @@ class PurchasesViewModel @Inject constructor(
                             UIStateAdvertList.Error("Произошла ошибка, и попробуйте снова"))
                     }
                 }
+            }
+        }
+    }
+
+    fun initBottomSheet(bookingId: Long){
+        id = bookingId
+        viewModelScope.launch (Dispatchers.IO){
+            if(repository.isAuthorised()){
+                _bottomSheetData.postValue(UIStateAdvertList.Loading)
+                val response = advertRepository.getBookingInfo(bookingId)
+                when (response) {
+                    is ApiResult.Success<BookingInfoResponse> -> {
+
+                        val mainData = response.data
+
+
+
+                        _bottomSheetData.postValue(UIStateAdvertList.Success(mainData))
+                    }
+
+                    is ApiResult.Error -> {
+                        when{
+                            response.body.contains("Connection") -> _bottomSheetData.postValue(
+                                UIStateAdvertList.ConnectionError)
+                            response.code == 403 || response.code == 401 -> _bottomSheetData.postValue(UIStateAdvertList.Unauthorised)
+                            response.code == 404 -> _bottomSheetData.postValue(UIStateAdvertList.Error("Произошла ошибка, и попробуйте снова"))
+                        }
+                    }
+                }
+            }else{
+                _bottomSheetData.postValue(UIStateAdvertList.Unauthorised)
             }
         }
     }

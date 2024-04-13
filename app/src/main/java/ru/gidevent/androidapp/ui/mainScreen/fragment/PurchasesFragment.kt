@@ -9,20 +9,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import ru.gidevent.andriodapp.R
-import ru.gidevent.andriodapp.databinding.FragmentMainBinding
 import ru.gidevent.andriodapp.databinding.FragmentPurchasesBinding
-import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.AdvertPreviewCard
-import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.HeaderViewpagerItem
-import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.MainRecyclerViewData
+import ru.gidevent.androidapp.data.model.myAdverts.MyBooking
 import ru.gidevent.androidapp.ui.SharedViewModel
-import ru.gidevent.androidapp.ui.advertisement.AdvertisementFragment
+import ru.gidevent.androidapp.ui.advertisement.CustomerBookingInfoBottomSheet
 import ru.gidevent.androidapp.ui.login.fragment.SignInFragment
-import ru.gidevent.androidapp.ui.mainScreen.adapter.FavouriteRecyclerViewAdapter
-import ru.gidevent.androidapp.ui.mainScreen.adapter.MainRecyclerViewAdapter
 import ru.gidevent.androidapp.ui.mainScreen.adapter.PurchasesRecyclerViewAdapter
-import ru.gidevent.androidapp.ui.mainScreen.viewModel.MainViewModel
 import ru.gidevent.androidapp.ui.mainScreen.viewModel.PurchasesViewModel
-import ru.gidevent.androidapp.ui.state.UIState
 import ru.gidevent.androidapp.ui.state.UIStateAdvertList
 import ru.gidevent.androidapp.utils.showSnack
 
@@ -67,9 +60,10 @@ class PurchasesFragment : Fragment() {
     private fun initView(){
         //viewModel.initView()
         adapter = PurchasesRecyclerViewAdapter(listOf(), {
-            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it)).addToBackStack(null).commit()
+            viewModel.initBottomSheet(it)
+            CustomerBookingInfoBottomSheet().show(childFragmentManager, "bookingInfoBottomDialog")
         },{
-            viewModel.postFavourite(it)
+            //viewModel.postFavourite(it)
         })
         binding.rvPurchasesCards.adapter = adapter
 
@@ -85,15 +79,15 @@ class PurchasesFragment : Fragment() {
             when(it){
                 is UIStateAdvertList.Success<*> -> {
                     sharedViewModel.showProgressIndicator(false)
-                    val dataSet = it.data as List<AdvertPreviewCard>?
+                    val dataSet = it.data as List<MyBooking>?
                     if(dataSet!=null){
                         adapter.setItemsList(dataSet)
                     }
                 }
                 is UIStateAdvertList.Update<*> -> {
-                    val advert = it.data as AdvertPreviewCard?
-                    if(advert!=null){
-                        adapter.updateItem(advert)
+                    val dataSet = it.data as List<MyBooking>?
+                    if(dataSet!=null){
+                        adapter.setItemsList(dataSet)
                     }
                     sharedViewModel.showProgressIndicator(false)
                 }

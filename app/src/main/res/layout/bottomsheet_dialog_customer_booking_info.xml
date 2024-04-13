@@ -191,19 +191,6 @@
                 app:layout_constraintBottom_toBottomOf="@id/tv_booking_info_booking_cost_title" />
 
             <Button
-                android:id="@+id/btn_booking_info_confirm"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_booking_info_booking_cost_title"
-                android:text="Подтвердить"
-
-                android:backgroundTint="?attr/colorPrimary"
-                android:textColor="?attr/colorOnPrimary"/>
-
-            <Button
                 android:id="@+id/btn_booking_info_decline"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

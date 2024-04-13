@@ -385,6 +385,42 @@
                 app:layout_constraintTop_toTopOf="@id/iv_advert_circular_avatar" />
 
             <TextView
+                android:id="@+id/tv_advert_title_pricelist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Цены"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_advert_circular_avatar" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_advert_pricelist"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_advert_title_pricelist"
+                tools:itemCount="9"
+                tools:listitem="@layout/recyclerview_item_advert_price" />
+
+            <Button
+                android:id="@+id/btn_advert_schedule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="График"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_advert_pricelist" />
+
+            <TextView
                 android:id="@+id/tv_advert_title_reviews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -393,7 +429,7 @@
                 android:text="Отзывы"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_advert_circular_avatar" />
+                app:layout_constraintTop_toBottomOf="@id/btn_advert_schedule" />
 
             <TextView
                 android:id="@+id/tv_advert_reviews_add"

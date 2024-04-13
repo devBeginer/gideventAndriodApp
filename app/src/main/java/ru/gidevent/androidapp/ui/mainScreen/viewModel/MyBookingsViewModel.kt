@@ -11,7 +11,7 @@ import ru.gidevent.androidapp.data.model.booking.BookingResponse
 import ru.gidevent.androidapp.data.model.myAdverts.AdvertChip
 import ru.gidevent.androidapp.data.model.myAdverts.BookingInfoResponse
 import ru.gidevent.androidapp.data.model.myAdverts.MyBooking
-import ru.gidevent.androidapp.data.model.myAdverts.SellerBookingResponse
+import ru.gidevent.androidapp.data.model.myAdverts.BookingCardResponse
 import ru.gidevent.androidapp.data.repository.AdvertisementRepository
 import ru.gidevent.androidapp.data.repository.UserRepository
 import ru.gidevent.androidapp.network.ApiResult
@@ -48,7 +48,7 @@ class MyBookingsViewModel @Inject constructor(
                 _data.postValue(UIStateAdvertList.Loading)
                 val response = advertRepository.getSellerBooking(advert, date?.timeInMillis)
                 when (response) {
-                    is ApiResult.Success<List<SellerBookingResponse>> -> {
+                    is ApiResult.Success<List<BookingCardResponse>> -> {
 
                         val mainDataSet = response.data.map { bookingResponse ->
                             val eventTime = Calendar.getInstance(Locale.getDefault())

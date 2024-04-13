@@ -1,31 +1,23 @@
 package ru.gidevent.androidapp.ui.mainScreen.adapter
 
-import android.app.ActionBar.LayoutParams
-import android.content.Context
-import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
+import android.widget.Button
 import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.core.view.setPadding
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import ru.gidevent.andriodapp.R
-import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.AdvertPreviewCard
-import ru.gidevent.androidapp.utils.Utils
+import ru.gidevent.androidapp.data.model.myAdverts.MyBooking
+import ru.gidevent.androidapp.utils.Utils.toString
 
 class PurchasesRecyclerViewAdapter(
-    private var dataSet: List<AdvertPreviewCard>,
+    private var dataSet: List<MyBooking>,
     private val onClick: (id: Long)->Unit,
-    private val onFavourite: (id: Long)->Unit
+    private val onDecline: (id: Long) -> Unit
 ) : RecyclerView.Adapter<PurchasesRecyclerViewAdapter.CardsViewHolder>() {
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardsViewHolder {
+    /*override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardsViewHolder {
         val itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.recyclerview_item_cards, parent, false)
         return CardsViewHolder(itemView)
@@ -111,6 +103,70 @@ class PurchasesRecyclerViewAdapter(
             }
             favourite.setOnClickListener {
                 onFavourite(dataSet[adapterPosition].id)
+            }
+        }
+    }*/
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardsViewHolder {
+        val itemView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.recyclerview_item_customer_booking, parent, false)
+        return CardsViewHolder(itemView)
+    }
+
+
+    override fun getItemCount(): Int {
+        return dataSet.size
+    }
+
+    fun setItemsList(list: List<MyBooking>) {
+        dataSet = list
+        notifyDataSetChanged()
+    }
+
+    fun updateItem(confirmed: Boolean, id: Long) {
+        val position = dataSet.find { it.id == id }?.let { dataSet.indexOf(it) }
+        if(position!=null){
+            val tmpList = mutableListOf<MyBooking>()
+            tmpList.addAll(dataSet)
+            tmpList[position] = MyBooking(dataSet[position].id, dataSet[position].name, dataSet[position].count, dataSet[position].date, dataSet[position].cost, confirmed)
+            dataSet = tmpList
+            notifyItemChanged(position)
+        }
+    }
+
+
+    override fun onBindViewHolder(holder: CardsViewHolder, position: Int) {
+        holder.name.text = dataSet[position].name
+        holder.price.text = "${dataSet[position].cost}₽"
+        holder.customerCount.text = dataSet[position].count.toString()
+        holder.date.text = dataSet[position].date.time.toString("dd.MM.yy HH:mm")
+        if (dataSet[position].isConfirmed) {
+            holder.confimed.text = "Подтверждено"
+        }else{
+            holder.confimed.text = "Не подтверждено"
+        }
+    }
+
+    inner class CardsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val name: TextView
+        val price: TextView
+        val customerCount: TextView
+        val confimed: TextView
+        val date: TextView
+        val btnDecline: Button
+
+        init {
+            name = view.findViewById(R.id.tv_card_customer_booking_name)
+            price = view.findViewById(R.id.tv_card_customer_booking_price)
+            customerCount = view.findViewById(R.id.tv_card_customer_booking_people_count)
+            confimed = view.findViewById(R.id.tv_card_customer_booking_confirmed)
+            date = view.findViewById(R.id.tv_card_customer_booking_time)
+            btnDecline = view.findViewById(R.id.btn_customer_booking_decline)
+            view.setOnClickListener {
+                onClick(dataSet[adapterPosition].id)
+            }
+            btnDecline.setOnClickListener {
+                onDecline(dataSet[adapterPosition].id)
             }
         }
     }

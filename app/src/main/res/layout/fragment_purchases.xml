@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar_purchases"
         tools:itemCount="9"
-        tools:listitem="@layout/recyclerview_item_cards" />
+        tools:listitem="@layout/recyclerview_item_customer_booking" />
 
     <TextView
         android:id="@+id/tv_purchases_not_auth"

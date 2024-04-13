@@ -16,9 +16,7 @@ import ru.gidevent.androidapp.data.model.advertisement.AdvertisementCardInfo
 import ru.gidevent.androidapp.ui.SharedViewModel
 import ru.gidevent.androidapp.ui.advertisement.adapter.AdvertReviewRecyclerViewAdapter
 import ru.gidevent.androidapp.ui.advertisement.adapter.AdvertViewPagerAdapter
-import ru.gidevent.androidapp.ui.edit.fragment.CreateAdvertisementFragment
-import ru.gidevent.androidapp.ui.edit.fragment.PriceBottomSheetDialog
-import ru.gidevent.androidapp.ui.mainScreen.fragment.MainScreenContainerFragment
+import ru.gidevent.androidapp.ui.advertisement.adapter.PriceListRecyclerViewAdapter
 import ru.gidevent.androidapp.ui.makeBooking.MakeBookingFragment
 import ru.gidevent.androidapp.ui.state.UIState
 import ru.gidevent.androidapp.utils.Utils
@@ -32,6 +30,7 @@ class AdvertisementFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var viewPagerAdapter: AdvertViewPagerAdapter
     private lateinit var recyclerViewAdapter: AdvertReviewRecyclerViewAdapter
+    private lateinit var priceListAdapter: PriceListRecyclerViewAdapter
     private var id: Long? = null
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,9 +69,19 @@ class AdvertisementFragment : Fragment() {
         )
         binding.rvAdvertReviews.adapter = recyclerViewAdapter
 
+        priceListAdapter = PriceListRecyclerViewAdapter(
+            listOf()
+        )
+        binding.rvAdvertPricelist.adapter = priceListAdapter
+
         binding.tvAdvertReviewsAdd.setOnClickListener {
             FeedbackBottomSheetDialog(viewModel)
                 .show(parentFragmentManager, "priceBottomSheetDialog")
+        }
+
+        binding.btnAdvertSchedule.setOnClickListener {
+            AdvertScheduleBottomSheet(viewModel)
+                .show(parentFragmentManager, "scheduleBottomSheetDialog")
         }
         binding.btnAdvertBuy.setOnClickListener {
             id?.let { advertId-> requireActivity().supportFragmentManager.beginTransaction()
@@ -91,6 +100,8 @@ class AdvertisementFragment : Fragment() {
                     if (dataSet != null) {
                         viewPagerAdapter.setItemList(dataSet.advertViewpagerItem)
                         recyclerViewAdapter.setItemList(dataSet.reviewsList)
+                        dataSet.priceList?.let { it1 -> priceListAdapter.setItemList(it1) }
+
                         binding.collapsingToolbar.title = dataSet.name
                         binding.ratingBarAdvert.rating = dataSet.rating
                         binding.tvAdvertFeedback.text = when (dataSet.reviewsList.size) {

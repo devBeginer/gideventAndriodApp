@@ -18,11 +18,9 @@ import ru.gidevent.RestAPI.model.dto.CitySuggestion
 import ru.gidevent.RestAPI.model.response.Suggestions
 import ru.gidevent.RestAPI.response.TopsResponse
 import ru.gidevent.androidapp.data.model.advertisement.dto.CustomerCategory
-import ru.gidevent.androidapp.data.model.advertisement.dto.EventTime
 import ru.gidevent.androidapp.data.model.advertisement.dto.NewFeedback
 import ru.gidevent.androidapp.data.model.advertisement.request.EventTimeRequest
 import ru.gidevent.androidapp.data.model.advertisement.request.NewAdvertisement
-import ru.gidevent.androidapp.data.model.advertisement.request.TicketPrice
 import ru.gidevent.androidapp.data.model.advertisement.request.TicketPriceRequest
 import ru.gidevent.androidapp.data.model.advertisement.response.AdvertisementExpanded
 import ru.gidevent.androidapp.data.model.advertisement.response.Advertisement
@@ -36,7 +34,7 @@ import ru.gidevent.androidapp.data.model.booking.BookingResponse
 import ru.gidevent.androidapp.data.model.myAdverts.AdvertChip
 import ru.gidevent.androidapp.data.model.myAdverts.BookingInfoResponse
 import ru.gidevent.androidapp.data.model.myAdverts.SellerAdvertResponse
-import ru.gidevent.androidapp.data.model.myAdverts.SellerBookingResponse
+import ru.gidevent.androidapp.data.model.myAdverts.BookingCardResponse
 import ru.gidevent.androidapp.data.model.request.search.SearchOptions
 import ru.gidevent.androidapp.data.model.search.OptionsVariants
 
@@ -67,7 +65,7 @@ interface AdvertisementApiService {
     suspend fun getFavouriteAdvertisement(@Header("Authorization") token: String): Response<List<Advertisement>>
 
     @GET("advertisement/purchases")
-    suspend fun getPurchasesAdvertisement(@Header("Authorization") token: String): Response<List<Advertisement>>
+    suspend fun getPurchasesAdvertisement(@Header("Authorization") token: String): Response<List<BookingCardResponse>>
 
     @GET("auth/advertisement/{id}")
     suspend fun getAdvertisementById(@Path("id") id: Long): Response<AdvertisementExpanded>
@@ -253,7 +251,7 @@ interface AdvertisementApiService {
         @Query("advertId") advertId: Long,
         @Query("date") date: Long?,
         @Header("Authorization") token: String
-    ): Response<List<SellerBookingResponse>>
+    ): Response<List<BookingCardResponse>>
 
 
     @GET("advertChips/")

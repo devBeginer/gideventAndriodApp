@@ -34,7 +34,7 @@ import ru.gidevent.androidapp.data.model.booking.BookingResponse
 import ru.gidevent.androidapp.data.model.myAdverts.AdvertChip
 import ru.gidevent.androidapp.data.model.myAdverts.BookingInfoResponse
 import ru.gidevent.androidapp.data.model.myAdverts.SellerAdvertResponse
-import ru.gidevent.androidapp.data.model.myAdverts.SellerBookingResponse
+import ru.gidevent.androidapp.data.model.myAdverts.BookingCardResponse
 import ru.gidevent.androidapp.data.model.request.search.SearchOptions
 import ru.gidevent.androidapp.data.model.search.OptionsVariants
 import ru.gidevent.androidapp.network.ApiResult
@@ -85,7 +85,7 @@ class AdvertisementRepository @Inject constructor(
 
     }
 
-    suspend fun getPurchasesAdvertisement(): ApiResult<List<Advertisement>> {
+    suspend fun getPurchasesAdvertisement(): ApiResult<List<BookingCardResponse>> {
         val token = userLocalDataSource.getAccessTokenFromSP()
         return advertRemoteDataSource.getPurchasesAdvertisement(token)
 
@@ -311,7 +311,7 @@ class AdvertisementRepository @Inject constructor(
         return advertRemoteDataSource.getBookingInfo(token, bookingId)
     }
 
-    suspend fun getSellerBooking(advertId: Long, date: Long?): ApiResult<List<SellerBookingResponse>> {
+    suspend fun getSellerBooking(advertId: Long, date: Long?): ApiResult<List<BookingCardResponse>> {
         val token = userLocalDataSource.getAccessTokenFromSP()
 
         return advertRemoteDataSource.getSellerBooking(token, advertId, date)
