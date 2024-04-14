@@ -45,6 +45,13 @@ class FeedbackBottomSheetDialog(private val viewModel: AdvertisementViewModel): 
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.initFeedback()
+        viewModel.feedbackData.observe(viewLifecycleOwner, Observer {
+            if(it!=null){
+                binding.etFeedbackReview.setText(it.text)
+                binding.ratingBarFeedback.rating = it.rating.toFloat()
+            }
+        })
 
         binding.btnFeedbackPost.setOnClickListener {
             if(!binding.etFeedbackReview.text.isNullOrBlank()){

@@ -100,6 +100,29 @@ class MyAdvertsViewModel @Inject constructor(
         }
     }
 
+    fun delete(id: Long){
+        viewModelScope.launch(Dispatchers.IO){
+            _data.postValue(UIStateAdvertList.Loading)
+            val response = advertRepository.deleteAdvertisement(id)
+            when (response) {
+                is ApiResult.Success<Boolean> -> {
+                    initView()
+                }
+
+                is ApiResult.Error -> {
+                    when{
+                        response.body.contains("Connection") -> _data.postValue(
+                            UIStateAdvertList.ConnectionError)
+                        response.code == 403 || response.code == 401 -> _data.postValue(
+                            UIStateAdvertList.Unauthorised)
+                        response.code == 404 -> _data.postValue(
+                            UIStateAdvertList.Error("Произошла ошибка, и попробуйте снова"))
+                    }
+                }
+            }
+        }
+    }
+
     fun decline(id: Long){
         viewModelScope.launch(Dispatchers.IO){
             _data.postValue(UIStateAdvertList.Loading)

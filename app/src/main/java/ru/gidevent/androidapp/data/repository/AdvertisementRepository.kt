@@ -24,6 +24,7 @@ import ru.gidevent.androidapp.data.model.advertisement.request.NewAdvertisement
 import ru.gidevent.androidapp.data.model.advertisement.request.TicketPriceRequest
 import ru.gidevent.androidapp.data.model.advertisement.response.AdvertisementExpanded
 import ru.gidevent.androidapp.data.model.advertisement.response.Advertisement
+import ru.gidevent.androidapp.data.model.advertisement.response.AdvertisementEdit
 import ru.gidevent.androidapp.data.model.advertisement.response.EventTimeResponse
 import ru.gidevent.androidapp.data.model.advertisement.response.NewFeedbackResponse
 import ru.gidevent.androidapp.data.model.advertisement.response.ResponsePoster
@@ -123,6 +124,14 @@ class AdvertisementRepository @Inject constructor(
 
 
 
+    suspend fun getAdvertisementForEdit(id: Long): ApiResult<AdvertisementEdit> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+        return advertRemoteDataSource.getAdvertisementForEdit(token, id)
+
+    }
+
+
+
     suspend fun getAllTransport(): ApiResult<List<TransportationVariant>> {
         return advertRemoteDataSource.getAllTransport()
     }
@@ -157,6 +166,11 @@ class AdvertisementRepository @Inject constructor(
         return advertRemoteDataSource.putAdvertisement(token, newAdvertisement)
     }
 
+    suspend fun deleteAdvertisement(advertisementId: Long): ApiResult<Boolean> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+        return advertRemoteDataSource.deleteAdvertisement(token, advertisementId)
+    }
+
     suspend fun postEventTime(eventTime: EventTimeRequest): ApiResult<EventTimeResponse> {
         val token = userLocalDataSource.getAccessTokenFromSP()
         return advertRemoteDataSource.postEventTime(token, eventTime)
@@ -169,6 +183,10 @@ class AdvertisementRepository @Inject constructor(
         val token = userLocalDataSource.getAccessTokenFromSP()
         return advertRemoteDataSource.putEventTime(token, eventTime)
     }
+    suspend fun deleteEventTime(eventTimeId: Long): ApiResult<Boolean> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+        return advertRemoteDataSource.deleteEventTime(token, eventTimeId)
+    }
 
     suspend fun getAllTicketPrice(id: Long): ApiResult<List<TicketPriceResponse>> {
         return advertRemoteDataSource.getAllTicketPrice(id)
@@ -178,6 +196,11 @@ class AdvertisementRepository @Inject constructor(
     suspend fun postTicketPrice(ticketPrice: TicketPriceRequest): ApiResult<TicketPriceResponse> {
         val token = userLocalDataSource.getAccessTokenFromSP()
         return advertRemoteDataSource.postTicketPrice(token, ticketPrice)
+    }
+
+    suspend fun deleteTicketPrice(ticketPriceId: Long): ApiResult<Boolean> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+        return advertRemoteDataSource.deleteTicketPrice(token, ticketPriceId)
     }
 
     suspend fun putTicketPrice(ticketPrice: TicketPriceRequest): ApiResult<TicketPriceResponse> {
@@ -279,6 +302,11 @@ class AdvertisementRepository @Inject constructor(
     suspend fun putFeedback(newFeedback: NewFeedback): ApiResult<NewFeedbackResponse> {
         val token = userLocalDataSource.getAccessTokenFromSP()
         return advertRemoteDataSource.putFeedback(token, newFeedback)
+    }
+
+    suspend fun getFeedback(advertId: Long): ApiResult<NewFeedbackResponse> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+        return advertRemoteDataSource.getFeedback(token, advertId)
     }
 
     suspend fun postFavourite(advertId: Long): ApiResult<Advertisement> {

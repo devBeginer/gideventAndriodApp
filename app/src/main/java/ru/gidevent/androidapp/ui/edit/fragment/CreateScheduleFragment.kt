@@ -18,7 +18,7 @@ import ru.gidevent.androidapp.ui.state.UIState
 import ru.gidevent.androidapp.utils.showSnack
 
 @AndroidEntryPoint
-class CreateScheduleFragment(/*private val viewModel: CreateAdvertViewModel*/): Fragment() {
+class CreateScheduleFragment(): Fragment() {
     private val viewModel: CreateAdvertViewModel by viewModels({requireParentFragment()})
     private val sharedViewModel: SharedViewModel by viewModels({requireActivity()})
 
@@ -113,9 +113,8 @@ class CreateScheduleFragment(/*private val viewModel: CreateAdvertViewModel*/): 
         }*/
 
 
-        binding.toolbarCreateSHedule.setNavigationOnClickListener() {
+        binding.toolbarCreateSchedule.setNavigationOnClickListener() {
             parentFragmentManager.popBackStack()
-            //onBackPressed() // возврат на предыдущий activity
         }
         scheduleRVAdapter = ScheduleEditRecyclerViewAdapter(listOf(), {
             viewModel.delTime(it)
@@ -148,7 +147,11 @@ class CreateScheduleFragment(/*private val viewModel: CreateAdvertViewModel*/): 
     }
 
     private fun editTime(id: Long) {
-        EventtimeBottomSheetDialog()
+        val eventtimeBottomSheetDialog = EventtimeBottomSheetDialog()
+        val bundle = Bundle()
+        bundle.putLong("ID", id)
+        eventtimeBottomSheetDialog.arguments = bundle
+        eventtimeBottomSheetDialog
             .show(parentFragmentManager/*childFragmentManager*/, "eventTimeBottomDialog")
     }
 }

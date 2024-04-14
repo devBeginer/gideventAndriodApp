@@ -24,6 +24,7 @@ import ru.gidevent.androidapp.data.model.advertisement.request.NewAdvertisement
 import ru.gidevent.androidapp.data.model.advertisement.request.TicketPriceRequest
 import ru.gidevent.androidapp.data.model.advertisement.response.AdvertisementExpanded
 import ru.gidevent.androidapp.data.model.advertisement.response.Advertisement
+import ru.gidevent.androidapp.data.model.advertisement.response.AdvertisementEdit
 import ru.gidevent.androidapp.data.model.advertisement.response.EventTimeResponse
 import ru.gidevent.androidapp.data.model.advertisement.response.NewFeedbackResponse
 import ru.gidevent.androidapp.data.model.advertisement.response.ResponsePoster
@@ -72,6 +73,9 @@ interface AdvertisementApiService {
 
     @GET("advertisement/{id}")
     suspend fun getAdvertisementById(@Header("Authorization") token: String, @Path("id") id: Long): Response<AdvertisementExpanded>
+
+    @GET("edit/advertisement/{id}")
+    suspend fun getAdvertisementForEdit(@Header("Authorization") token: String, @Path("id") id: Long): Response<AdvertisementEdit>
 
     @GET("auth/category/")
     suspend fun getAllCategory(): Response<List<Category>>
@@ -178,6 +182,26 @@ interface AdvertisementApiService {
 
 
 
+    @DELETE("advertisement/")
+    suspend fun deleteAdvertisement(
+        @Query("advertisementId") advertisementId: Long,
+        @Header("Authorization") token: String
+    ): Response<Boolean>
+
+    @DELETE("eventTime/")
+    suspend fun deleteEventTime(
+        @Query("eventTimeId") eventTimeId: Long,
+        @Header("Authorization") token: String
+    ): Response<Boolean>
+
+    @DELETE("ticketPrice/")
+    suspend fun deleteTicketPrice(
+        @Query("ticketPriceId") ticketPriceId: Long,
+        @Header("Authorization") token: String
+    ): Response<Boolean>
+
+
+
     @GET("auth/advertisement/eventTime/{id}")
     suspend fun getAllEventTime(@Path("id") id: Long): Response<List<EventTimeResponse>>
 
@@ -207,6 +231,14 @@ interface AdvertisementApiService {
     @PUT("feedback/")
     suspend fun putFeedback(
         @Body newFeedback: NewFeedback,
+        @Header("Authorization") token: String
+    ): Response<NewFeedbackResponse>
+
+
+
+    @GET("feedback/")
+    suspend fun getFeedback(
+        @Query("advertisementId") advertisementId: Long,
         @Header("Authorization") token: String
     ): Response<NewFeedbackResponse>
 

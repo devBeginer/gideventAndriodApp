@@ -3,6 +3,7 @@ package ru.gidevent.androidapp.ui.seller_management.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.gidevent.andriodapp.R
@@ -10,7 +11,9 @@ import ru.gidevent.androidapp.data.model.myAdverts.MyAdvert
 
 class MyAdvertsRecyclerViewAdapter(
     private var dataSet: List<MyAdvert>,
-    private val onClick: (id: Long) -> Unit
+    private val onClick: (id: Long) -> Unit,
+    private val onEdit: (id: Long) -> Unit,
+    private val onDelete: (id: Long) -> Unit
 ) : RecyclerView.Adapter<MyAdvertsRecyclerViewAdapter.CardsViewHolder>() {
 
 
@@ -52,14 +55,26 @@ class MyAdvertsRecyclerViewAdapter(
         val name: TextView
         val price: TextView
         val customerCount: TextView
+        val btnEdit: ImageView
+        val btnDelete: ImageView
 
         init {
             name = view.findViewById(R.id.tv_card_my_advert_name)
             price = view.findViewById(R.id.tv_card_my_advert_price)
             customerCount = view.findViewById(R.id.tv_card_my_advert_people_count)
+            btnEdit = view.findViewById(R.id.iv_card_my_advert_edit)
+            btnDelete = view.findViewById(R.id.iv_card_my_advert_delete)
 
             view.setOnClickListener {
                 onClick(dataSet[adapterPosition].id)
+            }
+
+            btnEdit.setOnClickListener {
+                onEdit(dataSet[adapterPosition].id)
+            }
+
+            btnDelete.setOnClickListener {
+                onDelete(dataSet[adapterPosition].id)
             }
 
         }

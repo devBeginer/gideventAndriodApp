@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.children
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -17,6 +18,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.gidevent.andriodapp.databinding.BottomsheetDialogEventtimeBinding
 import ru.gidevent.androidapp.data.model.advertisement.dto.EventTime
+import ru.gidevent.androidapp.data.model.advertisement.response.AdvertisementEdit
 import ru.gidevent.androidapp.ui.SharedViewModel
 import ru.gidevent.androidapp.ui.edit.CreateAdvertViewModel
 import ru.gidevent.androidapp.ui.state.UIState
@@ -33,6 +35,7 @@ class EventtimeBottomSheetDialog(): BottomSheetDialogFragment() {
     private val binding get() = _binding!!
 
     private var currentMode = CREATE_MODE
+    private var id: Long? = null
 
     companion object{
         const val EDIT_MODE = 0
@@ -46,6 +49,10 @@ class EventtimeBottomSheetDialog(): BottomSheetDialogFragment() {
     ): View {
         _binding = BottomsheetDialogEventtimeBinding.inflate(inflater, container, false)
         val view = binding.root
+        id = arguments?.getLong("ID")
+        if (id != null) {
+            currentMode = EDIT_MODE
+        }
         return view
     }
 
@@ -53,6 +60,62 @@ class EventtimeBottomSheetDialog(): BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initData()
+        initObserver()
+
+    }
+
+    private fun initObserver() {
+        viewModel.scheduleData.observe(viewLifecycleOwner, Observer { it ->
+            if(it!=null){
+                binding.switchScheduleRepeatable.isChecked = it.isRepeatable
+
+                if(!binding.switchScheduleRepeatable.isChecked){
+                    viewModel.editableStartDate = it.startDate
+                    binding.tvScheduleDatePeriod.visibility = View.VISIBLE
+                    viewModel.editableStartDate?.let { from ->
+                        binding.tvScheduleDatePeriod.text = "${from.time.toString("dd.MM.yyyy")}"
+                    }
+                }else{
+                    viewModel.editableStartDate = it.startDate
+
+                    viewModel.editableEndDate = it.endDate
+
+                    viewModel.editableStartDate?.let { from ->
+                        viewModel.editableEndDate?.let { to ->
+                            binding.tvScheduleDatePeriod.visibility = View.VISIBLE
+                            binding.tvScheduleDatePeriod.text =
+                                "${from.time.toString("dd.MM.yyyy")} - ${to.time.toString("dd.MM.yyyy")}"
+                        }
+                    }
+                }
+
+                if(it.isRepeatable){
+                    val days = it.daysOfWeek.split(",").map {
+                        when(it){
+                            "Monday" -> "Пн"
+                            "Tuesday" -> "Вт"
+                            "Wednesday" -> "Ср"
+                            "Thursday" -> "Чт"
+                            "Friday" -> "Пт"
+                            "Saturday" -> "Сб"
+                            "Sunday"-> "Вс"
+                            else -> ""
+                        }
+                    }
+
+                    binding.chipGroupScheduleWeekdays.children.forEach {
+                        val chip = it as Chip
+                        if(days.contains(chip.text.toString())){
+                            chip.isChecked = true
+                        }
+                    }
+                }
+
+                binding.tpScheduleTime.hour = it.time.get(Calendar.HOUR_OF_DAY)
+                binding.tpScheduleTime.minute = it.time.get(Calendar.MINUTE)
+
+            }
+        })
 
     }
 
@@ -110,13 +173,14 @@ class EventtimeBottomSheetDialog(): BottomSheetDialogFragment() {
                         }
                     }
                     val result = viewModel.createEventTime(
-                        EventTime(0,
+                        EventTime(if(currentMode == CreateAdvertisementFragment.CREATE_MODE) 0 else id?:0,
                             time,
                             binding.switchScheduleRepeatable.isChecked,
                             weekDays,
                             startDate,
                             endDate ?: startDate
-                        ))
+                        ), currentMode== PriceBottomSheetDialog.EDIT_MODE
+                    )
                     withContext(Dispatchers.Main){
                         when(result){
                             is UIState.Success<*>->{
@@ -140,6 +204,10 @@ class EventtimeBottomSheetDialog(): BottomSheetDialogFragment() {
 
 
             }
+        }
+
+        if(currentMode== EDIT_MODE){
+            id?.let { viewModel.initEventTimeFields(it) }
         }
 
     }

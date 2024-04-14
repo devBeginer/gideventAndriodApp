@@ -35,6 +35,11 @@ class AdvertisementViewModel @Inject constructor(
     val data: LiveData<UIState>
         get() = dataResultMutableLiveData
 
+
+    private val _feedbackData = MutableLiveData<NewFeedbackResponse>(null)
+    val feedbackData: LiveData<NewFeedbackResponse>
+        get() = _feedbackData
+
     private val favouriteMutableLiveData = MutableLiveData<AdvertPreviewCard?>()
     val favourite: LiveData<AdvertPreviewCard?>
         get() = favouriteMutableLiveData
@@ -187,6 +192,33 @@ class AdvertisementViewModel @Inject constructor(
         }else{
             UIState.Error("Произошла ошибка, попробуйте снова")
         }
+    }
+
+    fun initFeedback() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val id = advertId
+
+            if(id!=null){
+                val response = advertRepository.getFeedback(id)
+
+                when (response) {
+                    is ApiResult.Success<NewFeedbackResponse> -> {
+                        _feedbackData.postValue(response.data)
+                    }
+
+                    is ApiResult.Error -> {
+                        when {
+                            response.body.contains("Connection") -> dataResultMutableLiveData.postValue(UIState.ConnectionError)
+                            /*response.code == 404 -> dataResultMutableLiveData.postValue(UIState.Error("Произошла ошибка, попробуйте снова"))
+                            else -> dataResultMutableLiveData.postValue(UIState.Error(response.body))*/
+                        }
+                    }
+                }
+            }else{
+                dataResultMutableLiveData.postValue(UIState.Error("Произошла ошибка, попробуйте снова"))
+            }
+        }
+
     }
 
     fun postFavourite(id: Long){

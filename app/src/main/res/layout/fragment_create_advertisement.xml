@@ -355,59 +355,11 @@
                 android:layout_marginTop="8dp"
                 tools:listitem="@layout/recyclerview_item_photo"/>
 
-            <TextView
-                android:id="@+id/tv_create_schedule_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rv_create_photo"
-                android:layout_marginTop="8dp"
-                android:visibility="gone"
-                android:textStyle="bold"
-                android:text="Время проведения"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_create_schedule"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_create_schedule_title"
-                android:layout_marginTop="8dp"
-                tools:listitem="@layout/recyclerview_item_schedule"/>
-
-            <TextView
-                android:id="@+id/tv_create_pricelist_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rv_create_schedule"
-                android:layout_marginTop="8dp"
-                android:visibility="gone"
-                android:textStyle="bold"
-                android:text="Цены"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_create_pricelist"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_create_pricelist_title"
-                android:layout_marginTop="8dp"
-                tools:listitem="@layout/recyclerview_item_price"/>
-
             <Button
                 android:id="@+id/btn_create_post"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/rv_create_pricelist"
+                app:layout_constraintTop_toBottomOf="@id/rv_create_photo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginBottom="8dp"

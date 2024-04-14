@@ -50,6 +50,9 @@ class AdvertRemoteDataSource @Inject constructor(
     suspend fun getAdvertListById(credentials: String, id: Long) =
         networkHelper.safeApiCall { advertApiService.getAdvertisementById(credentials, id)}
 
+    suspend fun getAdvertisementForEdit(credentials: String, id: Long) =
+        networkHelper.safeApiCall { advertApiService.getAdvertisementForEdit(credentials, id)}
+
     suspend fun getAdvertListById(id: Long) =
         networkHelper.safeApiCall { advertApiService.getAdvertisementById(id)}
 
@@ -73,6 +76,9 @@ class AdvertRemoteDataSource @Inject constructor(
     suspend fun putAdvertisement(credentials: String, newAdvertisement: NewAdvertisement) =
         networkHelper.safeApiCall { advertApiService.putAdvertisement(newAdvertisement, credentials)}
 
+    suspend fun deleteAdvertisement(credentials: String, advertisementId: Long) =
+        networkHelper.safeApiCall { advertApiService.deleteAdvertisement(advertisementId, credentials)}
+
     suspend fun postEventTime(credentials: String, eventTimeRequest: EventTimeRequest) =
         networkHelper.safeApiCall { advertApiService.postEventTime(eventTimeRequest, credentials)}
 
@@ -85,11 +91,17 @@ class AdvertRemoteDataSource @Inject constructor(
     suspend fun putEventTime(credentials: String, eventTimeRequest: EventTimeRequest) =
         networkHelper.safeApiCall { advertApiService.putEventTime(eventTimeRequest, credentials)}
 
+    suspend fun deleteEventTime(credentials: String, eventTimeId: Long) =
+        networkHelper.safeApiCall { advertApiService.deleteEventTime(eventTimeId, credentials)}
+
     suspend fun postTicketPrice(credentials: String, ticketPrice: TicketPriceRequest) =
         networkHelper.safeApiCall { advertApiService.postTicketPrice(ticketPrice, credentials)}
 
     suspend fun putTicketPrice(credentials: String, ticketPrice: TicketPriceRequest) =
         networkHelper.safeApiCall { advertApiService.putTicketPrice(ticketPrice, credentials)}
+
+    suspend fun deleteTicketPrice(credentials: String, ticketPriceId: Long) =
+        networkHelper.safeApiCall { advertApiService.deleteTicketPrice(ticketPriceId, credentials)}
 
     suspend fun postCategory(credentials: String, category: Category) =
         networkHelper.safeApiCall { advertApiService.postCategory(category, credentials)}
@@ -122,6 +134,9 @@ class AdvertRemoteDataSource @Inject constructor(
 
     suspend fun putFeedback(credentials: String, newFeedback: NewFeedback) =
         networkHelper.safeApiCall { advertApiService.putFeedback(newFeedback, credentials)}
+
+    suspend fun getFeedback(credentials: String, advertId: Long) =
+        networkHelper.safeApiCall { advertApiService.getFeedback(advertId, credentials)}
 
 
     suspend fun postFavourite(credentials: String, advertId: Long) =

@@ -26,6 +26,7 @@ class EditContainerFragment : Fragment() {
 
     private var _binding: FragmentContainerEditBinding? = null
     private val binding get() = _binding!!
+    private var id: Long? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,6 +34,7 @@ class EditContainerFragment : Fragment() {
     ): View? {
         _binding = FragmentContainerEditBinding.inflate(inflater, container, false)
         val view = binding.root
+        id = arguments?.getLong("ID")
         return view
     }
 
@@ -44,10 +46,24 @@ class EditContainerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val nextFragment = id?.let{
+            CreateAdvertisementFragment.newInstance(it)
+        } ?: CreateAdvertisementFragment()
+
 
 
         childFragmentManager.beginTransaction()
-            .replace(R.id.edit_nav_host_fragment, CreateAdvertisementFragment()).addToBackStack(null).commit()
+            .replace(R.id.edit_nav_host_fragment, nextFragment).addToBackStack(null).commit()
 
+    }
+
+    companion object {
+        fun newInstance(id: Long): EditContainerFragment {
+            val fragment = EditContainerFragment()
+            val args = Bundle()
+            args.putLong("ID", id)
+            fragment.setArguments(args)
+            return fragment
+        }
     }
 }

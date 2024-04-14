@@ -11,11 +11,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.gidevent.andriodapp.R
 import ru.gidevent.andriodapp.databinding.FragmentCreatePriceBinding
 import ru.gidevent.androidapp.data.model.advertisement.PriceRVItem
-import ru.gidevent.androidapp.data.model.advertisement.dto.EventTime
 import ru.gidevent.androidapp.ui.SharedViewModel
 import ru.gidevent.androidapp.ui.edit.CreateAdvertViewModel
 import ru.gidevent.androidapp.ui.edit.adapter.PriceEditRecyclerViewAdapter
-import ru.gidevent.androidapp.ui.edit.adapter.ScheduleEditRecyclerViewAdapter
 import ru.gidevent.androidapp.ui.mainScreen.fragment.MainScreenContainerFragment
 import ru.gidevent.androidapp.ui.state.UIState
 import ru.gidevent.androidapp.utils.showSnack
@@ -147,7 +145,12 @@ class CreatePriceFragment(/*private val viewModel: CreateAdvertViewModel*/): Fra
     }
 
     private fun editPrice(id: Long) {
-        PriceBottomSheetDialog()
+        val priceBottomSheetDialog = PriceBottomSheetDialog()
+        val bundle = Bundle()
+        bundle.putLong("ID", id)
+        priceBottomSheetDialog.arguments = bundle
+        priceBottomSheetDialog
+        priceBottomSheetDialog
             .show(parentFragmentManager/*childFragmentManager*/, "priceBottomSheetDialog")
     }
 }

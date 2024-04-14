@@ -13,6 +13,7 @@ import ru.gidevent.andriodapp.databinding.FragmentMyAdvertsBinding
 import ru.gidevent.androidapp.data.model.myAdverts.MyAdvert
 import ru.gidevent.androidapp.ui.SharedViewModel
 import ru.gidevent.androidapp.ui.advertisement.AdvertisementFragment
+import ru.gidevent.androidapp.ui.edit.fragment.EditContainerFragment
 import ru.gidevent.androidapp.ui.seller_management.adapter.MyAdvertsRecyclerViewAdapter
 import ru.gidevent.androidapp.ui.seller_management.viewModel.MyAdvertsViewModel
 import ru.gidevent.androidapp.ui.state.UIStateAdvertList
@@ -53,12 +54,17 @@ class MyAdvertsFragment: Fragment() {
     }
 
     private fun initView(){
-        adapter = MyAdvertsRecyclerViewAdapter(listOf()) {
-            /*requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it))
-                .addToBackStack(null).commit()*/
-            parentFragmentManager.beginTransaction().replace(R.id.main_nav_host_fragment, AdvertisementFragment.newInstance(it)).addToBackStack(null).commit()
-        }
+        adapter = MyAdvertsRecyclerViewAdapter(listOf(), {
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it)).addToBackStack(null).commit()
+        }, {
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.nav_host_fragment, EditContainerFragment.newInstance(it)).addToBackStack(null).commit()
+        }, {
+            viewModel.delete(it)
+        })
         binding.rvAdvertsCards.adapter = adapter
 
 

@@ -28,6 +28,7 @@ import ru.gidevent.RestAPI.model.TransportationVariant
 import ru.gidevent.andriodapp.R
 import ru.gidevent.andriodapp.databinding.FragmentCreateAdvertisementBinding
 import ru.gidevent.androidapp.data.model.advertisement.request.NewAdvertisement
+import ru.gidevent.androidapp.data.model.advertisement.response.AdvertisementEdit
 import ru.gidevent.androidapp.data.model.advertisement.response.ResponsePoster
 import ru.gidevent.androidapp.data.model.search.OptionsVariants
 import ru.gidevent.androidapp.ui.SharedViewModel
@@ -93,8 +94,8 @@ class CreateAdvertisementFragment() : Fragment() {
     companion object {
         const val EDIT_MODE = 0
         const val CREATE_MODE = 1
-        fun newInstance(id: Long): AdvertisementFragment {
-            val fragment = AdvertisementFragment()
+        fun newInstance(id: Long): CreateAdvertisementFragment {
+            val fragment = CreateAdvertisementFragment()
             val args = Bundle()
             args.putLong("ID", id)
             fragment.setArguments(args)
@@ -112,6 +113,7 @@ class CreateAdvertisementFragment() : Fragment() {
         id = arguments?.getLong("ID")
         if (id != null) {
             currentMode = EDIT_MODE
+            viewModel.advertId = id
         }
         return view
     }
@@ -186,14 +188,73 @@ class CreateAdvertisementFragment() : Fragment() {
             when (it) {
                 is UIState.Success<*> -> {
                     sharedViewModel.showProgressIndicator(false)
-                    currentMode = EDIT_MODE
-
                     parentFragmentManager
-                        /*requireParentFragment().childFragmentManager*/
                             .beginTransaction()
                             .replace(R.id.edit_nav_host_fragment, CreateScheduleFragment()).addToBackStack(null)
                             .commit()
 
+                }
+
+                is UIState.Error -> {
+                    sharedViewModel.showProgressIndicator(false)
+                    showSnack(requireView(), it.message, 5)
+                }
+
+                is UIState.ConnectionError -> {
+                    sharedViewModel.showProgressIndicator(false)
+                    showSnack(requireView(), "Отсутствует интернет подключение", 3)
+                }
+
+                is UIState.Idle -> {
+
+                }
+
+                is UIState.Loading -> {
+                    sharedViewModel.showProgressIndicator(true)
+                }
+
+                else -> {}
+            }
+        })
+
+        viewModel.data.observe(viewLifecycleOwner, Observer { it ->
+            when (it) {
+                is UIState.Success<*> -> {
+                    val data = it.data as AdvertisementEdit
+
+                    binding.etCreateName.setText(data.name)
+                    binding.etCreateDescription.setText(data.description)
+                    binding.tpCreateDuration.hour = data.duration
+                    binding.tpCreateDuration.minute = 0
+                    transports.forEach {
+                        if(it.value == data.transportation) {
+                            binding.chipGroupCreateTransportation.clearCheck()
+                            binding.chipGroupCreateTransportation.check(it.key)
+                        }
+                    }
+                    ages.forEach {
+                        if(it.value == data.ageRestrictions) {
+                            binding.chipGroupCreateAge.clearCheck()
+                            binding.chipGroupCreateAge.check(it.key)
+                        }
+                    }
+                    categories.forEach {
+                        if(it.value == data.category) {
+                            binding.chipGroupCreateCategory.clearCheck()
+                            binding.chipGroupCreateCategory.check(it.key)
+                        }
+                    }
+
+                    binding.switchCreateIndividual.isChecked = data.isIndividual
+                    if(!data.isIndividual){
+                        binding.etCreatePeopleCount.setText(data.visitorsCount.toString())
+                    }
+                    val photos = data.photos.split(",")
+                    photos.forEach {
+                        images.add(it)
+                        photoRVAdapter.addItemList(it)
+                    }
+                    sharedViewModel.showProgressIndicator(false)
                 }
 
                 is UIState.Error -> {
@@ -227,25 +288,17 @@ class CreateAdvertisementFragment() : Fragment() {
 
     private fun initView() {
 
-        viewModel.initOptions()
+        viewModel.initOptions(currentMode==EDIT_MODE)
         binding.tpCreateDuration.setIs24HourView(true)
         when(currentMode){
             EDIT_MODE->{
-                binding.rvCreatePricelist.visibility = View.VISIBLE
-                binding.tvCreatePricelistTitle.visibility = View.VISIBLE
-                binding.rvCreateSchedule.visibility = View.VISIBLE
-                binding.tvCreateScheduleTitle.visibility = View.VISIBLE
-                viewModel.initFields()
+
             }
             CREATE_MODE->{
-                binding.rvCreatePricelist.visibility = View.GONE
-                binding.tvCreatePricelistTitle.visibility = View.GONE
-                binding.rvCreateSchedule.visibility = View.GONE
-                binding.tvCreateScheduleTitle.visibility = View.GONE
             }
         }
         binding.toolbarCreate.setNavigationOnClickListener() {
-            parentFragmentManager.popBackStack()
+            requireActivity().supportFragmentManager.popBackStack()
             //onBackPressed() // возврат на предыдущий activity
         }
         photoRVAdapter = PhotoEditRecyclerViewAdapter(listOf(), {
@@ -254,22 +307,7 @@ class CreateAdvertisementFragment() : Fragment() {
             //loadPhoto()
             getContent.launch("image/*")
         })
-        /*priceRVAdapter = PriceEditRecyclerViewAdapter(listOf(), {
-            viewModel.delPrice(it)
-        }, {
-            editPrice(it)
-        }, {
-            createPrice()
-        })
-        scheduleRVAdapter = ScheduleEditRecyclerViewAdapter(listOf(), {
-            viewModel.delTime(it)
-        }, {
-            editTime(it)
-        }, {
-            createTime()
-        })
-        binding.rvCreatePricelist.adapter = priceRVAdapter
-        binding.rvCreateSchedule.adapter = scheduleRVAdapter*/
+
         binding.rvCreatePhoto.adapter = photoRVAdapter
 
         binding.chipGroupCreateAge.children.forEach {
@@ -309,7 +347,7 @@ class CreateAdvertisementFragment() : Fragment() {
                 && (binding.tpCreateDuration.hour != 0 || binding.tpCreateDuration.minute != 0)
             ) {
                 val newAdvertisement = NewAdvertisement(
-                    0,
+                    if(currentMode == CREATE_MODE) 0 else id?:0,
                     binding.etCreateName.text.toString(),
                     binding.tpCreateDuration.hour,
                     binding.etCreateDescription.text.toString(),
@@ -323,7 +361,7 @@ class CreateAdvertisementFragment() : Fragment() {
                     city.cityId
                 )
 
-                viewModel.postAdvertisement(newAdvertisement)
+                viewModel.postAdvertisement(newAdvertisement, currentMode == EDIT_MODE)
 
             }
         }
@@ -409,9 +447,7 @@ class CreateAdvertisementFragment() : Fragment() {
     }
 
 
-    private fun loadPhoto() {
-        TODO("Not yet implemented")
-    }
+
 
     private fun addTransportation(){
         val mDialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_transportation, null)
@@ -480,4 +516,5 @@ class CreateAdvertisementFragment() : Fragment() {
         }
 
     }
+
 }

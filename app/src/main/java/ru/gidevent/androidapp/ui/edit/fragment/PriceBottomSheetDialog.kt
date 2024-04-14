@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.RadioButton
+import androidx.core.view.children
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -26,6 +27,7 @@ import ru.gidevent.androidapp.data.model.advertisement.dto.CustomerCategory
 import ru.gidevent.androidapp.ui.SharedViewModel
 import ru.gidevent.androidapp.ui.edit.CreateAdvertViewModel
 import ru.gidevent.androidapp.ui.state.UIState
+import ru.gidevent.androidapp.utils.Utils.toString
 import ru.gidevent.androidapp.utils.showSnack
 @AndroidEntryPoint
 class PriceBottomSheetDialog(): BottomSheetDialogFragment() {
@@ -36,6 +38,7 @@ class PriceBottomSheetDialog(): BottomSheetDialogFragment() {
 
     private var currentMode = CREATE_MODE
     private val customerCategory: HashMap<Int, CustomerCategory> = hashMapOf()
+    private var id: Long? = null
 
     companion object{
         const val EDIT_MODE = 0
@@ -49,6 +52,10 @@ class PriceBottomSheetDialog(): BottomSheetDialogFragment() {
     ): View {
         _binding = BottomsheetDialogPriceBinding.inflate(inflater, container, false)
         val view = binding.root
+        id = arguments?.getLong("ID")
+        if (id != null) {
+            currentMode = EventtimeBottomSheetDialog.EDIT_MODE
+        }
         return view
     }
 
@@ -60,7 +67,7 @@ class PriceBottomSheetDialog(): BottomSheetDialogFragment() {
     }
 
     private fun initData() {
-        viewModel.initCustomerCategories()
+        viewModel.initCustomerCategories(id)
         binding.btnPriceCreate.setOnClickListener {
             val category = customerCategory[binding.rgPriceCustomercategory.checkedRadioButtonId]
             if(!binding.etPriceAmount.text.isNullOrBlank()
@@ -68,7 +75,7 @@ class PriceBottomSheetDialog(): BottomSheetDialogFragment() {
                 sharedViewModel.showProgressIndicator(true)
                 CoroutineScope(Dispatchers.IO).launch {
 
-                    val result = viewModel.createPrice(binding.etPriceAmount.text.toString().toInt(), category.customerCategoryId)
+                    val result = viewModel.createPrice(binding.etPriceAmount.text.toString().toInt(), category.customerCategoryId, currentMode == EDIT_MODE, id)
                     withContext(Dispatchers.Main){
                         when(result){
                             is UIState.Success<*>->{
@@ -138,6 +145,18 @@ class PriceBottomSheetDialog(): BottomSheetDialogFragment() {
                 else -> {}
             }
         })
+
+        viewModel.ticketPriceDate.observe(viewLifecycleOwner, Observer { ticketPriceResponse ->
+            if(ticketPriceResponse!=null){
+                binding.etPriceAmount.setText(ticketPriceResponse.price.toString())
+                customerCategory.forEach {
+                    if(it.value == ticketPriceResponse.customerCategory){
+                        binding.rgPriceCustomercategory.check(it.key)
+                    }
+                }
+            }
+        })
+
     }
 
     private fun addCategory() {
