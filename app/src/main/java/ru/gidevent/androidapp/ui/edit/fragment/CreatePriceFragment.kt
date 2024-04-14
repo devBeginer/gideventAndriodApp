@@ -134,6 +134,10 @@ class CreatePriceFragment(/*private val viewModel: CreateAdvertViewModel*/): Fra
 
         }
 
+        binding.toolbarCreatePrice.setNavigationOnClickListener() {
+            parentFragmentManager.popBackStack()
+            //onBackPressed() // возврат на предыдущий activity
+        }
 
     }
 

@@ -5,13 +5,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_сreate_price"
+        android:id="@+id/toolbar_create_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Цены">
+        app:title="Цены 3/3"
+        app:navigationIcon="@drawable/baseline_arrow_back_24">
     </androidx.appcompat.widget.Toolbar>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_create_pricelist"
@@ -23,7 +24,7 @@
         android:layout_marginHorizontal="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_сreate_price"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_create_price"
         tools:listitem="@layout/recyclerview_item_price"/>
 
     <Button

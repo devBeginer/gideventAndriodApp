@@ -14,7 +14,7 @@
         android:paddingBottom="8dp">
 
         <TextView
-            android:id="@+id/tv_card_my_booking_name"
+            android:id="@+id/tv_card_my_advert_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_card_my_booking_people_count_title"
+            android:id="@+id/tv_card_my_advert_people_count_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -35,20 +35,20 @@
             android:layout_marginStart="8dp"
             android:text="Максимальное количество человек:"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_card_my_booking_name" />
+            app:layout_constraintTop_toBottomOf="@id/tv_card_my_advert_name" />
 
         <TextView
-            android:id="@+id/tv_card_my_booking_people_count"
+            android:id="@+id/tv_card_my_advert_people_count"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="15"
-            app:layout_constraintStart_toEndOf="@id/tv_card_my_booking_people_count_title"
-            app:layout_constraintTop_toTopOf="@id/tv_card_my_booking_people_count_title"
-            app:layout_constraintBottom_toBottomOf="@id/tv_card_my_booking_people_count_title" />
+            app:layout_constraintStart_toEndOf="@id/tv_card_my_advert_people_count_title"
+            app:layout_constraintTop_toTopOf="@id/tv_card_my_advert_people_count_title"
+            app:layout_constraintBottom_toBottomOf="@id/tv_card_my_advert_people_count_title" />
 
         <TextView
-            android:id="@+id/tv_card_my_booking_price"
+            android:id="@+id/tv_card_my_advert_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -56,17 +56,37 @@
             android:text="15000 р"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_card_my_booking_people_count_title" />
+            app:layout_constraintTop_toBottomOf="@id/tv_card_my_advert_people_count_title" />
+
+        <ImageView
+            android:id="@+id/iv_card_my_advert_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/outline_edit_24"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_card_my_advert_price" />
+
+        <ImageView
+            android:id="@+id/iv_card_my_advert_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_delete_outline_24"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toStartOf="@id/iv_card_my_advert_edit"
+            app:layout_constraintTop_toTopOf="@id/iv_card_my_advert_edit"
+            app:layout_constraintBottom_toBottomOf="@id/iv_card_my_advert_edit"/>
 
         <Button
-            android:id="@+id/btn_my_booking_confirm"
+            android:id="@+id/btn_my_advert_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_card_my_booking_price"
+            app:layout_constraintStart_toStartOf= "parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_card_my_advert_price"
             android:text="Скрыть"
             android:visibility="gone"/>
     </androidx.constraintlayout.widget.ConstraintLayout>

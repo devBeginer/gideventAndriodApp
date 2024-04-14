@@ -1,4 +1,4 @@
-package ru.gidevent.androidapp.ui.mainScreen.viewModel
+package ru.gidevent.androidapp.ui.seller_management.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

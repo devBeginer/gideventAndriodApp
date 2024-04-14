@@ -113,6 +113,10 @@ class CreateScheduleFragment(/*private val viewModel: CreateAdvertViewModel*/): 
         }*/
 
 
+        binding.toolbarCreateSHedule.setNavigationOnClickListener() {
+            parentFragmentManager.popBackStack()
+            //onBackPressed() // возврат на предыдущий activity
+        }
         scheduleRVAdapter = ScheduleEditRecyclerViewAdapter(listOf(), {
             viewModel.delTime(it)
         }, {

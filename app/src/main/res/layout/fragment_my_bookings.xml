@@ -15,7 +15,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/my_booking_toolbar_title"
-        app:menu="@menu/menu_my_bookings">
+        app:menu="@menu/menu_my_bookings"
+        app:navigationIcon="@drawable/baseline_arrow_back_24">
     </androidx.appcompat.widget.Toolbar>
 
     <HorizontalScrollView

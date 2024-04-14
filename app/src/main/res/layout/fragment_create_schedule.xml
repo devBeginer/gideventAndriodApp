@@ -5,13 +5,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_сreate_sсhedule"
+        android:id="@+id/toolbar_create_sсhedule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Расписание">
+        app:title="Расписание 2/3"
+        app:navigationIcon="@drawable/baseline_arrow_back_24">
     </androidx.appcompat.widget.Toolbar>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_create_schedule"
@@ -23,7 +24,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_сreate_sсhedule"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_create_sсhedule"
         tools:listitem="@layout/recyclerview_item_schedule"/>
 
     <Button

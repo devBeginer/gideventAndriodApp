@@ -6,6 +6,7 @@ import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -14,6 +15,7 @@ import androidx.core.view.setPadding
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.material.button.MaterialButton
 import ru.gidevent.andriodapp.R
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.AdvertPreviewCard
 import ru.gidevent.androidapp.utils.Utils
@@ -58,7 +60,7 @@ class SearchRecyclerViewAdapter(
     override fun onBindViewHolder(holder: CardsViewHolder, position: Int) {
         holder.name.text = dataSet[position].name
         holder.price.text = "₽ ${dataSet[position].price.toString()}"
-        holder.favourite.setImageDrawable(
+        holder.favourite.setIcon/*setImageDrawable*/(
             if (dataSet[position].isFavourite) ContextCompat.getDrawable(
                 holder.favourite.context,
                 R.drawable.baseline_favorite_active_24
@@ -97,7 +99,7 @@ class SearchRecyclerViewAdapter(
         val name: TextView
         val price: TextView
         val imageView: ImageView
-        val favourite: ImageView
+        val favourite: MaterialButton//ImageView
         val categories: LinearLayout
 
         init {

@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.gidevent.RestAPI.auth.RegisterBodyRequest
+import ru.gidevent.androidapp.data.model.auth.request.SellerRequest
 import ru.gidevent.androidapp.data.model.auth.response.RegisterBodyResponse
 import ru.gidevent.androidapp.data.repository.UserRepository
 import ru.gidevent.androidapp.network.ApiResult
@@ -22,13 +23,17 @@ class SignUpViewModel @Inject constructor(private val repository: UserRepository
         get() = _registerState
 
 
-    fun register(login: String, password: String, firstName: String, lastName: String, role: SignInScreenMode){
+    fun register(login: String, password: String, firstName: String, lastName: String, about: String, role: SignInScreenMode){
         viewModelScope.launch (Dispatchers.IO){
 
             _registerState.postValue(UIState.Loading)
-            val response = repository.userSignUp(RegisterBodyRequest(login, password, firstName, lastName, "USER"))
+            val response =
+                when(role){
+                    SignInScreenMode.SELLER->repository.userSignUpAsSeller(SellerRequest(0, login, password, firstName, lastName, "", about))
+                    SignInScreenMode.TOURIST->repository.userSignUp(RegisterBodyRequest(login, password, firstName, lastName, "User"))
+            }
             when(response){
-                is ApiResult.Success<RegisterBodyResponse> -> {
+                is ApiResult.Success<*> -> {
                     _registerState.postValue(UIState.Success(true))
                 }
                 is ApiResult.Error -> {

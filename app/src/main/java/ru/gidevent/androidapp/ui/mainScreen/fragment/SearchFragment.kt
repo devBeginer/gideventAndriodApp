@@ -75,7 +75,8 @@ class SearchFragment : Fragment() {
     private fun initView(){
         //viewModel.initView()
         adapter = SearchRecyclerViewAdapter(listOf(), {
-            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it)).addToBackStack(null).commit()
+            //requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it)).addToBackStack(null).commit()
+            parentFragmentManager.beginTransaction().replace(R.id.main_nav_host_fragment, AdvertisementFragment.newInstance(it)).addToBackStack(null).commit()
         },{
             viewModel.postFavourite(it)
         })
@@ -83,7 +84,8 @@ class SearchFragment : Fragment() {
         suggestionAdapter = SuggestionsRecyclerViewAdapter(
             SuggestionRecyclerViewData(listOf(), listOf(), listOf()),
             {
-                requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it)).addToBackStack(null).commit()
+                //requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it)).addToBackStack(null).commit()
+                parentFragmentManager.beginTransaction().replace(R.id.main_nav_host_fragment, AdvertisementFragment.newInstance(it)).addToBackStack(null).commit()
             },{
                 viewModel.resetSearchOptions()
                 val newValue = viewModel.searchOptions.value

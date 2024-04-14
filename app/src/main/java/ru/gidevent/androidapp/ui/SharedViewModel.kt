@@ -22,4 +22,8 @@ class SharedViewModel @Inject constructor(
     fun showProgressIndicator(isShown: Boolean){
         _progressBar.postValue(isShown)
     }
+
+    fun isAuthorised(): Boolean{
+        return repository.isAuthorised()
+    }
 }

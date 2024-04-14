@@ -1,4 +1,4 @@
-package ru.gidevent.androidapp.ui.mainScreen.fragment
+package ru.gidevent.androidapp.ui.seller_management.fragment
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -11,8 +11,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.gidevent.andriodapp.databinding.BottomsheetDialogBookingInfoBinding
 import ru.gidevent.androidapp.data.model.myAdverts.BookingInfoResponse
 import ru.gidevent.androidapp.ui.SharedViewModel
-import ru.gidevent.androidapp.ui.mainScreen.adapter.BookingsGroupRecyclerViewAdapter
-import ru.gidevent.androidapp.ui.mainScreen.viewModel.MyBookingsViewModel
+import ru.gidevent.androidapp.ui.seller_management.adapter.BookingsGroupRecyclerViewAdapter
+import ru.gidevent.androidapp.ui.seller_management.viewModel.MyBookingsViewModel
 import ru.gidevent.androidapp.ui.state.UIStateAdvertList
 import ru.gidevent.androidapp.utils.showSnack
 import java.util.Calendar

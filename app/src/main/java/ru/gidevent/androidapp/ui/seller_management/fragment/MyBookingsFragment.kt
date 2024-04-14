@@ -1,4 +1,4 @@
-package ru.gidevent.androidapp.ui.mainScreen.fragment
+package ru.gidevent.androidapp.ui.seller_management.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,10 +15,9 @@ import ru.gidevent.andriodapp.R
 import ru.gidevent.andriodapp.databinding.FragmentMyBookingsBinding
 import ru.gidevent.androidapp.data.model.myAdverts.MyBooking
 import ru.gidevent.androidapp.ui.SharedViewModel
-import ru.gidevent.androidapp.ui.mainScreen.adapter.MyBookingsRecyclerViewAdapter
-import ru.gidevent.androidapp.ui.mainScreen.viewModel.MyBookingsViewModel
+import ru.gidevent.androidapp.ui.seller_management.adapter.MyBookingsRecyclerViewAdapter
+import ru.gidevent.androidapp.ui.seller_management.viewModel.MyBookingsViewModel
 import ru.gidevent.androidapp.ui.state.UIStateAdvertList
-import ru.gidevent.androidapp.utils.Utils.toString
 import ru.gidevent.androidapp.utils.showSnack
 import java.util.Calendar
 import java.util.Locale
@@ -87,6 +86,10 @@ class MyBookingsFragment: Fragment() {
             true
         }
 
+
+        binding.toolbarMyBooking.setNavigationOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
     }
 
     private fun initObservers(){

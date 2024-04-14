@@ -1,15 +1,12 @@
-package ru.gidevent.androidapp.ui.mainScreen.adapter
+package ru.gidevent.androidapp.ui.seller_management.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.gidevent.andriodapp.R
-import ru.gidevent.androidapp.data.model.myAdverts.MyBooking
 import ru.gidevent.androidapp.data.model.myAdverts.VisitorsGroupResponse
-import ru.gidevent.androidapp.utils.Utils.toString
 
 class BookingsGroupRecyclerViewAdapter(
     private var dataSet: List<VisitorsGroupResponse>

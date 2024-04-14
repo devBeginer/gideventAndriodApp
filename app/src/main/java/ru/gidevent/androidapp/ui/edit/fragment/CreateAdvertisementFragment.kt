@@ -244,7 +244,10 @@ class CreateAdvertisementFragment() : Fragment() {
                 binding.tvCreateScheduleTitle.visibility = View.GONE
             }
         }
-
+        binding.toolbarCreate.setNavigationOnClickListener() {
+            parentFragmentManager.popBackStack()
+            //onBackPressed() // возврат на предыдущий activity
+        }
         photoRVAdapter = PhotoEditRecyclerViewAdapter(listOf(), {
             viewModel.delPhoto(it)
         }, {

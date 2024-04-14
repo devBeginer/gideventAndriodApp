@@ -1,4 +1,4 @@
-package ru.gidevent.androidapp.ui.mainScreen.fragment
+package ru.gidevent.androidapp.ui.seller_management.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,8 +13,8 @@ import ru.gidevent.andriodapp.databinding.FragmentMyAdvertsBinding
 import ru.gidevent.androidapp.data.model.myAdverts.MyAdvert
 import ru.gidevent.androidapp.ui.SharedViewModel
 import ru.gidevent.androidapp.ui.advertisement.AdvertisementFragment
-import ru.gidevent.androidapp.ui.mainScreen.adapter.MyAdvertsRecyclerViewAdapter
-import ru.gidevent.androidapp.ui.mainScreen.viewModel.MyAdvertsViewModel
+import ru.gidevent.androidapp.ui.seller_management.adapter.MyAdvertsRecyclerViewAdapter
+import ru.gidevent.androidapp.ui.seller_management.viewModel.MyAdvertsViewModel
 import ru.gidevent.androidapp.ui.state.UIStateAdvertList
 import ru.gidevent.androidapp.utils.showSnack
 
@@ -54,12 +54,17 @@ class MyAdvertsFragment: Fragment() {
 
     private fun initView(){
         adapter = MyAdvertsRecyclerViewAdapter(listOf()) {
-            requireActivity().supportFragmentManager.beginTransaction()
+            /*requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it))
-                .addToBackStack(null).commit()
+                .addToBackStack(null).commit()*/
+            parentFragmentManager.beginTransaction().replace(R.id.main_nav_host_fragment, AdvertisementFragment.newInstance(it)).addToBackStack(null).commit()
         }
         binding.rvAdvertsCards.adapter = adapter
 
+
+        binding.toolbarMyAdverts.setNavigationOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
     }
 
     private fun initObservers(){

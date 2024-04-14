@@ -6,6 +6,7 @@ import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.material.button.MaterialButton
 import ru.gidevent.andriodapp.R
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.AdvertPreviewCard
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.MainRecyclerViewData
@@ -111,7 +113,7 @@ class MainRecyclerViewAdapter(
         val name: TextView
         private val price: TextView
         private val imageView: ImageView
-        private val favourite: ImageView
+        private val favourite: MaterialButton//ImageView
         private val categories: LinearLayout
 
         init {
@@ -133,7 +135,7 @@ class MainRecyclerViewAdapter(
             val positionInList = position-2
             name.text = dataSet.cardsDataSet[positionInList].name
             price.text = "₽ ${ dataSet.cardsDataSet[positionInList].price.toString() }"
-            favourite.setImageDrawable(
+            favourite.setIcon/*setImageDrawable*/(
                 if (dataSet.cardsDataSet[positionInList].isFavourite) ContextCompat.getDrawable(
                     favourite.context,
                     R.drawable.baseline_favorite_active_24

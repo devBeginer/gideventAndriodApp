@@ -27,9 +27,17 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.nav_host_fragment, MainScreenContainerFragment()).addToBackStack(null)
-            .commit()
+        if(viewModel.isAuthorised()){
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment, MainScreenContainerFragment())
+                .commit()
+        }else{
+            viewModel.showProgressIndicator(false)
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment, SignInFragment())
+                .commit()
+        }
+
 
         viewModel.progressBar.observe(this, Observer {
             if(it){

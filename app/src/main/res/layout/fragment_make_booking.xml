@@ -12,7 +12,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Бронирование">
+        app:title="Бронирование"
+        app:navigationIcon="@drawable/baseline_arrow_back_24">
     </androidx.appcompat.widget.Toolbar>
 
     <TextView

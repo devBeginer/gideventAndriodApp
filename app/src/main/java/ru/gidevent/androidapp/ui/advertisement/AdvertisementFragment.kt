@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -89,6 +90,25 @@ class AdvertisementFragment : Fragment() {
             }
 
         }
+
+
+
+        binding.toolbarAdvertisement.setOnMenuItemClickListener { menuItem->
+            when(menuItem.itemId){
+                R.id.advertisement_favourite->{
+                    id?.let {
+                        sharedViewModel.showProgressIndicator(true)
+                        viewModel.postFavourite(it)
+                    }
+                }
+            }
+            true
+        }
+
+        binding.toolbarAdvertisement.setNavigationOnClickListener() {
+            parentFragmentManager.popBackStack()
+            //onBackPressed() // возврат на предыдущий activity
+        }
     }
 
     private fun initObservers() {
@@ -123,6 +143,14 @@ class AdvertisementFragment : Fragment() {
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .centerCrop()
                             .into(binding.ivAdvertCircularAvatar)
+                        val menuItem = binding.toolbarAdvertisement.menu.getItem(0/*R.id.advertisement_favourite*/)
+                        menuItem.icon = if (dataSet.favourite == true) ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.baseline_favorite_active_24
+                        ) else ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.twotone_favorite_24
+                        )
 
 
 
@@ -151,6 +179,21 @@ class AdvertisementFragment : Fragment() {
                 }
 
                 else -> {}
+            }
+        })
+
+        viewModel.favourite.observe(viewLifecycleOwner, Observer { advert ->
+            if (advert != null) {
+                val menuItem =
+                    binding.toolbarAdvertisement.menu.getItem(0/*R.id.advertisement_favourite*/)
+                menuItem.icon = if (advert.isFavourite) ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.baseline_favorite_active_24
+                ) else ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.twotone_favorite_24
+                )
+                sharedViewModel.showProgressIndicator(false)
             }
         })
     }

@@ -1,15 +1,12 @@
-package ru.gidevent.androidapp.ui.mainScreen.adapter
+package ru.gidevent.androidapp.ui.seller_management.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.gidevent.andriodapp.R
 import ru.gidevent.androidapp.data.model.myAdverts.MyAdvert
-import ru.gidevent.androidapp.data.model.myAdverts.MyBooking
-import ru.gidevent.androidapp.utils.Utils.toString
 
 class MyAdvertsRecyclerViewAdapter(
     private var dataSet: List<MyAdvert>,
@@ -57,9 +54,9 @@ class MyAdvertsRecyclerViewAdapter(
         val customerCount: TextView
 
         init {
-            name = view.findViewById(R.id.tv_card_my_booking_name)
-            price = view.findViewById(R.id.tv_card_my_booking_price)
-            customerCount = view.findViewById(R.id.tv_card_my_booking_people_count)
+            name = view.findViewById(R.id.tv_card_my_advert_name)
+            price = view.findViewById(R.id.tv_card_my_advert_price)
+            customerCount = view.findViewById(R.id.tv_card_my_advert_people_count)
 
             view.setOnClickListener {
                 onClick(dataSet[adapterPosition].id)

@@ -61,7 +61,8 @@ class FavouritesFragment : Fragment() {
     private fun initView(){
         //viewModel.initView()
         adapter = FavouriteRecyclerViewAdapter(listOf(),{
-            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it)).addToBackStack(null).commit()
+            //requireActivity().supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment, AdvertisementFragment.newInstance(it)).addToBackStack(null).commit()
+            parentFragmentManager.beginTransaction().replace(R.id.main_nav_host_fragment, AdvertisementFragment.newInstance(it)).addToBackStack(null).commit()
         },{
             viewModel.postFavourite(it)
         })

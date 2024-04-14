@@ -1,4 +1,4 @@
-package ru.gidevent.androidapp.ui.mainScreen.adapter
+package ru.gidevent.androidapp.ui.seller_management.adapter
 
 import android.view.LayoutInflater
 import android.view.View

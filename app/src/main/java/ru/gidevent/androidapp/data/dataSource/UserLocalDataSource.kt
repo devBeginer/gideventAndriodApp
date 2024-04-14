@@ -27,4 +27,9 @@ class UserLocalDataSource @Inject constructor(
     fun saveRefreshTokenToSP(token: String) {
         return sharedPreferences.editPref(REFRESH_TOKEN, token)
     }
+
+    fun resetTokensInSP() {
+        sharedPreferences.editPref(REFRESH_TOKEN, "")
+        sharedPreferences.editPref(ACCESS_TOKEN, "")
+    }
 }

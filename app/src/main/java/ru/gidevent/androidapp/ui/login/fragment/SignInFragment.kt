@@ -49,6 +49,7 @@ class SignInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sharedViewModel.showProgressIndicator(false)
 
         binding.btnSignInRegister.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction().addToBackStack(null)
@@ -67,6 +68,7 @@ class SignInFragment : Fragment() {
             if (binding.etSignInLogin.text.toString().isNotEmpty()
                 && binding.etSignInPassword.text.toString().isNotEmpty()
             ) {
+                sharedViewModel.showProgressIndicator(true)
                 viewModel.login(
                     binding.etSignInLogin.text.toString(),
                     binding.etSignInPassword.text.toString()

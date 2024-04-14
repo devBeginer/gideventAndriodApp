@@ -64,16 +64,19 @@ class SignUpFragment : Fragment() {
         }
 
         binding.btnSignUpRegister.setOnClickListener {
-            if (binding.etSignUpName.toString().isNotEmpty() && binding.etSignUpLastName.toString()
-                    .isNotEmpty() && binding.etSignUpLogin.toString()
-                    .isNotEmpty() && binding.etSignUpPassword.toString()
-                    .isNotEmpty() && binding.etSignUpPasswordRepeat.toString() == binding.etSignUpPassword.toString()
+            if (binding.etSignUpName.text.toString().isNotEmpty()
+                && binding.etSignUpLastName.text.toString().isNotEmpty()
+                && binding.etSignUpLogin.text.toString().isNotEmpty()
+                && binding.etSignUpPassword.text.toString().isNotEmpty()
+                && binding.etSignUpPasswordRepeat.text.toString() == binding.etSignUpPassword.text.toString()
+                && (registerMode == SignInScreenMode.TOURIST || binding.etSignUpAbout.text.toString().isNotEmpty())
             ) {
                 viewModel.register(
-                    binding.etSignUpName.toString(),
-                    binding.etSignUpLastName.toString(),
-                    binding.etSignUpLogin.toString(),
-                    binding.etSignUpPassword.toString(),
+                    binding.etSignUpLogin.text.toString(),
+                    binding.etSignUpPassword.text.toString(),
+                    binding.etSignUpName.text.toString(),
+                    binding.etSignUpLastName.text.toString(),
+                    binding.etSignUpAbout.text.toString(),
                     registerMode
                 )
             } else {

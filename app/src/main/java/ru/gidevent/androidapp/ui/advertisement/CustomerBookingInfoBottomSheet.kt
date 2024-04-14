@@ -11,7 +11,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.gidevent.andriodapp.databinding.BottomsheetDialogCustomerBookingInfoBinding
 import ru.gidevent.androidapp.data.model.myAdverts.BookingInfoResponse
 import ru.gidevent.androidapp.ui.SharedViewModel
-import ru.gidevent.androidapp.ui.mainScreen.adapter.BookingsGroupRecyclerViewAdapter
+import ru.gidevent.androidapp.ui.seller_management.adapter.BookingsGroupRecyclerViewAdapter
 import ru.gidevent.androidapp.ui.mainScreen.viewModel.PurchasesViewModel
 import ru.gidevent.androidapp.ui.state.UIStateAdvertList
 import ru.gidevent.androidapp.utils.showSnack

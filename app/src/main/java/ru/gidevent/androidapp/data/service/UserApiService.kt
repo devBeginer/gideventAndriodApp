@@ -10,7 +10,9 @@ import ru.gidevent.RestAPI.auth.LoginBodyResponse
 import ru.gidevent.RestAPI.auth.RefreshBodyRequest
 import ru.gidevent.RestAPI.auth.RegisterBodyRequest
 import ru.gidevent.androidapp.data.model.auth.request.LoginBodyRequest
+import ru.gidevent.androidapp.data.model.auth.request.SellerRequest
 import ru.gidevent.androidapp.data.model.auth.response.RegisterBodyResponse
+import ru.gidevent.androidapp.data.model.auth.response.SellerResponse
 import ru.gidevent.androidapp.data.model.auth.response.UserDetailsResponse
 
 interface UserApiService {
@@ -20,6 +22,9 @@ interface UserApiService {
 
     @POST("auth/signup")
     suspend fun signUp(@Body registerBodyRequest: RegisterBodyRequest): Response<RegisterBodyResponse>
+
+    @POST("auth/seller/")
+    suspend fun signUpAsSeller(@Body sellerRequest: SellerRequest): Response<SellerResponse>
 
     @POST("auth/refresh")
     suspend fun refreshToken(@Body refreshBodyRequest: RefreshBodyRequest): Response<LoginBodyResponse>

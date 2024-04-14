@@ -182,6 +182,10 @@ class MakeBookingFragment  : Fragment() {
             viewModel.resetPriceList()
             adapter.resetItemList()
         }
+
+        binding.toolbarMakeBooking.setNavigationOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
     }
 
     private fun showDatePicker() {

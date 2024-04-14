@@ -50,8 +50,18 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Мои брони"
+        app:layout_constraintBottom_toTopOf="@id/btn_profile_exit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_profile_my_advert" />
+
+    <Button
+        android:id="@+id/btn_profile_exit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Выход"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_repeat" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_profile_my_bookings" />
 </androidx.constraintlayout.widget.ConstraintLayout>

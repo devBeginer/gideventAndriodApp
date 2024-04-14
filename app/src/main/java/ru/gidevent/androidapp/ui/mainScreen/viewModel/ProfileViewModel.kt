@@ -28,4 +28,8 @@ class ProfileViewModel @Inject constructor(private val repository: UserRepositor
             }
         }
     }
+
+    fun logout(){
+        repository.logout()
+    }
 }

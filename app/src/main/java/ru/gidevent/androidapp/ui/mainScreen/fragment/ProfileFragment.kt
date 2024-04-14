@@ -11,9 +11,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.gidevent.andriodapp.R
 import ru.gidevent.andriodapp.databinding.FragmentProfileBinding
 import ru.gidevent.androidapp.ui.SharedViewModel
-import ru.gidevent.androidapp.ui.edit.fragment.CreateAdvertisementFragment
 import ru.gidevent.androidapp.ui.edit.fragment.EditContainerFragment
+import ru.gidevent.androidapp.ui.login.fragment.SignInFragment
 import ru.gidevent.androidapp.ui.mainScreen.viewModel.ProfileViewModel
+import ru.gidevent.androidapp.ui.seller_management.fragment.MyAdvertsFragment
+import ru.gidevent.androidapp.ui.seller_management.fragment.MyBookingsFragment
 
 @AndroidEntryPoint
 class ProfileFragment: Fragment() {
@@ -71,6 +73,14 @@ class ProfileFragment: Fragment() {
             requireActivity().supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.nav_host_fragment, MyBookingsFragment()).addToBackStack(null)
+                .commit()
+        }
+
+        binding.btnProfileExit.setOnClickListener {
+            viewModel.logout()
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.nav_host_fragment, SignInFragment())
                 .commit()
         }
     }

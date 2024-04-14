@@ -6,6 +6,7 @@ import ru.gidevent.RestAPI.auth.RegisterBodyRequest
 import ru.gidevent.androidapp.data.dataSource.UserLocalDataSource
 import ru.gidevent.androidapp.data.dataSource.UserRemoteDataSource
 import ru.gidevent.androidapp.data.model.auth.request.LoginBodyRequest
+import ru.gidevent.androidapp.data.model.auth.request.SellerRequest
 import ru.gidevent.androidapp.data.model.auth.response.UserDetailsResponse
 import ru.gidevent.androidapp.network.ApiResult
 import javax.inject.Inject
@@ -20,6 +21,9 @@ class UserRepository @Inject constructor(
 
     suspend fun userSignUp(registerBodyRequest: RegisterBodyRequest) =
         remoteDataSource.userSignUp(registerBodyRequest)
+
+    suspend fun userSignUpAsSeller(sellerRequest: SellerRequest) =
+        remoteDataSource.userSignUpAsSeller(sellerRequest)
 
     suspend fun userRefreshToken(refreshBodyRequest: RefreshBodyRequest) =
         remoteDataSource.userRefreshToken(refreshBodyRequest)
@@ -47,4 +51,8 @@ class UserRepository @Inject constructor(
     }
 
 
+
+    fun logout() {
+        localDataSource.resetTokensInSP()
+    }
 }
