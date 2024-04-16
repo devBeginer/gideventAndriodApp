@@ -19,6 +19,8 @@ import ru.gidevent.androidapp.ui.advertisement.adapter.AdvertReviewRecyclerViewA
 import ru.gidevent.androidapp.ui.advertisement.adapter.AdvertViewPagerAdapter
 import ru.gidevent.androidapp.ui.advertisement.adapter.PriceListRecyclerViewAdapter
 import ru.gidevent.androidapp.ui.makeBooking.MakeBookingFragment
+import ru.gidevent.androidapp.ui.profileScreen.EditProfileFragment
+import ru.gidevent.androidapp.ui.profileScreen.SellerFragment
 import ru.gidevent.androidapp.ui.state.UIState
 import ru.gidevent.androidapp.utils.Utils
 import ru.gidevent.androidapp.utils.showSnack
@@ -108,6 +110,9 @@ class AdvertisementFragment : Fragment() {
         binding.toolbarAdvertisement.setNavigationOnClickListener() {
             parentFragmentManager.popBackStack()
             //onBackPressed() // возврат на предыдущий activity
+        }
+        binding.ivAdvertCircularAvatar.setOnClickListener {
+            parentFragmentManager.beginTransaction().replace(R.id.main_nav_host_fragment, SellerFragment()).addToBackStack(null).commit()
         }
     }
 

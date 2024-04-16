@@ -11,9 +11,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.gidevent.andriodapp.R
 import ru.gidevent.andriodapp.databinding.FragmentProfileBinding
 import ru.gidevent.androidapp.ui.SharedViewModel
+import ru.gidevent.androidapp.ui.advertisement.AdvertisementFragment
 import ru.gidevent.androidapp.ui.edit.fragment.EditContainerFragment
 import ru.gidevent.androidapp.ui.login.fragment.SignInFragment
 import ru.gidevent.androidapp.ui.mainScreen.viewModel.ProfileViewModel
+import ru.gidevent.androidapp.ui.profileScreen.EditProfileFragment
 import ru.gidevent.androidapp.ui.seller_management.fragment.MyAdvertsFragment
 import ru.gidevent.androidapp.ui.seller_management.fragment.MyBookingsFragment
 
@@ -47,7 +49,7 @@ class ProfileFragment: Fragment() {
         viewModel.initView()
         viewModel.data.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                binding.tvMainScreenContainer.text = it.firstName
+                binding.tvProfileName.text = "${it.firstName} ${it.lastName}"
             }
         })
 
@@ -55,21 +57,21 @@ class ProfileFragment: Fragment() {
             viewModel.initView()
         }
 
-        binding.btnProfileCreateAdvert.setOnClickListener {
+        binding.cvProfileCreateSellerAdvert.setOnClickListener {
             requireActivity().supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.nav_host_fragment, EditContainerFragment()).addToBackStack(null)
                 .commit()
         }
 
-        binding.btnProfileMyAdvert.setOnClickListener {
+        binding.cvProfileSellerMyAdvert.setOnClickListener {
             requireActivity().supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.nav_host_fragment, MyAdvertsFragment()).addToBackStack(null)
                 .commit()
         }
 
-        binding.btnProfileMyBookings.setOnClickListener {
+        binding.cvProfileSellerMyBookings.setOnClickListener {
             requireActivity().supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.nav_host_fragment, MyBookingsFragment()).addToBackStack(null)
@@ -82,6 +84,10 @@ class ProfileFragment: Fragment() {
                 .beginTransaction()
                 .replace(R.id.nav_host_fragment, SignInFragment())
                 .commit()
+        }
+
+        binding.cvProfileEdit.setOnClickListener {
+            parentFragmentManager.beginTransaction().replace(R.id.main_nav_host_fragment, EditProfileFragment()).addToBackStack(null).commit()
         }
     }
 }
