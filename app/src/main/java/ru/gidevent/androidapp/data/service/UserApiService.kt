@@ -11,6 +11,8 @@ import ru.gidevent.RestAPI.auth.RefreshBodyRequest
 import ru.gidevent.RestAPI.auth.RegisterBodyRequest
 import ru.gidevent.androidapp.data.model.auth.request.LoginBodyRequest
 import ru.gidevent.androidapp.data.model.auth.request.SellerRequest
+import ru.gidevent.androidapp.data.model.auth.response.EditProfile
+import ru.gidevent.androidapp.data.model.auth.response.ProfileResponse
 import ru.gidevent.androidapp.data.model.auth.response.RegisterBodyResponse
 import ru.gidevent.androidapp.data.model.auth.response.SellerResponse
 import ru.gidevent.androidapp.data.model.auth.response.UserDetailsResponse
@@ -32,9 +34,12 @@ interface UserApiService {
     @PUT("profile")
     suspend fun updateUser(
         @Header("Authorization") token: String,
-        @Body registerBodyRequest: RegisterBodyRequest
-    ): Response<RegisterBodyResponse>
+        @Body editProfile: EditProfile
+    ): Response<ProfileResponse>
 
     @GET("profile")
     suspend fun getUserById(@Header("Authorization") token: String): Response<UserDetailsResponse?>
+
+    @GET("editProfile")
+    suspend fun getEditProfile(@Header("Authorization") token: String): Response<EditProfile?>
 }

@@ -37,7 +37,7 @@ class HeaderViewPagerAdapter(
 
     override fun onBindViewHolder(holder: HeaderViewHolder, position: Int) {
         holder.name.text = itemsList[position].name
-        holder.price.text = "₽ ${itemsList[position].price.toString()}"
+        holder.price.text = "от ₽ ${itemsList[position].price.toString()}"
 
         Glide.with(holder.imageView.context)
             .load("${Utils.IMAGE_URL}${itemsList[position].photoUrl}")

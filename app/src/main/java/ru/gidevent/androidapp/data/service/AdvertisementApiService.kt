@@ -29,6 +29,8 @@ import ru.gidevent.androidapp.data.model.advertisement.response.EventTimeRespons
 import ru.gidevent.androidapp.data.model.advertisement.response.NewFeedbackResponse
 import ru.gidevent.androidapp.data.model.advertisement.response.ResponsePoster
 import ru.gidevent.androidapp.data.model.advertisement.response.TicketPriceResponse
+import ru.gidevent.androidapp.data.model.auth.response.Seller
+import ru.gidevent.androidapp.data.model.auth.response.UserDetailsResponse
 import ru.gidevent.androidapp.data.model.booking.BookingParamsResponse
 import ru.gidevent.androidapp.data.model.booking.BookingRequest
 import ru.gidevent.androidapp.data.model.booking.BookingResponse
@@ -303,4 +305,7 @@ interface AdvertisementApiService {
         @Query("bookingId") bookingId: Long,
         @Header("Authorization") token: String
     ): Response<BookingResponse>
+
+    @GET("auth/sellerInfo")
+    suspend fun getSellerById(@Query("sellerId") sellerId: Long): Response<Seller?>
 }

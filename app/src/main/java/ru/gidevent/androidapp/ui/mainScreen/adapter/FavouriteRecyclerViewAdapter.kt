@@ -59,7 +59,7 @@ class FavouriteRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: CardsViewHolder, position: Int) {
         holder.name.text = dataSet[position].name
-        holder.price.text = "₽ ${dataSet[position].price.toString()}"
+        holder.price.text = "от ₽ ${dataSet[position].price.toString()}"
         holder.favourite.setIcon/*setImageDrawable*/(
             if (dataSet[position].isFavourite) ContextCompat.getDrawable(
                 holder.favourite.context,

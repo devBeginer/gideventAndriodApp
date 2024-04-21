@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import ru.gidevent.andriodapp.R
 import ru.gidevent.andriodapp.databinding.FragmentAdvertisementBinding
@@ -35,6 +36,7 @@ class AdvertisementFragment : Fragment() {
     private lateinit var recyclerViewAdapter: AdvertReviewRecyclerViewAdapter
     private lateinit var priceListAdapter: PriceListRecyclerViewAdapter
     private var id: Long? = null
+    private var sellerId: Long? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -66,6 +68,8 @@ class AdvertisementFragment : Fragment() {
         id?.let { viewModel.initView(it) }
         viewPagerAdapter = AdvertViewPagerAdapter()
         binding.viewPagerAdvertisement.adapter = viewPagerAdapter
+
+        TabLayoutMediator(binding.viewPagerAdvertisementIndicator, binding.viewPagerAdvertisement) { tab, position -> }.attach()
 
         recyclerViewAdapter = AdvertReviewRecyclerViewAdapter(
             listOf()
@@ -112,7 +116,11 @@ class AdvertisementFragment : Fragment() {
             //onBackPressed() // возврат на предыдущий activity
         }
         binding.ivAdvertCircularAvatar.setOnClickListener {
-            parentFragmentManager.beginTransaction().replace(R.id.main_nav_host_fragment, SellerFragment()).addToBackStack(null).commit()
+            val fragment = SellerFragment()
+            val bundle = Bundle()
+            sellerId?.let { id -> bundle.putLong("ID", id) }
+            fragment.arguments = bundle
+            parentFragmentManager.beginTransaction().replace(R.id.main_nav_host_fragment, fragment).addToBackStack(null).commit()
         }
     }
 
@@ -156,7 +164,7 @@ class AdvertisementFragment : Fragment() {
                             requireContext(),
                             R.drawable.twotone_favorite_24
                         )
-
+                        sellerId = dataSet.seller.sellerId
 
 
                     }

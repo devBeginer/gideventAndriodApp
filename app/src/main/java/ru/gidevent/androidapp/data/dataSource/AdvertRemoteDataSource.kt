@@ -168,4 +168,8 @@ class AdvertRemoteDataSource @Inject constructor(
     suspend fun getSellerAdvert(credentials: String) =
         networkHelper.safeApiCall { advertApiService.getSellerAdvert(credentials)}
 
+
+    suspend fun getSellerInfo(sellerId: Long) =
+        networkHelper.safeApiCall { advertApiService.getSellerById(sellerId)}
+
 }

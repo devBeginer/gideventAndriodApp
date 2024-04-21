@@ -7,6 +7,8 @@ import ru.gidevent.androidapp.data.dataSource.UserLocalDataSource
 import ru.gidevent.androidapp.data.dataSource.UserRemoteDataSource
 import ru.gidevent.androidapp.data.model.auth.request.LoginBodyRequest
 import ru.gidevent.androidapp.data.model.auth.request.SellerRequest
+import ru.gidevent.androidapp.data.model.auth.response.EditProfile
+import ru.gidevent.androidapp.data.model.auth.response.ProfileResponse
 import ru.gidevent.androidapp.data.model.auth.response.UserDetailsResponse
 import ru.gidevent.androidapp.network.ApiResult
 import javax.inject.Inject
@@ -31,6 +33,16 @@ class UserRepository @Inject constructor(
     suspend fun getUserById(): ApiResult<UserDetailsResponse?> {
         val token = localDataSource.getAccessTokenFromSP()
         return remoteDataSource.getUserById(token)
+    }
+
+    suspend fun getEditUserInfo(): ApiResult<EditProfile?> {
+        val token = localDataSource.getAccessTokenFromSP()
+        return remoteDataSource.getEditUserInfo(token)
+    }
+
+    suspend fun updateUser(editProfile: EditProfile): ApiResult<ProfileResponse?> {
+        val token = localDataSource.getAccessTokenFromSP()
+        return remoteDataSource.updateUser(token, editProfile)
     }
 
     fun saveAccessTokenToSP(token: String) {

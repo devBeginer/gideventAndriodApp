@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TableLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.setPadding
@@ -17,6 +18,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import ru.gidevent.andriodapp.R
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.AdvertPreviewCard
 import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.MainRecyclerViewData
@@ -134,7 +137,7 @@ class MainRecyclerViewAdapter(
         override fun bind(position: Int) {
             val positionInList = position-2
             name.text = dataSet.cardsDataSet[positionInList].name
-            price.text = "₽ ${ dataSet.cardsDataSet[positionInList].price.toString() }"
+            price.text = "от ₽ ${ dataSet.cardsDataSet[positionInList].price.toString() }"
             favourite.setIcon/*setImageDrawable*/(
                 if (dataSet.cardsDataSet[positionInList].isFavourite) ContextCompat.getDrawable(
                     favourite.context,
@@ -162,15 +165,20 @@ class MainRecyclerViewAdapter(
     inner class HeaderViewHolder(view: View) : MainViewHolder(view) {
         private var headerViewPager: ViewPager2
         private var headerViewPagerAdapter: HeaderViewPagerAdapter
+        private var indicators: TabLayout
 
         init {
             headerViewPager = view.findViewById(R.id.view_pager_main_header)
+            indicators = view.findViewById(R.id.view_pager_main_header_indicator)
             headerViewPagerAdapter = HeaderViewPagerAdapter(onClickViewPager)
         }
 
         override fun bind(position: Int) {
             headerViewPagerAdapter.setItemList(dataSet.headerDataSet)
             headerViewPager.adapter = headerViewPagerAdapter
+            TabLayoutMediator(indicators, headerViewPager) { tab, position ->
+
+            }.attach()
         }
     }
 

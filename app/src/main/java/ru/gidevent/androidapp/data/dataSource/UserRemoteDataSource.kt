@@ -4,6 +4,7 @@ import ru.gidevent.RestAPI.auth.RefreshBodyRequest
 import ru.gidevent.RestAPI.auth.RegisterBodyRequest
 import ru.gidevent.androidapp.data.model.auth.request.LoginBodyRequest
 import ru.gidevent.androidapp.data.model.auth.request.SellerRequest
+import ru.gidevent.androidapp.data.model.auth.response.EditProfile
 import ru.gidevent.androidapp.data.service.UserApiService
 import ru.gidevent.androidapp.network.NetworkHelper
 import javax.inject.Inject
@@ -27,5 +28,11 @@ class UserRemoteDataSource @Inject constructor(
 
     suspend fun getUserById(credentials: String) =
         networkHelper.safeApiCall { userApiService.getUserById(credentials) }
+
+    suspend fun getEditUserInfo(credentials: String) =
+        networkHelper.safeApiCall { userApiService.getEditProfile(credentials) }
+
+    suspend fun updateUser(credentials: String, editProfile: EditProfile) =
+        networkHelper.safeApiCall { userApiService.updateUser(credentials, editProfile) }
 
 }

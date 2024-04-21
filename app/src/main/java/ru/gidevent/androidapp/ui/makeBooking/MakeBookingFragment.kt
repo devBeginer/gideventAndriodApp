@@ -103,7 +103,7 @@ class MakeBookingFragment  : Fragment() {
         })
 
         viewModel.total.observe(viewLifecycleOwner, Observer {
-            binding.tvMakeBookingTotalCost.text = "${it.first} за ${it.second} участников"
+            binding.tvMakeBookingTotalCost.text = "${it.second} за ${it.first} участников"
             binding.tvMakeBookingTotalCost.visibility = View.VISIBLE
         })
     }
