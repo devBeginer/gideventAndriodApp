@@ -182,6 +182,24 @@ interface AdvertisementApiService {
         @Header("Authorization") token: String
     ): Response<CustomerCategory>
 
+    @DELETE("category/")
+    suspend fun deleteCategory(
+        @Query("categoryId") categoryId: Long,
+        @Header("Authorization") token: String
+    ): Response<Boolean>
+
+    @DELETE("customerCategory/")
+    suspend fun deleteCustomerCategory(
+        @Query("customerId") customerId: Long,
+        @Header("Authorization") token: String
+    ): Response<Boolean>
+
+    @DELETE("transportation/")
+    suspend fun deleteTransportation(
+        @Query("transportationId") transportationId: Long,
+        @Header("Authorization") token: String
+    ): Response<Boolean>
+
 
 
     @DELETE("advertisement/")
@@ -308,4 +326,27 @@ interface AdvertisementApiService {
 
     @GET("auth/sellerInfo")
     suspend fun getSellerById(@Query("sellerId") sellerId: Long): Response<Seller?>
+
+
+
+
+
+    @POST("admin/declineAdvertisement/")
+    suspend fun declineAdvertModeration(
+        @Query("advertisementId") advertisementId: Long,
+        @Header("Authorization") credentials: Any
+    ): Response<Boolean>
+
+
+    @POST("admin/confirmAdvertisement/")
+    suspend fun confirmAdvertModeration(
+        @Query("advertisementId") advertisementId: Long,
+        @Header("Authorization") credentials: Any
+    ): Response<Boolean>
+
+
+    @GET("adminAdverts/")
+    suspend fun getAdminAdvert(
+        @Header("Authorization") token: String
+    ): Response<List<SellerAdvertResponse>>
 }

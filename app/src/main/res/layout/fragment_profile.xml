@@ -305,6 +305,120 @@
 
         </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_profile_admin_moderate_advert"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintTop_toBottomOf="@id/cv_profile_seller_my_bookings"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/tv_profile_admin_moderate_advert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Модерация объявлений"
+                android:layout_gravity="center_vertical"/>
+            <ImageView
+                android:id="@+id/iv_profile_admin_moderate_advert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:src="@drawable/baseline_arrow_forward_ios_24"
+                android:layout_gravity="end"/>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_profile_admin_category"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintTop_toBottomOf="@id/cv_profile_admin_moderate_advert"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/tv_profile_admin_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Категории"
+                android:layout_gravity="center_vertical"/>
+            <ImageView
+                android:id="@+id/iv_profile_admin_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:src="@drawable/baseline_arrow_forward_ios_24"
+                android:layout_gravity="end"/>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_profile_admin_transport"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintTop_toBottomOf="@id/cv_profile_admin_category"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/tv_profile_admin_transport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Способы передвижения"
+                android:layout_gravity="center_vertical"/>
+            <ImageView
+                android:id="@+id/iv_profile_admin_transport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:src="@drawable/baseline_arrow_forward_ios_24"
+                android:layout_gravity="end"/>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_profile_admin_customer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintTop_toBottomOf="@id/cv_profile_admin_transport"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/tv_profile_admin_customer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Категории посетителей"
+                android:layout_gravity="center_vertical"/>
+            <ImageView
+                android:id="@+id/iv_profile_admin_customer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:src="@drawable/baseline_arrow_forward_ios_24"
+                android:layout_gravity="end"/>
+
+
+        </androidx.cardview.widget.CardView>
+
 
 
         <Button
@@ -359,7 +473,7 @@
             android:text="Выход"
             android:layout_marginTop="16dp"
             android:layout_marginHorizontal="8dp"
-            app:layout_constraintTop_toBottomOf="@id/cv_profile_seller_my_bookings"
+            app:layout_constraintTop_toBottomOf="@id/cv_profile_admin_customer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,5 +6,6 @@ data class MyAdvert(
     val id: Long,
     val name: String,
     val count: Int,
-    val cost: Int
+    val cost: Int,
+    val status: String
 )

@@ -14,6 +14,10 @@ import ru.gidevent.andriodapp.R
 import ru.gidevent.andriodapp.databinding.FragmentProfileBinding
 import ru.gidevent.androidapp.data.model.auth.UserRoles
 import ru.gidevent.androidapp.ui.SharedViewModel
+import ru.gidevent.androidapp.ui.admin.fragment.AdminCategoryFragment
+import ru.gidevent.androidapp.ui.admin.fragment.AdminCustomerFragment
+import ru.gidevent.androidapp.ui.admin.fragment.AdminTransportFragment
+import ru.gidevent.androidapp.ui.admin.fragment.ModerateAdvertsFragment
 import ru.gidevent.androidapp.ui.advertisement.AdvertisementFragment
 import ru.gidevent.androidapp.ui.edit.fragment.EditContainerFragment
 import ru.gidevent.androidapp.ui.login.fragment.SignInFragment
@@ -121,6 +125,39 @@ class ProfileFragment: Fragment() {
 
         binding.cvProfileEdit.setOnClickListener {
             parentFragmentManager.beginTransaction().replace(R.id.main_nav_host_fragment, EditProfileFragment()).addToBackStack(null).commit()
+        }
+
+        binding.cvProfileAdminCategory.visibility = View.VISIBLE
+        binding.cvProfileAdminModerateAdvert.visibility = View.VISIBLE
+        binding.cvProfileAdminCustomer.visibility = View.VISIBLE
+        binding.cvProfileAdminTransport.visibility = View.VISIBLE
+
+        binding.cvProfileAdminCategory.setOnClickListener {
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.nav_host_fragment, AdminCategoryFragment()).addToBackStack(null)
+                .commit()
+        }
+
+        binding.cvProfileAdminModerateAdvert.setOnClickListener {
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.nav_host_fragment, ModerateAdvertsFragment()).addToBackStack(null)
+                .commit()
+        }
+
+        binding.cvProfileAdminCustomer.setOnClickListener {
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.nav_host_fragment, AdminCustomerFragment()).addToBackStack(null)
+                .commit()
+        }
+
+        binding.cvProfileAdminTransport.setOnClickListener {
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.nav_host_fragment, AdminTransportFragment()).addToBackStack(null)
+                .commit()
         }
     }
 }

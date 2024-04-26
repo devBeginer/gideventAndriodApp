@@ -7,7 +7,6 @@ import ru.gidevent.androidapp.data.model.advertisement.dto.CustomerCategory
 import ru.gidevent.androidapp.data.model.advertisement.dto.NewFeedback
 import ru.gidevent.androidapp.data.model.advertisement.request.EventTimeRequest
 import ru.gidevent.androidapp.data.model.advertisement.request.NewAdvertisement
-import ru.gidevent.androidapp.data.model.advertisement.request.TicketPrice
 import ru.gidevent.androidapp.data.model.advertisement.request.TicketPriceRequest
 import ru.gidevent.androidapp.data.model.booking.BookingRequest
 import ru.gidevent.androidapp.data.model.request.search.SearchOptions
@@ -109,6 +108,15 @@ class AdvertRemoteDataSource @Inject constructor(
     suspend fun putCategory(credentials: String, category: Category) =
         networkHelper.safeApiCall { advertApiService.putCategory(category, credentials)}
 
+    suspend fun deleteCategory(credentials: String, category: Long) =
+        networkHelper.safeApiCall { advertApiService.deleteCategory(category, credentials)}
+
+    suspend fun deleteCustomerCategory(credentials: String, id: Long) =
+        networkHelper.safeApiCall { advertApiService.deleteCustomerCategory(id, credentials)}
+
+    suspend fun deleteTransportation(credentials: String, id: Long) =
+        networkHelper.safeApiCall { advertApiService.deleteTransportation(id, credentials)}
+
     suspend fun postTransportationVariant(credentials: String, transportationVariant: TransportationVariant) =
         networkHelper.safeApiCall { advertApiService.postTransportationVariant(transportationVariant, credentials)}
 
@@ -171,5 +179,21 @@ class AdvertRemoteDataSource @Inject constructor(
 
     suspend fun getSellerInfo(sellerId: Long) =
         networkHelper.safeApiCall { advertApiService.getSellerById(sellerId)}
+
+
+
+
+
+
+    suspend fun declineAdvertModeration(token: String, advertisementId: Long) =
+        networkHelper.safeApiCall { advertApiService.declineAdvertModeration(advertisementId, token)}
+
+
+    suspend fun confirmAdvertModeration(token: String, advertisementId: Long) =
+        networkHelper.safeApiCall { advertApiService.confirmAdvertModeration(advertisementId, token)}
+
+    suspend fun getAdminAdvert(credentials: String) =
+        networkHelper.safeApiCall { advertApiService.getAdminAdvert(credentials)}
+
 
 }

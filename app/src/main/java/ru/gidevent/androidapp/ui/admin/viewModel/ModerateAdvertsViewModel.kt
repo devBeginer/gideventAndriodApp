@@ -1,4 +1,4 @@
-package ru.gidevent.androidapp.ui.seller_management.viewModel
+package ru.gidevent.androidapp.ui.admin.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,8 +7,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ru.gidevent.androidapp.data.model.advertisement.response.Advertisement
-import ru.gidevent.androidapp.data.model.mainRecyclerviewModels.AdvertPreviewCard
 import ru.gidevent.androidapp.data.model.myAdverts.MyAdvert
 import ru.gidevent.androidapp.data.model.myAdverts.SellerAdvertResponse
 import ru.gidevent.androidapp.data.repository.AdvertisementRepository
@@ -18,7 +16,7 @@ import ru.gidevent.androidapp.ui.state.UIStateAdvertList
 import javax.inject.Inject
 
 @HiltViewModel
-class MyAdvertsViewModel @Inject constructor(
+class ModerateAdvertsViewModel @Inject constructor(
     private val repository: UserRepository,
     private val advertRepository: AdvertisementRepository
 ) : ViewModel() {
@@ -31,7 +29,7 @@ class MyAdvertsViewModel @Inject constructor(
         viewModelScope.launch (Dispatchers.IO){
             if(repository.isAuthorised()){
                 _data.postValue(UIStateAdvertList.Loading)
-                val response = advertRepository.getSellerAdvert()
+                val response = advertRepository.getAdminAdvert()
                 when (response) {
                     is ApiResult.Success<List<SellerAdvertResponse>> -> {
 
@@ -66,11 +64,11 @@ class MyAdvertsViewModel @Inject constructor(
     fun confirm(id: Long){
         viewModelScope.launch(Dispatchers.IO){
             _data.postValue(UIStateAdvertList.Loading)
-            val response = advertRepository.postFavourite(id)
+            val response = advertRepository.confirmAdvertModeration(id)
             when (response) {
-                is ApiResult.Success<Advertisement> -> {
+                is ApiResult.Success<Boolean> -> {
 
-                    val advert = AdvertPreviewCard(
+                    /*val advert = AdvertPreviewCard(
                         response.data.id,
                         response.data.favourite ?: false,
                         response.data.name,
@@ -84,7 +82,8 @@ class MyAdvertsViewModel @Inject constructor(
                     )
 
 
-                    _data.postValue(UIStateAdvertList.Update(advert))
+                    _data.postValue(UIStateAdvertList.Update(advert))*/
+                    initView()
                 }
 
                 is ApiResult.Error -> {
@@ -127,11 +126,11 @@ class MyAdvertsViewModel @Inject constructor(
     fun decline(id: Long){
         viewModelScope.launch(Dispatchers.IO){
             _data.postValue(UIStateAdvertList.Loading)
-            val response = advertRepository.postFavourite(id)
+            val response = advertRepository.declineAdvertModeration(id)
             when (response) {
-                is ApiResult.Success<Advertisement> -> {
+                is ApiResult.Success<Boolean> -> {
 
-                    val advert = AdvertPreviewCard(
+                    /*val advert = AdvertPreviewCard(
                         response.data.id,
                         response.data.favourite ?: false,
                         response.data.name,
@@ -145,7 +144,8 @@ class MyAdvertsViewModel @Inject constructor(
                     )
 
 
-                    _data.postValue(UIStateAdvertList.Update(advert))
+                    _data.postValue(UIStateAdvertList.Update(advert))*/
+                    initView()
                 }
 
                 is ApiResult.Error -> {

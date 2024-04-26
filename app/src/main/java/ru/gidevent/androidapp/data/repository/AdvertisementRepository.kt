@@ -219,6 +219,21 @@ class AdvertisementRepository @Inject constructor(
         return advertRemoteDataSource.putCategory(token, category)
     }
 
+    suspend fun deleteCategory(category: Long): ApiResult<Boolean> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+        return advertRemoteDataSource.deleteCategory(token, category)
+    }
+
+    suspend fun deleteCustomerCategory(id: Long): ApiResult<Boolean> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+        return advertRemoteDataSource.deleteCustomerCategory(token, id)
+    }
+
+    suspend fun deleteTransportation(id: Long): ApiResult<Boolean> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+        return advertRemoteDataSource.deleteTransportation(token, id)
+    }
+
     suspend fun postTransportationVariant(transportationVariant: TransportationVariant): ApiResult<TransportationVariant> {
         val token = userLocalDataSource.getAccessTokenFromSP()
         return advertRemoteDataSource.postTransportationVariant(token, transportationVariant)
@@ -361,5 +376,23 @@ class AdvertisementRepository @Inject constructor(
     suspend fun getSellerInfo(id: Long): ApiResult<Seller?> {
 
         return advertRemoteDataSource.getSellerInfo(id)
+    }
+
+
+
+    suspend fun declineAdvertModeration(advertisementId: Long): ApiResult<Boolean> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+        return advertRemoteDataSource.declineAdvertModeration(token, advertisementId)
+    }
+
+    suspend fun confirmAdvertModeration(advertisementId: Long): ApiResult<Boolean> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+        return advertRemoteDataSource.confirmAdvertModeration(token, advertisementId)
+    }
+
+    suspend fun getAdminAdvert(): ApiResult<List<SellerAdvertResponse>> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+
+        return advertRemoteDataSource.getAdminAdvert(token)
     }
 }
