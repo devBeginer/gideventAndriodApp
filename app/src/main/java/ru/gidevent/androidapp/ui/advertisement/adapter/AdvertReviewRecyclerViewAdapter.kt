@@ -94,7 +94,7 @@ class AdvertReviewRecyclerViewAdapter(
             text.text = dataSet[position].text
 
             Glide.with(imageView.context)
-                .load("${Utils.IMAGE_URL}${dataSet[position].avatarUrl}")
+                .load(/*${Utils.IMAGE_URL}*/"${dataSet[position].avatarUrl}")
                 .placeholder(R.drawable.card_preview_placeholder)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()

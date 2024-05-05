@@ -23,6 +23,9 @@ class UserRemoteDataSource @Inject constructor(
     suspend fun userSignUpAsSeller(sellerRequest: SellerRequest) =
         networkHelper.safeApiCall { userApiService.signUpAsSeller(sellerRequest) }
 
+    suspend fun becomeSeller() =
+        networkHelper.safeApiCall { userApiService.becomeSeller() }
+
     suspend fun userRefreshToken(refreshBodyRequest: RefreshBodyRequest) =
         networkHelper.safeApiCall { userApiService.refreshToken(refreshBodyRequest) }
 
@@ -34,5 +37,8 @@ class UserRemoteDataSource @Inject constructor(
 
     suspend fun updateUser(credentials: String, editProfile: EditProfile) =
         networkHelper.safeApiCall { userApiService.updateUser(credentials, editProfile) }
+
+    suspend fun userSignIn(accessToken: String, uuid: String) =
+        networkHelper.safeApiCall { userApiService.loginFromVk(accessToken, uuid) }
 
 }

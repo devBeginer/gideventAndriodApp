@@ -60,7 +60,7 @@ class ProfileFragment: Fragment() {
             if (it != null) {
                 binding.tvProfileName.text = "${it.firstName} ${it.lastName}"
                 Glide.with(requireContext())
-                    .load("${Utils.IMAGE_URL}${it.photo}")
+                    .load(/*${Utils.IMAGE_URL}*/"${it.photo}")
                     .placeholder(R.drawable.viewpager_item2)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop()
@@ -78,6 +78,13 @@ class ProfileFragment: Fragment() {
                     binding.cvProfileSellerTodayBookings.visibility = View.VISIBLE
                     binding.tvProfileSellerAdvertsCount.text = it.advertsCount.toString()
                     binding.tvProfileSellerTodayBookingsCount.text = it.ordersCount.toString()
+                }else if(it.roles.contains(UserRoles.ADMIN)){
+                    binding.cvProfileAdminCategory.visibility = View.VISIBLE
+                    binding.cvProfileAdminCustomer.visibility = View.VISIBLE
+                    binding.cvProfileAdminTransport.visibility = View.VISIBLE
+                    binding.cvProfileAdminModerateAdvert.visibility = View.VISIBLE
+                    binding.cvProfileActiveBookings.visibility = View.GONE
+                    binding.cvProfileTodayBookings.visibility = View.GONE
                 }else{
                     binding.cvProfileCreateSellerAdvert.visibility = View.GONE
                     binding.cvProfileSellerMyAdvert.visibility = View.GONE
@@ -90,9 +97,7 @@ class ProfileFragment: Fragment() {
             }
         })
 
-        binding.btnRepeat.setOnClickListener {
-            viewModel.initView()
-        }
+
 
         binding.cvProfileCreateSellerAdvert.setOnClickListener {
             requireActivity().supportFragmentManager
@@ -127,10 +132,7 @@ class ProfileFragment: Fragment() {
             parentFragmentManager.beginTransaction().replace(R.id.main_nav_host_fragment, EditProfileFragment()).addToBackStack(null).commit()
         }
 
-        binding.cvProfileAdminCategory.visibility = View.VISIBLE
-        binding.cvProfileAdminModerateAdvert.visibility = View.VISIBLE
-        binding.cvProfileAdminCustomer.visibility = View.VISIBLE
-        binding.cvProfileAdminTransport.visibility = View.VISIBLE
+
 
         binding.cvProfileAdminCategory.setOnClickListener {
             requireActivity().supportFragmentManager

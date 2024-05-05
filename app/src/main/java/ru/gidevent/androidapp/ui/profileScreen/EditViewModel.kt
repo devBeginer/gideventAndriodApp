@@ -17,6 +17,7 @@ import ru.gidevent.androidapp.data.model.auth.request.SellerRequest
 import ru.gidevent.androidapp.data.model.auth.response.EditProfile
 import ru.gidevent.androidapp.data.model.auth.response.ProfileResponse
 import ru.gidevent.androidapp.data.model.auth.response.Seller
+import ru.gidevent.androidapp.data.model.auth.response.SellerResponse
 import ru.gidevent.androidapp.data.model.auth.response.UserDetailsResponse
 import ru.gidevent.androidapp.data.repository.AdvertisementRepository
 import ru.gidevent.androidapp.data.repository.UserRepository
@@ -55,12 +56,12 @@ class EditViewModel @Inject constructor(
     }
 
 
-    fun update(login: String, password: String, firstName: String, lastName: String, about: String, roles: Set<UserRoles>, photo: String){
+    fun update(login: String, password: String, firstName: String, lastName: String, about: String, roles: Set<UserRoles>, photo: String, vkUser: Boolean){
         viewModelScope.launch (Dispatchers.IO){
 
             dataResultMutableLiveData.postValue(UIStateEditProfile.Loading)
             val response =
-                repository.updateUser(EditProfile(0, photo, firstName, lastName, about, login, password, roles))
+                repository.updateUser(EditProfile(0, photo, firstName, lastName, about, login, password, roles, vkUser))
             when(response){
                 is ApiResult.Success<ProfileResponse?> -> {
                     response.data?.let{
@@ -71,6 +72,26 @@ class EditViewModel @Inject constructor(
                         }
                     }
                     dataResultMutableLiveData.postValue(UIStateEditProfile.SuccessUpdate)
+                }
+                is ApiResult.Error -> {
+                    when{
+                        response.body.contains("Connection") -> dataResultMutableLiveData.postValue(UIStateEditProfile.ConnectionError)
+                        else -> dataResultMutableLiveData.postValue(UIStateEditProfile.Error(response.body))
+                    }
+                }
+            }
+        }
+    }
+
+
+    fun becomeSeller(){
+        viewModelScope.launch (Dispatchers.IO){
+
+            dataResultMutableLiveData.postValue(UIStateEditProfile.Loading)
+            val response = repository.becomeSeller()
+            when(response){
+                is ApiResult.Success<SellerResponse?> -> {
+                    initView()
                 }
                 is ApiResult.Error -> {
                     when{

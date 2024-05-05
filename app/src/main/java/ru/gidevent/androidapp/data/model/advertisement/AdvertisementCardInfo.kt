@@ -2,7 +2,7 @@ package ru.gidevent.androidapp.data.model.advertisement
 
 import ru.gidevent.RestAPI.model.Category
 import ru.gidevent.RestAPI.model.City
-import ru.gidevent.RestAPI.model.Seller
+import ru.gidevent.androidapp.data.model.advertisement.response.Seller
 import ru.gidevent.RestAPI.model.TransportationVariant
 import ru.gidevent.androidapp.data.model.advertisement.response.TicketPriceDto
 import ru.gidevent.androidapp.data.model.advertisement.dto.EventTime

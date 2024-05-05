@@ -1,4 +1,4 @@
-package ru.gidevent.RestAPI.model
+package ru.gidevent.androidapp.data.model.advertisement.response
 
 
 data class Seller(
@@ -6,7 +6,8 @@ data class Seller(
         val firstName: String,
         val lastName: String,
         val photo: String,
-        val about: String
+        val about: String,
+        val isVerified: Boolean
 )
 
 //TODO сделать наследование от User (ссылку на User)

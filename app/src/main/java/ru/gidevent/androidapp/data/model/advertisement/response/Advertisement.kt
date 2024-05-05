@@ -3,7 +3,6 @@ package ru.gidevent.androidapp.data.model.advertisement.response
 import com.google.gson.annotations.SerializedName
 import ru.gidevent.RestAPI.model.Category
 import ru.gidevent.RestAPI.model.City
-import ru.gidevent.RestAPI.model.Seller
 import ru.gidevent.RestAPI.model.TransportationVariant
 
 data class Advertisement(

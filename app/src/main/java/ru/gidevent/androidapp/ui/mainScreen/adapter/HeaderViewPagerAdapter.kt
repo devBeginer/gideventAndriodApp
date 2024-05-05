@@ -40,7 +40,7 @@ class HeaderViewPagerAdapter(
         holder.price.text = "от ₽ ${itemsList[position].price.toString()}"
 
         Glide.with(holder.imageView.context)
-            .load("${Utils.IMAGE_URL}${itemsList[position].photoUrl}")
+            .load(/*${Utils.IMAGE_URL}*/"${itemsList[position].photoUrl}")
             //.load(ContextCompat.getDrawable(holder.imageView.context, itemsList[position].photoUrl))
             .placeholder(R.drawable.card_preview_placeholder)
             .diskCacheStrategy(DiskCacheStrategy.ALL)

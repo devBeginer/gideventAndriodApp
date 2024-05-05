@@ -132,20 +132,59 @@ class SignInFragment : Fragment() {
     }
 
     private fun openWebPage() {
-        val url = "https://id.vk.com/auth?" +
+        /*val url = "https://id.vk.com/auth?" +
                 "state=${PKCEUtil.generateState()}" +
                 "&response_type=silent_token" +
                 "&code_challenge=${PKCEUtil.getCodeChallenge()}" +
                 "&code_challenge_method=sha256" +
-                "&app_id=51808635" +
+                "&app_id=51914695" +
                 "&v=0.0.2" +
-                //"&redirect_uri=ru.gidevent.androidapp:/vk51808635/vk.com" +
-                //"&redirect_uri=ru.gidevent.androidapp://vk51808635/vk.com" +
-                //"&redirect_uri=vk51808635://vk.com" +
-                "&redirect_uri=content://ru.gidevent.androidapp:200/vk51808635/vk.com" +
-                //"&redirect_uri=vk51808635:/vk.com" +
-                "&uuid=${UUID.randomUUID()}"
+                "&redirect_uri=vk51914695://vk.com" +
+                "&uuid=${UUID.randomUUID()}"*/
+                //"&redirect_uri=ru.gidevent.androidapp:/vk51914695/vk.com" +
+                //"&redirect_uri=ru.gidevent.androidapp://vk51914695/vk.com" +
+                //"&redirect_uri=content://ru.gidevent.androidapp:200/vk51914695/vk.com" +
+                //"&redirect_uri=vk51914695:/vk.com" +
 
+        /*val url = "https://id.vk.com/auth?" +
+                "uuid=${UUID.randomUUID()}" +
+                "&app_id=51914695" +
+                "&response_type=silent_token" +
+                "&redirect_uri=vk51914695://vk.com" +
+                "&redirect_state=${PKCEUtil.generateState()}"*/
+
+        val url = "https://id.vk.com/auth?" +
+                "uuid=${UUID.randomUUID()}" +
+                "&app_id=51914694" +
+                "&response_type=silent_token" +
+                "&redirect_uri=vk51914695://vk.com" +
+                "&redirect_state=${PKCEUtil.generateState()}"
+
+        /*val url = "https://id.vk.com/auth?" +
+                "uuid=${UUID.randomUUID()}" +
+                "&app_id=51914695" +
+                "&response_type=code" +
+                "&redirect_uri=vk51914695://vk.com" +
+                "&redirect_state=${PKCEUtil.generateState()}"*/
+
+        /*val url = "https://id.vk.com/auth?" +
+                "uuid=${UUID.randomUUID()}" +
+                "&app_id=51914695" +
+                "&response_type=code" +
+                "&redirect_uri=vk51914695://vk.com" +
+                "&redirect_state=${PKCEUtil.generateState()}" +
+                "&code_challenge=${PKCEUtil.getCodeChallenge()}" +
+                "&code_challenge_method=sha256" +
+                "&v=0.0.2"*/
+
+
+        /*val url = "https://oauth.vk.com/authorize?" +
+                "client_id=51914695" +
+                "&display=mobile" +
+                "&redirect_uri =vk51914695://vk.com" +
+                "&scope=phone" +
+                "&response_type=code" +
+                "&v=5.199"*/
         val builder = CustomTabsIntent.Builder( )
         builder.setShowTitle(true)
         builder.setInstantAppsEnabled(true)

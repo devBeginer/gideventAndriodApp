@@ -58,8 +58,9 @@ class SellerFragment: Fragment() {
                 binding.tvSellerInfoAdvertsCount.text = it.advertsCount.toString()
                 binding.tvSellerReviews.text = it.feedbackCount.toString()
                 binding.tvSellerAverageRating.text = it.averageRating.toString()
+                binding.tvSellerInfoApproved.text = if(it.isVerified) "Подтвержден" else "Не подтвержден"
                 Glide.with(requireContext())
-                    .load("${Utils.IMAGE_URL}${it.photo}")
+                    .load(/*${Utils.IMAGE_URL}*/"${it.photo}")
                     .placeholder(R.drawable.viewpager_item2)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop()

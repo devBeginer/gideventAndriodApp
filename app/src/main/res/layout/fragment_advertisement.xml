@@ -407,10 +407,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Иванов Иван"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_advert_circular_avatar"
                 app:layout_constraintTop_toTopOf="@id/iv_advert_circular_avatar" />
+
+            <TextView
+                android:id="@+id/tv_advert_seller_approved"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Подтвержден"
+                app:layout_constraintStart_toEndOf="@id/iv_advert_circular_avatar"
+                app:layout_constraintTop_toBottomOf="@id/tv_advert_seller_name" />
 
             <TextView
                 android:id="@+id/tv_advert_title_pricelist"

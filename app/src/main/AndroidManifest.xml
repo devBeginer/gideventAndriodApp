@@ -36,16 +36,16 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <!--<data
-                    android:host="vk51808635/vk.com"
+                    android:host="vk51914695/vk.com"
                     android:scheme="ru.gidevent.androidapp" />-->
-                <data
+                <!--<data
                     android:host="ru.gidevent.androidapp"
                     android:scheme="content"
-                    android:path="/vk51808635/vk.com"
-                    android:port="200" />
-                <!--<data
+                    android:path="/vk51914695/vk.com"
+                    android:port="200" />-->
+                <data
                     android:host="vk.com"
-                    android:scheme="vk51808635"/>-->
+                    android:scheme="vk51914695"/>
             </intent-filter>
 
         </activity>

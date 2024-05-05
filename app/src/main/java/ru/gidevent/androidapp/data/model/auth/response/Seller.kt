@@ -8,5 +8,6 @@ data class Seller(
     val about: String,
     val advertsCount: Int,
     val feedbackCount: Int,
-    val averageRating: Float
+    val averageRating: Float,
+    val isVerified: Boolean
 )

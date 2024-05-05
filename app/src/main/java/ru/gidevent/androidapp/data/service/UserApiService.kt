@@ -6,6 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Query
 import ru.gidevent.RestAPI.auth.LoginBodyResponse
 import ru.gidevent.RestAPI.auth.RefreshBodyRequest
 import ru.gidevent.RestAPI.auth.RegisterBodyRequest
@@ -28,6 +29,9 @@ interface UserApiService {
     @POST("auth/seller/")
     suspend fun signUpAsSeller(@Body sellerRequest: SellerRequest): Response<SellerResponse>
 
+    @POST("seller/")
+    suspend fun becomeSeller(): Response<SellerResponse>
+
     @POST("auth/refresh")
     suspend fun refreshToken(@Body refreshBodyRequest: RefreshBodyRequest): Response<LoginBodyResponse>
 
@@ -42,4 +46,7 @@ interface UserApiService {
 
     @GET("editProfile")
     suspend fun getEditProfile(@Header("Authorization") token: String): Response<EditProfile?>
+
+    @POST("auth/vkAuth")
+    suspend fun loginFromVk(@Query("accessToken") accessToken: String, @Query("uuid") uuid: String): Response<LoginBodyResponse>
 }

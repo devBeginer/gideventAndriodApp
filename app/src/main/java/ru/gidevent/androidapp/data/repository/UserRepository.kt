@@ -21,11 +21,17 @@ class UserRepository @Inject constructor(
     suspend fun userSignIn(loginBodyRequest: LoginBodyRequest) =
         remoteDataSource.userSignIn(loginBodyRequest)
 
+    suspend fun userSignIn(accessToken: String, uuid: String) =
+        remoteDataSource.userSignIn(accessToken, uuid)
+
     suspend fun userSignUp(registerBodyRequest: RegisterBodyRequest) =
         remoteDataSource.userSignUp(registerBodyRequest)
 
     suspend fun userSignUpAsSeller(sellerRequest: SellerRequest) =
         remoteDataSource.userSignUpAsSeller(sellerRequest)
+
+    suspend fun becomeSeller() =
+        remoteDataSource.becomeSeller()
 
     suspend fun userRefreshToken(refreshBodyRequest: RefreshBodyRequest) =
         remoteDataSource.userRefreshToken(refreshBodyRequest)

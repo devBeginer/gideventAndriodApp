@@ -150,8 +150,10 @@ class AdvertisementFragment : Fragment() {
                         binding.tvAdvertCity.text = dataSet.city.name
                         binding.tvAdvertDescription.text = dataSet.description
                         binding.tvAdvertSellerName.text = "${dataSet.seller.lastName} ${dataSet.seller.firstName}"
+
+                        binding.tvAdvertSellerApproved.text = if(dataSet.seller.isVerified) "Подтвержден" else "Не подтвержден"
                         Glide.with(requireContext())
-                            .load("${Utils.IMAGE_URL}${dataSet.seller.photo}")
+                            .load(/*${Utils.IMAGE_URL}*/"${dataSet.seller.photo}")
                             .placeholder(R.drawable.viewpager_item2)
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .centerCrop()

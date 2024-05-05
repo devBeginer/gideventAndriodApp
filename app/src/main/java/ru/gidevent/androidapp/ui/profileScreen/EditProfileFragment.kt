@@ -26,6 +26,7 @@ import ru.gidevent.androidapp.ui.state.UIState
 import ru.gidevent.androidapp.ui.state.UIStateEditProfile
 import ru.gidevent.androidapp.utils.Utils
 import ru.gidevent.androidapp.utils.showSnack
+import java.util.UUID
 
 
 @AndroidEntryPoint
@@ -39,6 +40,7 @@ class EditProfileFragment: Fragment() {
     private var image = ""
     private var mode = UserRoles.USER
     private var roles = setOf(UserRoles.USER)
+    private var vkUser = false
     private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         if(uri!=null){
             CoroutineScope(Dispatchers.IO).launch {
@@ -50,7 +52,7 @@ class EditProfileFragment: Fragment() {
                             if (poster != null) {
                                 image = poster.fileUUID
                                 Glide.with(requireContext())
-                                    .load("${Utils.IMAGE_URL}${image}")
+                                    .load(/*${Utils.IMAGE_URL}*/"${image}")
                                     .placeholder(R.drawable.viewpager_item2)
                                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                                     .centerCrop()
@@ -106,23 +108,28 @@ class EditProfileFragment: Fragment() {
             if (binding.etEditProfileName.text.toString().isNotEmpty()
                 && binding.etEditProfileLogin.text.toString().isNotEmpty()
                 && binding.etEditProfileLastName.text.toString().isNotEmpty()
-                && binding.etEditProfilePassword.text.toString().isNotEmpty()
+                && (vkUser || binding.etEditProfilePassword.text.toString().isNotEmpty())
                 && binding.etEditProfilePasswordRepeat.text.toString() == binding.etEditProfilePassword.text.toString()
                 && (mode == UserRoles.USER || binding.etEditProfileAbout.text.toString().isNotEmpty())
             ) {
                 viewModel.update(
                     binding.etEditProfileLogin.text.toString(),
-                    binding.etEditProfilePassword.text.toString(),
+                    if(vkUser && binding.etEditProfilePassword.text.toString().isEmpty()) UUID.randomUUID().toString() else binding.etEditProfilePassword.text.toString(),
                     binding.etEditProfileName.text.toString(),
                     binding.etEditProfileLastName.text.toString(),
                     binding.etEditProfileAbout.text.toString(),
                     roles,
-                    image
+                    image,
+                    vkUser
                 )
             } else {
                 showSnack(requireView(), "Заполните все поля и попробуйте снова", 4)
             }
 
+        }
+
+        binding.btnEditProfileBecomeSeller.setOnClickListener {
+            viewModel.becomeSeller()
         }
 
         viewModel.data.observe(viewLifecycleOwner, Observer {
@@ -135,16 +142,20 @@ class EditProfileFragment: Fragment() {
                         binding.etEditProfileLogin.setText(editProfile.login)
                         if(editProfile.roles.contains(UserRoles.SELLER)){
                             binding.tilEditProfileAbout.visibility = View.VISIBLE
+                            binding.btnEditProfileBecomeSeller.visibility = View.GONE
                             binding.etEditProfileAbout.setText(editProfile.about)
                             mode = UserRoles.SELLER
                             roles = editProfile.roles
                         }else{
                             binding.tilEditProfileAbout.visibility = View.GONE
+                            binding.btnEditProfileBecomeSeller.visibility = View.VISIBLE
                             mode = UserRoles.USER
                             roles = editProfile.roles
                         }
+                        vkUser = editProfile.vkUser
+                        image = editProfile.photo
                         Glide.with(requireContext())
-                            .load("${Utils.IMAGE_URL}${editProfile.photo}")
+                            .load(/*${Utils.IMAGE_URL}*/"${editProfile.photo}")
                             .placeholder(R.drawable.viewpager_item2)
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .centerCrop()
