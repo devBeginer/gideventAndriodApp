@@ -135,20 +135,23 @@
                 app:layout_constraintTop_toTopOf="@id/tv_options_title_category"
                 android:text="Все"/>
 
-            <HorizontalScrollView
+            <!--<HorizontalScrollView
                 android:id="@+id/hsv_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_options_title_category"
-                android:scrollbars="none">
+                android:scrollbars="none">-->
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chipGroup_category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:singleLine="true">
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_options_title_category">
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipGroup_category_1"
@@ -172,7 +175,7 @@
                         android:text="Квест" />
 
                 </com.google.android.material.chip.ChipGroup>
-            </HorizontalScrollView>
+            <!--</HorizontalScrollView>-->
 
             <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/switch_options_individual"
@@ -183,7 +186,7 @@
                 android:textSize="18dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/hsv_category"
+                app:layout_constraintTop_toBottomOf="@id/chipGroup_category"
                 android:checked="true"/>
 
             <com.google.android.material.materialswitch.MaterialSwitch
@@ -231,19 +234,21 @@
                 android:text="Способ передвижения"/>
 
 
-            <HorizontalScrollView
+            <!--<HorizontalScrollView
                 android:id="@+id/hsv_transportation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_options_title_transportation"
-                android:scrollbars="none">
+                android:scrollbars="none">-->
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chipGroup_transportation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:singleLine="true">
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_options_title_transportation">
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chipGroup_transportation_1"
@@ -281,7 +286,7 @@
                         android:text="Самокаты" />
 
                 </com.google.android.material.chip.ChipGroup>
-            </HorizontalScrollView>
+            <!--</HorizontalScrollView>-->
 
 
             <TextView
@@ -289,7 +294,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/hsv_transportation"
+                app:layout_constraintTop_toBottomOf="@id/chipGroup_transportation"
                 android:textStyle="bold"
                 android:textSize="18dp"
                 android:text="Возрастные ограничения"/>
