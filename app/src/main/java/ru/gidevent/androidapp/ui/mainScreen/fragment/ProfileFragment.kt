@@ -61,7 +61,7 @@ class ProfileFragment: Fragment() {
                 binding.tvProfileName.text = "${it.firstName} ${it.lastName}"
                 Glide.with(requireContext())
                     .load(/*${Utils.IMAGE_URL}*/"${it.photo}")
-                    .placeholder(R.drawable.viewpager_item2)
+                    .placeholder(R.drawable.avatar_placeholder)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop()
                     .into(binding.ivProfileCircularAvatar)
@@ -93,8 +93,15 @@ class ProfileFragment: Fragment() {
                     binding.tvProfileSellerAdvertsCount.visibility = View.GONE
                     binding.tvProfileSellerTodayBookingsCount.visibility = View.GONE
                 }
-                sharedViewModel.showProgressIndicator(false)
+                binding.groupProfileInfo.visibility = View.VISIBLE
+                binding.tvProfileNotAuth.visibility = View.GONE
+                binding.btnProfileSignIn.visibility = View.GONE
+            }else{
+                binding.groupProfileInfo.visibility = View.GONE
+                binding.tvProfileNotAuth.visibility = View.VISIBLE
+                binding.btnProfileSignIn.visibility = View.VISIBLE
             }
+            sharedViewModel.showProgressIndicator(false)
         })
 
 
@@ -160,6 +167,10 @@ class ProfileFragment: Fragment() {
                 .beginTransaction()
                 .replace(R.id.nav_host_fragment, AdminTransportFragment()).addToBackStack(null)
                 .commit()
+        }
+        binding.btnProfileSignIn.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment, SignInFragment()).addToBackStack(null).commit()
         }
     }
 }

@@ -53,7 +53,7 @@ class EditProfileFragment: Fragment() {
                                 image = poster.fileUUID
                                 Glide.with(requireContext())
                                     .load(/*${Utils.IMAGE_URL}*/"${image}")
-                                    .placeholder(R.drawable.viewpager_item2)
+                                    .placeholder(R.drawable.avatar_placeholder)
                                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                                     .centerCrop()
                                     .into(binding.ivEditProfileCircularAvatar)
@@ -156,7 +156,7 @@ class EditProfileFragment: Fragment() {
                         image = editProfile.photo
                         Glide.with(requireContext())
                             .load(/*${Utils.IMAGE_URL}*/"${editProfile.photo}")
-                            .placeholder(R.drawable.viewpager_item2)
+                            .placeholder(R.drawable.avatar_placeholder)
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .centerCrop()
                             .into(binding.ivEditProfileCircularAvatar)

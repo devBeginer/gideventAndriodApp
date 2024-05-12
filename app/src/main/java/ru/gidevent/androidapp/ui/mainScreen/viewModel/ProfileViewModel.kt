@@ -21,10 +21,14 @@ class ProfileViewModel @Inject constructor(private val repository: UserRepositor
 
     fun initView(){
         viewModelScope.launch (Dispatchers.IO){
-            val response = repository.getUserById()
-            when(response){
-                is ApiResult.Success<UserDetailsResponse?> -> dataResultMutableLiveData.postValue(response.data)
-                is ApiResult.Error -> dataResultMutableLiveData.postValue(null)
+            if(repository.isAuthorised()){
+                val response = repository.getUserById()
+                when(response){
+                    is ApiResult.Success<UserDetailsResponse?> -> dataResultMutableLiveData.postValue(response.data)
+                    is ApiResult.Error -> dataResultMutableLiveData.postValue(null)
+                }
+            }else{
+                dataResultMutableLiveData.postValue(null)
             }
         }
     }

@@ -89,7 +89,8 @@ class MainScreenContainerFragment: Fragment() {
 
             true
         }
-
+        childFragmentManager.beginTransaction()
+            .replace(R.id.main_nav_host_fragment, MainFragment()).commit()
         Log.d("SELECTED_ITEM", binding.btmNavViewMainContainer.selectedItemId.toString() )
         /*var selectedFragment = when(binding.btmNavViewMainContainer.selectedItemId){
             R.id.mainFragment -> {

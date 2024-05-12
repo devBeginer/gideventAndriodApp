@@ -71,7 +71,7 @@ class SearchRecyclerViewAdapter(
         )
         Glide.with(holder.imageView.context)
             .load(/*${Utils.IMAGE_URL}*/"${dataSet[position].photoUrl}")
-            .placeholder(R.drawable.card_preview_placeholder)
+            .placeholder(R.drawable.image_placeholder)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .centerCrop()
             .into(holder.imageView)

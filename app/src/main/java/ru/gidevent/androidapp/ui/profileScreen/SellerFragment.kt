@@ -61,7 +61,7 @@ class SellerFragment: Fragment() {
                 binding.tvSellerInfoApproved.text = if(it.isVerified) "Подтвержден" else "Не подтвержден"
                 Glide.with(requireContext())
                     .load(/*${Utils.IMAGE_URL}*/"${it.photo}")
-                    .placeholder(R.drawable.viewpager_item2)
+                    .placeholder(R.drawable.avatar_placeholder)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop()
                     .into(binding.ivSellerInfo)

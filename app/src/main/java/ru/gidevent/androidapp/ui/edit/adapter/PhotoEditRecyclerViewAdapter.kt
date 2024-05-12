@@ -96,8 +96,8 @@ class PhotoEditRecyclerViewAdapter(
 
         override fun bind(position: Int) {
             Glide.with(view.context)
-                .load("$IMAGE_URL${dataSet[position]}")
-                .placeholder(R.drawable.card_preview_placeholder)
+                .load(/*$IMAGE_URL*/"${dataSet[position]}")
+                .placeholder(R.drawable.image_placeholder)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
                 .into(image)

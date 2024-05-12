@@ -154,7 +154,7 @@ class AdvertisementFragment : Fragment() {
                         binding.tvAdvertSellerApproved.text = if(dataSet.seller.isVerified) "Подтвержден" else "Не подтвержден"
                         Glide.with(requireContext())
                             .load(/*${Utils.IMAGE_URL}*/"${dataSet.seller.photo}")
-                            .placeholder(R.drawable.viewpager_item2)
+                            .placeholder(R.drawable.image_placeholder)
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .centerCrop()
                             .into(binding.ivAdvertCircularAvatar)
