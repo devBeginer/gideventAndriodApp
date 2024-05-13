@@ -112,16 +112,20 @@ class EditProfileFragment: Fragment() {
                 && binding.etEditProfilePasswordRepeat.text.toString() == binding.etEditProfilePassword.text.toString()
                 && (mode == UserRoles.USER || binding.etEditProfileAbout.text.toString().isNotEmpty())
             ) {
-                viewModel.update(
-                    binding.etEditProfileLogin.text.toString(),
-                    if(vkUser && binding.etEditProfilePassword.text.toString().isEmpty()) UUID.randomUUID().toString() else binding.etEditProfilePassword.text.toString(),
-                    binding.etEditProfileName.text.toString(),
-                    binding.etEditProfileLastName.text.toString(),
-                    binding.etEditProfileAbout.text.toString(),
-                    roles,
-                    image,
-                    vkUser
-                )
+                if(vkUser && binding.etEditProfilePassword.text.toString().isEmpty() || binding.etEditProfilePassword.text.toString().matches(Regex(Utils.PASSWORD_PATTERN))){
+                    viewModel.update(
+                        binding.etEditProfileLogin.text.toString(),
+                        if(vkUser && binding.etEditProfilePassword.text.toString().isEmpty()) UUID.randomUUID().toString() else binding.etEditProfilePassword.text.toString(),
+                        binding.etEditProfileName.text.toString(),
+                        binding.etEditProfileLastName.text.toString(),
+                        binding.etEditProfileAbout.text.toString(),
+                        roles,
+                        image,
+                        vkUser
+                    )
+                }else {
+                    showSnack(requireView(), "Пароль должен содержать не меньше 8 символов, хотя бы 1 цифру и не иметь пробелов", 4)
+                }
             } else {
                 showSnack(requireView(), "Заполните все поля и попробуйте снова", 4)
             }

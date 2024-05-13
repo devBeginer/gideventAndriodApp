@@ -76,6 +76,7 @@ class CustomerBookingInfoBottomSheet(): BottomSheetDialogFragment() {
                         binding.tvBookingInfoConfirmed.text = if(dataSet.isApproved) "Подтверждено" else "Не подтверждено"
                         binding.tvBookingInfoCustomer.text = dataSet.userName
                         binding.tvBookingInfoCost.text = "${dataSet.totalPrice}₽"
+                        binding.tvBookingInfoPlace.text = dataSet.place
                         adapter.setItemsList(dataSet.visitorGroups)
                     }
                 }

@@ -10,6 +10,7 @@ data class BookingInfoResponse(
     val isApproved: Boolean,
     val user: Long,
     val userName: String,
+    val place: String,
     val totalPrice: Int,
     val visitorGroups: List<VisitorsGroupResponse>
 )

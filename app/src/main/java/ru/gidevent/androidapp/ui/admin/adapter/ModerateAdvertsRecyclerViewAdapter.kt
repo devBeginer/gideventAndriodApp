@@ -48,6 +48,7 @@ class ModerateAdvertsRecyclerViewAdapter(
     override fun onBindViewHolder(holder: CardsViewHolder, position: Int) {
         holder.name.text = dataSet[position].name
         holder.price.text = "${dataSet[position].cost}₽"
+        holder.place.text = dataSet[position].place
         holder.customerCount.text = dataSet[position].count.toString()
     }
 
@@ -55,6 +56,7 @@ class ModerateAdvertsRecyclerViewAdapter(
         val name: TextView
         val price: TextView
         val customerCount: TextView
+        val place: TextView
         val btnConfirm: Button
         val btnDecline: Button
 
@@ -62,6 +64,7 @@ class ModerateAdvertsRecyclerViewAdapter(
             name = view.findViewById(R.id.tv_card_moderate_advert_name)
             price = view.findViewById(R.id.tv_card_moderate_advert_price)
             customerCount = view.findViewById(R.id.tv_card_moderate_advert_people_count)
+            place = view.findViewById(R.id.tv_card_moderate_advert_place)
             btnConfirm = view.findViewById(R.id.btn_moderate_advert_confirm)
             btnDecline = view.findViewById(R.id.btn_moderate_advert_decline)
 

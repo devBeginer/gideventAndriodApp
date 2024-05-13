@@ -7,5 +7,6 @@ data class MyAdvert(
     val name: String,
     val count: Int,
     val cost: Int,
+    val place: String,
     val status: String
 )

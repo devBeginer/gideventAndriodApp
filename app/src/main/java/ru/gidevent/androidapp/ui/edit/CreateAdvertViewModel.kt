@@ -115,9 +115,7 @@ class CreateAdvertViewModel @Inject constructor(
 
     }
 
-    fun delPhoto(id: String) {
 
-    }
 
     fun delPrice(id: Long) {
         viewModelScope.launch(Dispatchers.IO){

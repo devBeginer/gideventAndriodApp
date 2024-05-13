@@ -13,6 +13,7 @@ import ru.gidevent.andriodapp.databinding.FragmentSignUpBinding
 import ru.gidevent.androidapp.ui.SharedViewModel
 import ru.gidevent.androidapp.ui.login.viewModel.SignUpViewModel
 import ru.gidevent.androidapp.ui.state.UIState
+import ru.gidevent.androidapp.utils.Utils.PASSWORD_PATTERN
 import ru.gidevent.androidapp.utils.showSnack
 
 @AndroidEntryPoint
@@ -71,14 +72,19 @@ class SignUpFragment : Fragment() {
                 && binding.etSignUpPasswordRepeat.text.toString() == binding.etSignUpPassword.text.toString()
                 && (registerMode == SignInScreenMode.TOURIST || binding.etSignUpAbout.text.toString().isNotEmpty())
             ) {
-                viewModel.register(
-                    binding.etSignUpLogin.text.toString(),
-                    binding.etSignUpPassword.text.toString(),
-                    binding.etSignUpName.text.toString(),
-                    binding.etSignUpLastName.text.toString(),
-                    binding.etSignUpAbout.text.toString(),
-                    registerMode
-                )
+                if(binding.etSignUpPassword.text.toString().matches(Regex(PASSWORD_PATTERN))){
+                    viewModel.register(
+                        binding.etSignUpLogin.text.toString(),
+                        binding.etSignUpPassword.text.toString(),
+                        binding.etSignUpName.text.toString(),
+                        binding.etSignUpLastName.text.toString(),
+                        binding.etSignUpAbout.text.toString(),
+                        registerMode
+                    )
+                }else {
+                    showSnack(requireView(), "Пароль должен содержать не меньше 8 символов, хотя бы 1 цифру и не иметь пробелов", 4)
+                }
+
             } else {
                 showSnack(requireView(), "Заполните все поля и попробуйте снова", 4)
             }

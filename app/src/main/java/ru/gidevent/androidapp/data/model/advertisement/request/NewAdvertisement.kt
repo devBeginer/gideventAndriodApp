@@ -9,6 +9,7 @@ data class NewAdvertisement(
     val ageRestrictions: Int,
     val visitorsCount: Int,
     val isIndividual: Boolean,
+    val place: String,
     val photos: String,
     val rating: Int,
     val category: /*Category*/Long,

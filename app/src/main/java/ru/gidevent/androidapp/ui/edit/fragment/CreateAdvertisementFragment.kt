@@ -224,6 +224,7 @@ class CreateAdvertisementFragment() : Fragment() {
 
                     binding.etCreateName.setText(data.name)
                     binding.etCreateDescription.setText(data.description)
+                    binding.etCreatePlace.setText(data.place)
                     binding.tpCreateDuration.hour = data.duration
                     binding.tpCreateDuration.minute = 0
                     transports.forEach {
@@ -302,7 +303,8 @@ class CreateAdvertisementFragment() : Fragment() {
             //onBackPressed() // возврат на предыдущий activity
         }
         photoRVAdapter = PhotoEditRecyclerViewAdapter(listOf(), {
-            viewModel.delPhoto(it)
+            images.remove(it)
+            photoRVAdapter.delItem(it)
         }, {
             //loadPhoto()
             getContent.launch("image/*")
@@ -355,6 +357,7 @@ class CreateAdvertisementFragment() : Fragment() {
                     age,
                     if(!binding.switchCreateIndividual.isChecked) binding.etCreatePeopleCount.text.toString().toInt() else 1,
                     binding.switchCreateIndividual.isChecked,
+                    binding.etCreatePlace.text.toString(),
                     images.joinToString(","),
                     0,
                     category.categoryId,

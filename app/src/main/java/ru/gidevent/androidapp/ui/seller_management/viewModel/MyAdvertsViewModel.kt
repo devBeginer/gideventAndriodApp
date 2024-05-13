@@ -41,6 +41,7 @@ class MyAdvertsViewModel @Inject constructor(
                                 advertisement.advertisement,
                                 advertisement.customerCount,
                                 advertisement.totalPrice,
+                                "",
                                 advertisement.status
                             )
                         }

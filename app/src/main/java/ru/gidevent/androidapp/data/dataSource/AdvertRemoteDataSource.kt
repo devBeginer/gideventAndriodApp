@@ -159,6 +159,10 @@ class AdvertRemoteDataSource @Inject constructor(
         networkHelper.safeApiCall { advertApiService.postBooking(bookingRequest, credentials)}
 
 
+    suspend fun delBooking(credentials: String, bookingId: Long) =
+        networkHelper.safeApiCall { advertApiService.delBooking(bookingId, credentials)}
+
+
     suspend fun postBookingConfirmation(credentials: String, bookingId: Long) =
         networkHelper.safeApiCall { advertApiService.postBookingConfirmation(bookingId, credentials)}
 

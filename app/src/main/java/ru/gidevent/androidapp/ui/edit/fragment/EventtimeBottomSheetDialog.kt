@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.gidevent.andriodapp.databinding.BottomsheetDialogEventtimeBinding
 import ru.gidevent.androidapp.data.model.advertisement.dto.EventTime
-import ru.gidevent.androidapp.data.model.advertisement.response.AdvertisementEdit
 import ru.gidevent.androidapp.ui.SharedViewModel
 import ru.gidevent.androidapp.ui.edit.CreateAdvertViewModel
 import ru.gidevent.androidapp.ui.state.UIState

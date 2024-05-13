@@ -34,6 +34,7 @@ import ru.gidevent.androidapp.data.model.auth.response.UserDetailsResponse
 import ru.gidevent.androidapp.data.model.booking.BookingParamsResponse
 import ru.gidevent.androidapp.data.model.booking.BookingRequest
 import ru.gidevent.androidapp.data.model.booking.BookingResponse
+import ru.gidevent.androidapp.data.model.myAdverts.AdminAdvertResponse
 import ru.gidevent.androidapp.data.model.myAdverts.AdvertChip
 import ru.gidevent.androidapp.data.model.myAdverts.BookingInfoResponse
 import ru.gidevent.androidapp.data.model.myAdverts.SellerAdvertResponse
@@ -287,6 +288,12 @@ interface AdvertisementApiService {
         @Header("Authorization") token: String
     ): Response<BookingResponse>
 
+    @DELETE("booking/")
+    suspend fun delBooking(
+        @Query("bookingId") bookingId: Long,
+        @Header("Authorization") token: String
+    ): Response<Boolean>
+
 
 
 
@@ -348,5 +355,5 @@ interface AdvertisementApiService {
     @GET("adminAdverts/")
     suspend fun getAdminAdvert(
         @Header("Authorization") token: String
-    ): Response<List<SellerAdvertResponse>>
+    ): Response<List<AdminAdvertResponse>>
 }

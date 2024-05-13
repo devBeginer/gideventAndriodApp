@@ -43,6 +43,7 @@ class SignInViewModel @Inject constructor(private val repository: UserRepository
                     when{
                         response.body.contains("Connection") -> _loginState.postValue(UIState.ConnectionError)
                         response.code == 403 || response.code == 401 -> _loginState.postValue(UIState.Error("Проверьте логин и пароль, и попробуйте снова"))
+                        else -> _loginState.postValue(UIState.Error("Проверьте логин и пароль, и попробуйте снова"))
                     }
                     //loginResultMutableLiveData.postValue(false)
                 }

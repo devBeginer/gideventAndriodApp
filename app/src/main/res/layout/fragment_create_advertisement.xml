@@ -332,12 +332,28 @@
                 app:layout_constraintTop_toTopOf="@id/tv_create_city_title"
                 android:text="Выбрать"/>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_create_place"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_create_city_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:hint="Место"
+                android:layout_marginTop="8dp">
+                <EditText
+                    android:id="@+id/et_create_place"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
             <TextView
                 android:id="@+id/tv_create_photo_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_create_city_name"
+                app:layout_constraintTop_toBottomOf="@id/til_create_place"
                 android:layout_marginTop="8dp"
                 android:textStyle="bold"
                 android:text="Фотографии"/>

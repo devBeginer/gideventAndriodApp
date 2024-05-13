@@ -80,6 +80,7 @@ class BookingInfoBottomSheet(): BottomSheetDialogFragment() {
                         binding.tvBookingInfoConfirmed.text = if(dataSet.isApproved) "Подтверждено" else "Не подтверждено"
                         binding.tvBookingInfoCustomer.text = dataSet.userName
                         binding.tvBookingInfoCost.text = "${dataSet.totalPrice}₽"
+                        binding.tvBookingInfoPlace.text = dataSet.place
                         if(dataSet.isApproved) {
                             binding.btnBookingInfoDecline.visibility = View.VISIBLE
                             binding.btnBookingInfoConfirm.visibility = View.GONE

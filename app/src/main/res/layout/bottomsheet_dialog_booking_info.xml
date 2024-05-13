@@ -48,7 +48,7 @@
                 android:gravity="center_vertical|start"
                 app:layout_constraintEnd_toStartOf="@id/tv_booking_info_booking_name"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_booking_info_booking_name_title" />
+                app:layout_constraintTop_toBottomOf="@id/tv_booking_info_booking_name" />
 
             <TextView
                 android:id="@+id/tv_booking_info_date"
@@ -86,6 +86,29 @@
                 app:layout_constraintBottom_toBottomOf="@id/tv_booking_info_booking_time_title" />
 
             <TextView
+                android:id="@+id/tv_booking_info_place_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Место"
+                android:gravity="center_vertical|start"
+                app:layout_constraintEnd_toStartOf="@id/tv_booking_info_place"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_booking_info_place"
+                app:layout_constraintBottom_toBottomOf="@id/tv_booking_info_place" />
+
+            <TextView
+                android:id="@+id/tv_booking_info_place"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="ул. Баумана, д. 10"
+                android:textStyle="bold"
+                android:gravity="center_vertical|end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_booking_info_place_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_booking_info_booking_time_title" />
+
+            <TextView
                 android:id="@+id/tv_booking_info_booking_timestamp_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -94,7 +117,7 @@
                 android:gravity="center_vertical|start"
                 app:layout_constraintEnd_toStartOf="@id/tv_booking_info_booking_name"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_booking_info_booking_time_title" />
+                app:layout_constraintTop_toBottomOf="@id/tv_booking_info_place" />
 
             <TextView
                 android:id="@+id/tv_booking_info_timestamp"
@@ -161,7 +184,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_booking_info_booking_customer_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_booking_info_customer"
                 tools:itemCount="9"
                 tools:listitem="@layout/recyclerview_item_booking_group" />
 

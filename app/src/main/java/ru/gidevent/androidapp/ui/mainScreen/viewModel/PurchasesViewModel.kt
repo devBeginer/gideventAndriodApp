@@ -151,4 +151,29 @@ class PurchasesViewModel @Inject constructor(
             }
         }
     }
+
+    fun delBooking(bookingId: Long){
+        viewModelScope.launch (Dispatchers.IO){
+            if(repository.isAuthorised()){
+                dataResultMutableLiveData.postValue(UIStateAdvertList.Loading)
+                val response = advertRepository.delBooking(bookingId)
+                when (response) {
+                    is ApiResult.Success<Boolean> -> {
+                        initView()
+                    }
+
+                    is ApiResult.Error -> {
+                        when{
+                            response.body.contains("Connection") -> dataResultMutableLiveData.postValue(
+                                UIStateAdvertList.ConnectionError)
+                            response.code == 403 || response.code == 401 -> dataResultMutableLiveData.postValue(UIStateAdvertList.Unauthorised)
+                            response.code == 404 -> dataResultMutableLiveData.postValue(UIStateAdvertList.Error("Произошла ошибка, и попробуйте снова"))
+                        }
+                    }
+                }
+            }else{
+                dataResultMutableLiveData.postValue(UIStateAdvertList.Unauthorised)
+            }
+        }
+    }
 }

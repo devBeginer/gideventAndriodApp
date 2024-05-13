@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import ru.gidevent.androidapp.data.model.myAdverts.AdminAdvertResponse
 import ru.gidevent.androidapp.data.model.myAdverts.MyAdvert
 import ru.gidevent.androidapp.data.model.myAdverts.SellerAdvertResponse
 import ru.gidevent.androidapp.data.repository.AdvertisementRepository
@@ -31,7 +32,7 @@ class ModerateAdvertsViewModel @Inject constructor(
                 _data.postValue(UIStateAdvertList.Loading)
                 val response = advertRepository.getAdminAdvert()
                 when (response) {
-                    is ApiResult.Success<List<SellerAdvertResponse>> -> {
+                    is ApiResult.Success<List<AdminAdvertResponse>> -> {
 
                         val mainDataSet = response.data.map { advertisement ->
                             MyAdvert(
@@ -39,6 +40,7 @@ class ModerateAdvertsViewModel @Inject constructor(
                                 advertisement.advertisement,
                                 advertisement.customerCount,
                                 advertisement.totalPrice,
+                                advertisement.place,
                                 advertisement.status
                             )
                         }

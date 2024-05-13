@@ -80,6 +80,17 @@ class PhotoEditRecyclerViewAdapter(
         notifyItemInserted(dataSet.lastIndex)
     }
 
+    fun delItem(item: String){
+        val newList = mutableListOf<String>()
+        newList.addAll(dataSet)
+        val position = newList.indexOf(item)
+        if(position!=-1) {
+            newList.remove(item)
+            dataSet = newList
+            notifyItemRemoved(position)
+        }
+    }
+
 
 
     inner class ItemViewHolder(val view: View) : MainViewHolder(view) {

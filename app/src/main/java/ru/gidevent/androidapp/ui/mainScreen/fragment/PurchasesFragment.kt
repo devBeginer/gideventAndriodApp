@@ -63,7 +63,7 @@ class PurchasesFragment : Fragment() {
             viewModel.initBottomSheet(it)
             CustomerBookingInfoBottomSheet().show(childFragmentManager, "bookingInfoBottomDialog")
         },{
-            //viewModel.postFavourite(it)
+            viewModel.delBooking(it)
         })
         binding.rvPurchasesCards.adapter = adapter
 

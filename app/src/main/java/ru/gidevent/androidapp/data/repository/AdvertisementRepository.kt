@@ -33,6 +33,7 @@ import ru.gidevent.androidapp.data.model.auth.response.Seller
 import ru.gidevent.androidapp.data.model.booking.BookingParamsResponse
 import ru.gidevent.androidapp.data.model.booking.BookingRequest
 import ru.gidevent.androidapp.data.model.booking.BookingResponse
+import ru.gidevent.androidapp.data.model.myAdverts.AdminAdvertResponse
 import ru.gidevent.androidapp.data.model.myAdverts.AdvertChip
 import ru.gidevent.androidapp.data.model.myAdverts.BookingInfoResponse
 import ru.gidevent.androidapp.data.model.myAdverts.SellerAdvertResponse
@@ -343,6 +344,12 @@ class AdvertisementRepository @Inject constructor(
         return advertRemoteDataSource.postBooking(token, bookingRequest)
     }
 
+    suspend fun delBooking(bookingId: Long): ApiResult<Boolean> {
+        val token = userLocalDataSource.getAccessTokenFromSP()
+
+        return advertRemoteDataSource.delBooking(token, bookingId)
+    }
+
     suspend fun postBookingConfirmation(bookingId: Long): ApiResult<BookingResponse> {
         val token = userLocalDataSource.getAccessTokenFromSP()
 
@@ -390,7 +397,7 @@ class AdvertisementRepository @Inject constructor(
         return advertRemoteDataSource.confirmAdvertModeration(token, advertisementId)
     }
 
-    suspend fun getAdminAdvert(): ApiResult<List<SellerAdvertResponse>> {
+    suspend fun getAdminAdvert(): ApiResult<List<AdminAdvertResponse>> {
         val token = userLocalDataSource.getAccessTokenFromSP()
 
         return advertRemoteDataSource.getAdminAdvert(token)
